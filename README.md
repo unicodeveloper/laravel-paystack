@@ -106,7 +106,7 @@ The payment result can be something like "payment ok", "customer cancelled payme
 
 ## Usage
 
-1. Open your .env file and add your public key, secret key, merchant email and payment url like so:
+Open your .env file and add your public key, secret key, merchant email and payment url like so:
 
 ```php
 PAYSTACK_PUBLIC_KEY=xxxxxxxxxxxxx
@@ -115,7 +115,7 @@ PAYSTACK_PAYMENT_URL=https://api.paystack.co
 MERCHANT_EMAIL=unicodeveloper@gmail.com
 ```
 
-2. Set up routes and controller methods like so:
+Set up routes and controller methods like so:
 
 ```php
 Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
@@ -160,7 +160,7 @@ class PaymentController extends Controller
 }
 ```
 
-3. A sample form will look like so:
+A sample form will look like so:
 
 ```html
 <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
