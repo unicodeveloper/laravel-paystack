@@ -22,7 +22,6 @@ class Paystack {
      */
     protected $secretKey;
 
-
     /**
      * Instance of Client
      * @var object
@@ -81,7 +80,6 @@ class Paystack {
 
         $this->client = new Client(['base_uri' => $this->baseUrl]);
 
-        //Set a single header using path syntax
         $this->client->setDefaultOption('headers', [
             'Authorization' => $authBearer,
             'Content-Type'  => 'application/json',
