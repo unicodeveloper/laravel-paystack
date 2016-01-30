@@ -118,7 +118,7 @@ class Paystack {
      */
     public function getAuthorizationUrl()
     {
-        $this->makePayment();
+        $this->makePaymentRequest();
 
         $this->url = $this->response->json()["data"]["authorization_url"];
 
