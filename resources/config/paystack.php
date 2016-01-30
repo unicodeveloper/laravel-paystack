@@ -29,5 +29,5 @@ return [
     /**
      * Unique transaction reference
      */
-    'reference' => 'payref'.time().'tranx'
+    'reference' => 'payref'.time().'tranx',
 ];
