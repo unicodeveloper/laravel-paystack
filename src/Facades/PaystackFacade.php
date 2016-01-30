@@ -1,10 +1,10 @@
 <?php
 
-namespace Unicodeveloper\Quotes\Facades;
+namespace Unicodeveloper\Paystack\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class QuotesFacade extends Facade {
+class PaystackFacade extends Facade {
     /**
    * Get the registered name of the component.
    *
@@ -12,6 +12,6 @@ class QuotesFacade extends Facade {
    */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-quotes';
+        return 'laravel-paystack';
     }
 }

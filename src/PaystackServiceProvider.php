@@ -13,6 +13,10 @@ class PaystackServiceProvider extends ServiceProvider {
    */
   protected $defer = false;
 
+  public function boot()
+  {
+  }
+
   /**
    * Register the application services.
    *
@@ -20,7 +24,7 @@ class PaystackServiceProvider extends ServiceProvider {
    */
   public function register()
   {
-      $this->app->bind('laravel-paystack', function() {
+        $this->app->bind('laravel-paystack', function() {
 
           return new Paystack;
 
