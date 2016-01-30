@@ -16,7 +16,6 @@ class Paystack {
      */
     const ITF = "Invalid transaction reference";
 
-
     /**
      * Issue Secret Key from your Paystack Dashboard
      * @var mixed
@@ -40,7 +39,7 @@ class Paystack {
      * Paystack API base Url
      * @var string
      */
-    protected $baseUrl = 'https://api.paystack.co';
+    protected $baseUrl;
 
     /**
      * Authorization Url - Paystack payment page
@@ -51,11 +50,20 @@ class Paystack {
     public function __construct()
     {
         $this->setKey();
+        $this->setBaseUrl();
         $this->setRequestOptions();
     }
 
     /**
-     * Get secret key from paystack config file
+     * Get Base Url from Paystack config file
+     */
+    public function setBaseUrl()
+    {
+        $this->baseUrl = config('paystack.paymentUrl');
+    }
+
+    /**
+     * Get secret key from Paystack config file
      * @return  void
      */
     public function setKey()
