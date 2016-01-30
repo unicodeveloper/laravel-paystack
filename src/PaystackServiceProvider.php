@@ -37,7 +37,7 @@ class PaystackServiceProvider extends ServiceProvider {
 
           return new Paystack;
 
-      });
+        });
   }
 
   /**
