@@ -215,6 +215,12 @@ In the controller that handles the request coming from the payment provider, we 
 
 `Paystack::getPaymentData()` - This function calls the verification methods and ensure it is a valid transction else it throws an exception.
 
+## Todo
+
+* Charge Returning Customers
+* Add Comprehensive Tests
+* Implement Transaction Dashboard to see all of the transactions in your laravel app
+
 ## Contributing
 
 Please feel free to fork this package and contribute by submitting a pull request to enhance the functionalities.
