@@ -154,7 +154,7 @@ class Paystack {
 
         $result = $this->response->json()["message"];
 
-        switch($result)
+        switch ($result)
         {
             case self::VS:
                 $validate = true;
@@ -177,7 +177,7 @@ class Paystack {
      */
     public function getPaymentData()
     {
-        if($this->isTransactionVerificationValid()) {
+        if ($this->isTransactionVerificationValid()) {
             return $this->response->json();
         } else {
             throw new PaymentVerificationFailedException("Invalid Transaction Reference");

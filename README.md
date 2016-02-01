@@ -187,7 +187,7 @@ A sample form will look like so:
             </p>
             <input type="hidden" name="email" value="otemuyiwa@gmail.com"> {{-- required --}}
             <input type="hidden" name="orderID" value="345">
-            <input type="hidden" name="amount" value="800"> {{-- required --}}
+            <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
             <input type="hidden" name="quantity" value="3">
             <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
             <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}"> {{-- required --}}

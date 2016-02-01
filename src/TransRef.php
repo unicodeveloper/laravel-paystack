@@ -20,7 +20,7 @@ class TransRef {
      * @param  string $type
      * @return string
      */
-    public static function getPool( $type = 'alnum')
+    private static function getPool( $type = 'alnum')
     {
         switch ( $type ) {
             case 'alnum':
@@ -55,7 +55,7 @@ class TransRef {
      * @param  integer $max
      * @return integer
      */
-    public static function secure_crypt($min, $max) {
+    private static function secure_crypt($min, $max) {
         $range = $max - $min;
 
         if ($range < 0) {
@@ -67,7 +67,7 @@ class TransRef {
         $bits   = (int) $log + 1; // length in bits
         $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
         do {
-            $rnd = hexdec( bin2hex( openssl_random_pseudo_bytes( $bytes ) ) );
+            $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
             $rnd = $rnd & $filter; // discard irrelevant bits
         } while ($rnd >= $range);
 
