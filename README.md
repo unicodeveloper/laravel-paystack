@@ -29,7 +29,7 @@ Also, register the Facade like so:
 ```php
 'aliases' => [
     ...
-    'Paystack' => Unicodeveloper\Paystack\Facades\PaystackFacade::class,
+    'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
     ...
 ]
 ```
@@ -166,7 +166,7 @@ Let me explain the two main fluent methods a bit here.
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
  *  Payment Page. I abstracted all of it, so you don't have to worry about that.
- *  Just eat your cookies :cookie: while coding!
+ *  Just eat your cookies while coding!
  */
 Paystack::getAuthorizationUrl()->redirectNow();
 

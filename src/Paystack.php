@@ -201,4 +201,13 @@ class Paystack {
     {
         return $this->response->json()["data"]["access_code"];
     }
+
+    /**
+     * Generate a Unique Transaction Reference
+     * @return string
+     */
+    public function genTranxRef()
+    {
+
+    }
 }

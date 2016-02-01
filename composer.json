@@ -17,7 +17,8 @@
    },
    "require-dev": {
         "phpunit/phpunit" : "4.*",
-        "scrutinizer/ocular": "~1.1"
+        "scrutinizer/ocular": "~1.1",
+        "satooshi/php-coveralls": "^0.7.0"
     },
    "autoload": {
         "psr-4": {
