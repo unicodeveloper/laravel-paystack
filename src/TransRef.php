@@ -15,6 +15,11 @@ namespace Unicodeveloper\Paystack;
 
 class TransRef {
 
+    /**
+     * Get the pool to use based on the type of prefix hash
+     * @param  string $type
+     * @return string
+     */
     public static function getPool( $type = 'alnum')
     {
         switch ( $type ) {
@@ -44,7 +49,12 @@ class TransRef {
         return $pool;
     }
 
-
+    /**
+     * Generate a random secure crypt figure
+     * @param  integer $min
+     * @param  integer $max
+     * @return integer
+     */
     public static function secure_crypt($min, $max) {
         $range = $max - $min;
 
@@ -64,6 +74,11 @@ class TransRef {
         return $min + $rnd;
     }
 
+    /**
+     * Finally, generate a hashed token
+     * @param  integer $length
+     * @return string
+     */
     public static function getHashedToken($length = 25)
     {
         $token = "";
