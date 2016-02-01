@@ -159,6 +159,25 @@ class PaymentController extends Controller
     }
 }
 ```
+Let me explain the two main fluent methods a bit here.
+
+```php
+/**
+ *  This fluent method does all the dirty work of sending a POST request with the form data
+ *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
+ *  Payment Page. I abstracted all of it, so you don't have to worry about that.
+ *  Just eat your cookies :cookie: while coding!
+ */
+Paystack::getAuthorizationUrl()->redirectNow();
+
+/**
+ * This fluent method does all the dirty work of verifying that the just concluded transaction was actually valid,
+ * It verifies the transaction reference with Paystack Api and then grabs the data returned from Paystack.
+ * In that data, we have a lot of good stuff, especially the authorisation code that you can save in your db
+ * to allow for easy recurrent subscription.
+ */
+Paystack::getPaymentData();
+```
 
 A sample form will look like so:
 
