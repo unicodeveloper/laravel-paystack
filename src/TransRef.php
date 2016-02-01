@@ -1,0 +1,78 @@
+<?php
+
+/*
+ * This file is part of the Laravel Paystack package.
+ *
+ * (c) Prosper Otemuyiwa <prosperotemuyiwa@gmail.com>
+ *
+ * Source http://stackoverflow.com/a/13733588/179104
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Unicodeveloper\Paystack;
+
+class TransRef {
+
+    public static function getPool( $type = 'alnum')
+    {
+        switch ( $type ) {
+            case 'alnum':
+                $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                break;
+            case 'alpha':
+                $pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                break;
+            case 'hexdec':
+                $pool = '0123456789abcdef';
+                break;
+            case 'numeric':
+                $pool = '0123456789';
+                break;
+            case 'nozero':
+                $pool = '123456789';
+                break;
+            case 'distinct':
+                $pool = '2345679ACDEFHJKLMNPRSTUVWXYZ';
+                break;
+            default:
+                $pool = (string) $type;
+                break;
+        }
+
+        return $pool;
+    }
+
+
+    public static function secure_crypt($min, $max) {
+        $range = $max - $min;
+
+        if ($range < 0) {
+            return $min; // not so random...
+        }
+
+        $log    = log($range, 2);
+        $bytes  = (int) ($log / 8) + 1; // length in bytes
+        $bits   = (int) $log + 1; // length in bits
+        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+        do {
+            $rnd = hexdec( bin2hex( openssl_random_pseudo_bytes( $bytes ) ) );
+            $rnd = $rnd & $filter; // discard irrelevant bits
+        } while ($rnd >= $range);
+
+        return $min + $rnd;
+    }
+
+    public static function getHashedToken($length = 25)
+    {
+        $token = "";
+        $max   = strlen(static::getPool());
+        for ($i = 0; $i < $length; $i++) {
+            $token .= static::getPool()[static::secure_crypt(0, $max)];
+        }
+
+        return $token;
+    }
+
+}
