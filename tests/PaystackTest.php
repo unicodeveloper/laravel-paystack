@@ -3,6 +3,7 @@
 namespace Unicodeveloper\Paystack\Test;
 
 use PHPUnit_Framework_TestCase;
+use Unicodeveloper\Paystack\Paystack;
 
 class PaystackTest extends PHPUnit_Framework_TestCase
 {
@@ -12,5 +13,11 @@ class PaystackTest extends PHPUnit_Framework_TestCase
     public function testTrueIsTrue()
     {
         $this->assertTrue(true);
+    }
+
+    public function testTranxRef()
+    {
+        $paystack =  new Paystack();
+        echo $paystack->genTranxRef();
     }
 }

@@ -4,7 +4,7 @@ namespace Unicodeveloper\Paystack\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class PaystackFacade extends Facade {
+class Paystack extends Facade {
     /**
    * Get the registered name of the component.
    *
