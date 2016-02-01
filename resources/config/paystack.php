@@ -26,8 +26,4 @@ return [
      */
     'merchantEmail' => getenv('MERCHANT_EMAIL'),
 
-    /**
-     * Unique transaction reference
-     */
-    'reference' => 'payref'.time().'tranx',
 ];

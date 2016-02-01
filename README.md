@@ -73,10 +73,6 @@ return [
      */
     'merchantEmail' => getenv('MERCHANT_EMAIL'),
 
-    /**
-     * Unique transaction reference
-     */
-    'reference' => 'payref'.time().'tranx',
 ];
 ```
 
@@ -100,8 +96,6 @@ The customer arrived on the site of the payment provider and gets to choose a pa
 After having paid the order the customer is redirected back. In the redirection request to the shop-site some values are returned. The values are usually the order id, a paymentresult and a hash.
 
 The hash is calculated out of some of the fields returned and a secret non-public value. This hash is used to verify if the request is valid and comes from the payment provider. It is paramount that this hash is thoroughly checked.
-
-The payment result can be something like "payment ok", "customer cancelled payment" or "payment declined".
 
 
 ## Usage
@@ -173,7 +167,7 @@ Paystack::getAuthorizationUrl()->redirectNow();
 /**
  * This fluent method does all the dirty work of verifying that the just concluded transaction was actually valid,
  * It verifies the transaction reference with Paystack Api and then grabs the data returned from Paystack.
- * In that data, we have a lot of good stuff, especially the authorisation code that you can save in your db
+ * In that data, we have a lot of good stuff, especially the `authorization_code` that you can save in your db
  * to allow for easy recurrent subscription.
  */
 Paystack::getPaymentData();
@@ -195,7 +189,7 @@ A sample form will look like so:
             <input type="hidden" name="orderID" value="345">
             <input type="hidden" name="amount" value="800"> {{-- required --}}
             <input type="hidden" name="quantity" value="3">
-            <input type="hidden" name="reference" value="{{ config('paystack.reference') }}"> {{-- required --}}
+            <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
             <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}"> {{-- required --}}
             {{ csrf_field() }}
 
