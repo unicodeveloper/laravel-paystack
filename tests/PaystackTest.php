@@ -14,10 +14,4 @@ class PaystackTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(true);
     }
-
-    public function testTranxRef()
-    {
-        $paystack =  new Paystack();
-        echo $paystack->genTranxRef();
-    }
 }
