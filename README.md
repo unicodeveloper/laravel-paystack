@@ -238,6 +238,14 @@ In the controller that handles the request coming from the payment provider, we 
 
 `Paystack::getPaymentData()` - This function calls the verification methods and ensure it is a valid transction else it throws an exception.
 
+You can test with these details
+
+```bash
+Card Number: 4123450131001381
+Expiry Date: any date in the future
+CVV: 883
+```
+
 ## Todo
 
 * Charge Returning Customers
