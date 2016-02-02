@@ -158,8 +158,8 @@ class PaymentController extends Controller
     }
 }
 ```
-Let me explain the two main fluent methods a bit here.
 
+Let me explain the fluent methods this package provides a bit here.
 ```php
 /**
  *  This fluent method does all the dirty work of sending a POST request with the form data
@@ -176,6 +176,24 @@ Paystack::getAuthorizationUrl()->redirectNow();
  * to allow for easy recurrent subscription.
  */
 Paystack::getPaymentData();
+
+/**
+ * This method returns all the customers that have performed transactions on your platform with Paystack
+ * @returns array
+ */
+Paystack::getAllCustomers();
+
+/**
+ * This method returns all the plans that you have registered on Paystack
+ * @returns array
+ */
+Paystack::getAllPlans();
+
+/**
+ * This method returns all the transactions that have occurred
+ * @returns array
+ */
+Paystack::getAllTransactions();
 ```
 
 A sample form will look like so:
