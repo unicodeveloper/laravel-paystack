@@ -12,6 +12,7 @@
 namespace Unicodeveloper\Paystack;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Config;
 
 class Paystack {
 
@@ -67,7 +68,7 @@ class Paystack {
      */
     public function setBaseUrl()
     {
-        $this->baseUrl = config('paystack.paymentUrl');
+        $this->baseUrl = Config::get('paystack.paymentUrl');
     }
 
     /**
@@ -76,7 +77,7 @@ class Paystack {
      */
     public function setKey()
     {
-        $this->secretKey = config('paystack.secretKey');
+        $this->secretKey = Config::get('paystack.secretKey');
     }
 
     /**
