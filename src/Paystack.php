@@ -127,6 +127,13 @@ class Paystack {
         return $this;
     }
 
+    private function setGetResponse($relativeUrl)
+    {
+        $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
+
+        return $this;
+    }
+
     /**
      * Get the authorization url from the callback response
      * @return Unicodeveloper\Paystack\Paystack
@@ -218,6 +225,48 @@ class Paystack {
     public function genTranxRef()
     {
         return TransRef::getHashedToken();
+    }
+
+    /**
+     * Get all the customers that have made transactions on your platform
+     * @return array
+     */
+    public function getAllCustomers()
+    {
+        $this->setRequestOptions();
+
+        return $this->setGetResponse("/customer")->getData();
+    }
+
+    /**
+     * Get all the plans that you have on Paystack
+     * @return array
+     */
+    public function getAllPlans()
+    {
+        $this->setRequestOptions();
+
+        return $this->setGetResponse("/plan")->getData();
+    }
+
+    /**
+     * Get all the transactions that have happened overtime
+     * @return array
+     */
+    public function getAllTransactions()
+    {
+        $this->setRequestOptions();
+
+        return $this->setGetResponse("/transaction")->getData();
+    }
+
+    /**
+     * Get the response from a get operation
+     * @return array
+     */
+    private function getData()
+    {
+        return $this->response->json()["data"];
     }
 
 }
