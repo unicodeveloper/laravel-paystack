@@ -145,7 +145,7 @@ class PaymentController extends Controller
 
     /**
      * Obtain Paystack payment information
-     * @return [type] [description]
+     * @return void
      */
     public function handleGatewayCallback()
     {
@@ -178,22 +178,28 @@ Paystack::getAuthorizationUrl()->redirectNow();
 Paystack::getPaymentData();
 
 /**
- * This method returns all the customers that have performed transactions on your platform with Paystack
+ * This method gets all the customers that have performed transactions on your platform with Paystack
  * @returns array
  */
 Paystack::getAllCustomers();
 
 /**
- * This method returns all the plans that you have registered on Paystack
+ * This method gets all the plans that you have registered on Paystack
  * @returns array
  */
 Paystack::getAllPlans();
 
 /**
- * This method returns all the transactions that have occurred
+ * This method gets all the transactions that have occurred
  * @returns array
  */
 Paystack::getAllTransactions();
+
+/**
+ * This method generates a unique super secure cryptograhical hash token to use as transaction reference
+ * @returns string
+ */
+Paystack::genTranxRef();
 ```
 
 A sample form will look like so:
