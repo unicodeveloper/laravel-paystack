@@ -39,7 +39,7 @@ Also, register the Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan config:publish unicodeveloper/laravel-paystack
+php artisan vendor:publish --provider="Unicodeveloper\Paystack\PaystackServiceProvider"
 ```
 
 A configuration-file named `paystack.php` with some sensible defaults will be placed in your `config` directory:
