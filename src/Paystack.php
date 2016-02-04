@@ -88,13 +88,12 @@ class Paystack {
     {
         $authBearer = 'Bearer '. $this->secretKey;
 
-        $this->client = new Client(['base_uri' => $this->baseUrl]);
-
-        $this->client->setDefaultOption('headers', [
-            'Authorization' => $authBearer,
-            'Content-Type'  => 'application/json',
-            'Accept'        => 'application/json'
-        ]);
+        $this->client = new Client(['base_uri' => $this->baseUrl,
+            'headers' => [
+                'Authorization' => $authBearer,
+                'Content-Type'  => 'application/json',
+                'Accept'        => 'application/json'
+        ]]);
     }
 
     /**
@@ -143,7 +142,7 @@ class Paystack {
     {
         $this->makePaymentRequest();
 
-        $this->url = $this->response->json()["data"]["authorization_url"];
+        $this->url = $this->getResponse()['data']['authorization_url'];
 
         return $this;
     }
@@ -169,7 +168,7 @@ class Paystack {
     {
         $this->verifyTransactionAtGateway();
 
-        $result = $this->response->json()["message"];
+        $result = $this->getResponse()['message'];
 
         switch ($result)
         {
@@ -195,7 +194,7 @@ class Paystack {
     public function getPaymentData()
     {
         if ($this->isTransactionVerificationValid()) {
-            return $this->response->json();
+            return $this->getResponse();
         } else {
             throw new PaymentVerificationFailedException("Invalid Transaction Reference");
         }
@@ -216,7 +215,7 @@ class Paystack {
      */
     public function getAccessCode()
     {
-        return $this->response->json()["data"]["access_code"];
+        return $this->getResponse()['data']['access_code'];
     }
 
     /**
@@ -262,12 +261,21 @@ class Paystack {
     }
 
     /**
-     * Get the response from a get operation
+     * Get the whole response from a get operation
+     * @return array
+     */
+    private function getResponse()
+    {
+        return json_decode($this->response->getBody(), true);
+    }
+
+    /**
+     * Get the data response from a get operation
      * @return array
      */
     private function getData()
     {
-        return $this->response->json()["data"];
+        return $this->getResponse()['data'];
     }
 
 }
