@@ -220,7 +220,10 @@ A sample form will look like so:
             <input type="hidden" name="quantity" value="3">
             <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
             <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}"> {{-- required --}}
-            {{ csrf_field() }}
+            {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
+
+             <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
+
 
             <p>
               <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">
