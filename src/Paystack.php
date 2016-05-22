@@ -361,7 +361,7 @@ class Paystack {
         return $this->setGetResponse('/customer', $data)->getResponse();
 
     }
-    
+
     /**
      * Fetch a customer based on id or code
      * @param $customer_id
@@ -395,6 +395,24 @@ class Paystack {
         $this->setRequestOptions();
 
         return $this->setGetResponse('/customer/'. $customer_id, $data)->getResponse();
+
+    }
+
+    /**
+     * Export tranactions in .CSV
+     * @return array
+     */
+    public function exportTransactions(){
+
+        $data = [
+            "from" => request()->from,
+            "to" => request()->to,
+            'settled' => request()->settled
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/transaction/export', $data)->getResponse();
 
     }
 
