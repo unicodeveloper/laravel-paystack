@@ -280,7 +280,6 @@ class Paystack {
 
     /**
      * Create a plan
-     * @return array
      */
     public function createPlan(){
 
@@ -296,7 +295,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/plan", $data)->getResponse();
+        $this->response = $this->setGetResponse("/plan", $data);
 
     }
 
@@ -353,7 +352,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/customer', $data)->getResponse();
+        $this->response = $this->setGetResponse('/customer', $data);
 
     }
 
@@ -424,7 +423,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/subscription', $data)->getResponse();
+        $this->response = $this->setGetResponse('/subscription', $data);
     }
 
     /**
@@ -488,7 +487,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/page', $data)->getResponse();
+        $this->response = $this->setGetResponse('/page', $data);
 
     }
 
