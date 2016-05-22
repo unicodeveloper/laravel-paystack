@@ -127,7 +127,7 @@ class Paystack {
         return $this;
     }
 
-    private function setGetResponse($relativeUrl, $body = array())
+    private function setGetResponse($relativeUrl, $body = [])
     {
         $this->response = $this->client->get($this->baseUrl . $relativeUrl, $body);
 
