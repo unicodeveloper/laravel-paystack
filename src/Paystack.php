@@ -433,6 +433,40 @@ class Paystack {
         return $this->setGetResponse('/subscription', $data)->getResponse();
     }
 
+    /**
+     * Enable a subscription using the subscription code and token
+     * @return array
+     */
+    public function enableSubscription(){
+
+        $data = [
+            "code" => request()->code,
+            "token" => request()->token,
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription/enable', $data)->getResponse();
+
+    }
+
+    /**
+     * Disable a subscription using the subscription code and token
+     * @return array
+     */
+    public function disableSubscription(){
+
+        $data = [
+            "code" => request()->code,
+            "token" => request()->token,
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription/disable', $data)->getResponse();
+
+    }
+
 }
 
 
