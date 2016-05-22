@@ -476,8 +476,31 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/subscription/'.$subscription_id)->getResponse();
+        return $this->setGetResponse('/subscription/'.$subscription_id, [])->getResponse();
 
+    }
+
+    /**
+     * Create pages you can share with users using the returned slug
+     * @return array
+     */
+    public function createPage(){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->description,
+            "amount" => request()->amount
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page', $data)->getResponse();
+
+    }
+
+    public function fetchPages(){
+        
     }
 
 }
