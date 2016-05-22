@@ -134,6 +134,20 @@ class Paystack {
         return $this;
     }
 
+    private function setPostResponse($relativeUrl, $body = [])
+    {
+        $this->response = $this->client->post($this->baseUrl . $relativeUrl, $body);
+
+        return $this;
+    }
+
+    private function setPutResponse($relativeUrl, $body = [])
+    {
+        $this->response = $this->client->put($this->baseUrl . $relativeUrl, $body);
+
+        return $this;
+    }
+
     /**
      * Get the authorization url from the callback response
      * @return Unicodeveloper\Paystack\Paystack
@@ -295,7 +309,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setGetResponse("/plan", $data);
+        $this->response = $this->setPostResponse("/plan", $data);
 
     }
 
@@ -331,7 +345,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/plan/' . $plan_code, $data)->getResponse();
+        return $this->setPutResponse('/plan/' . $plan_code, $data)->getResponse();
 
     }
 
@@ -352,7 +366,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setGetResponse('/customer', $data);
+        $this->response = $this->setPostResponse('/customer', $data);
 
     }
 
@@ -387,7 +401,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/customer/'. $customer_id, $data)->getResponse();
+        return $this->setPutResponse('/customer/'. $customer_id, $data)->getResponse();
 
     }
 
@@ -423,7 +437,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setGetResponse('/subscription', $data);
+        $this->response = $this->setPostResponse('/subscription', $data);
     }
 
     /**
@@ -439,7 +453,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/subscription/enable', $data)->getResponse();
+        return $this->setPostResponse('/subscription/enable', $data)->getResponse();
 
     }
 
@@ -456,7 +470,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/subscription/disable', $data)->getResponse();
+        return $this->setPostResponse('/subscription/disable', $data)->getResponse();
 
     }
 
@@ -487,7 +501,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setGetResponse('/page', $data);
+        $this->response = $this->setPostResponse('/page', $data);
 
     }
 
