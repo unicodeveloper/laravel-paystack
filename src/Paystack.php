@@ -499,8 +499,16 @@ class Paystack {
 
     }
 
+    /**
+     * Fetches all the pages the merchant has
+     * @return array
+     */
     public function fetchPages(){
-        
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page', [])->getResponse();
+
     }
 
 }
