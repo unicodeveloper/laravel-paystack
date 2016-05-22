@@ -278,8 +278,6 @@ class Paystack {
         return $this->getResponse()['data'];
     }
 
-    //Edits by Funsho http://devfunsho.com | @iamfusnho - 22/05/2016
-
     /**
      * Create a plan
      * @return array
@@ -287,7 +285,6 @@ class Paystack {
     public function createPlan(){
 
         $data = [
-
             "name" => request()->name,
             "description" => request()->desc,
             "amount" => intval(request()->amount),
@@ -324,7 +321,6 @@ class Paystack {
     public function updatePlan($plan_code){
 
         $data = [
-
             "name" => request()->name,
             "description" => request()->desc,
             "amount" => intval(request()->amount),
@@ -347,7 +343,6 @@ class Paystack {
     public function createCustomer(){
 
         $data = [
-
             "email" => request()->email,
             "first_name" => request()->fname,
             "last_name" => request()->lname,
@@ -383,7 +378,6 @@ class Paystack {
     public function updateCustomer($customer_id){
 
         $data = [
-
             "email" => request()->email,
             "first_name" => request()->fname,
             "last_name" => request()->lname,
@@ -487,7 +481,6 @@ class Paystack {
     public function createPage(){
 
         $data = [
-
             "name" => request()->name,
             "description" => request()->description,
             "amount" => request()->amount
@@ -532,7 +525,6 @@ class Paystack {
     public function updatePage($page_id){
 
         $data = [
-
             "name" => request()->name,
             "description" => request()->description,
             "amount" => request()->amount
