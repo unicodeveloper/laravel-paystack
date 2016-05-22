@@ -360,7 +360,7 @@ class Paystack {
             "first_name" => request()->fname,
             "last_name" => request()->lname,
             "phone" => request()->phone,
-            "metadata" => request()->addtional_info /* key => value pairs array */
+            "metadata" => request()->additional_info /* key => value pairs array */
 
         ];
 
@@ -395,7 +395,7 @@ class Paystack {
             "first_name" => request()->fname,
             "last_name" => request()->lname,
             "phone" => request()->phone,
-            "metadata" => request()->addtional_info /* key => value pairs array */
+            "metadata" => request()->additional_info /* key => value pairs array */
 
         ];
 
