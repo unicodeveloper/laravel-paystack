@@ -503,11 +503,24 @@ class Paystack {
      * Fetches all the pages the merchant has
      * @return array
      */
-    public function fetchPages(){
+    public function getAllPages(){
 
         $this->setRequestOptions();
 
         return $this->setGetResponse('/page', [])->getResponse();
+
+    }
+
+    /**
+     * Fetch details about a certain page using its id or slug
+     * @param $page_id
+     * @return array
+     */
+    public function fetchPage($page_id){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page/'.$page_id, [])->getResponse();
 
     }
 
