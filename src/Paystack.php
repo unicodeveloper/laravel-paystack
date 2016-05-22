@@ -98,21 +98,8 @@ class Paystack {
 
     /**
      * Initiate a payment request to Paystack
-     * @return Unicodeveloper\Paystack\Paystack
      */
     public function makePaymentRequest()
-    {
-        $this->setResponse('/transaction/initialize');
-
-        return $this;
-    }
-
-    /**
-     * Make the client request and get the response
-     * @param string $relativeUrl
-     * @return Unicodeveloper\Paystack\Paystack
-     */
-    public function setResponse($relativeUrl)
     {
         $data = [
             "amount" => intval(request()->amount),
@@ -120,37 +107,30 @@ class Paystack {
             "email" => request()->email
         ];
 
-        $this->response = $this->client->post($this->baseUrl . $relativeUrl, [
-            'body' => json_encode($data)
-        ]);
+        $this->setHttpResponse('/transaction/initialize', 'POST', $data);
 
         return $this;
     }
 
-    private function setGetResponse($relativeUrl, $body = [])
-    {
-        $this->response = $this->client->get($this->baseUrl . $relativeUrl, $body);
 
-        return $this;
-    }
+    private function setHttpResponse($relativeUrl, $method, $body = []){
 
-    private function setPostResponse($relativeUrl, $body = [])
-    {
-        $this->response = $this->client->post($this->baseUrl . $relativeUrl, $body);
+        if(is_null($method)){
 
-        return $this;
-    }
+            throw new isNullException("Empty method not allowed");
 
-    private function setPutResponse($relativeUrl, $body = [])
-    {
-        $this->response = $this->client->put($this->baseUrl . $relativeUrl, $body);
+        }else{
 
-        return $this;
+            $this->response = $this->client->{strtolower($method)}($this->baseUrl . $relativeUrl, $body);
+
+            return $this;
+
+        }
+
     }
 
     /**
      * Get the authorization url from the callback response
-     * @return Unicodeveloper\Paystack\Paystack
      */
     public function getAuthorizationUrl()
     {
@@ -216,7 +196,6 @@ class Paystack {
 
     /**
      * Fluent method to redirect to Paystack Payment Page
-     * @return Illuminate\Support\Redirect
      */
     public function redirectNow()
     {
@@ -249,7 +228,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/customer", [])->getData();
+        return $this->setHttpResponse("/customer", 'GET', [])->getData();
     }
 
     /**
@@ -260,7 +239,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/plan", [])->getData();
+        return $this->setHttpResponse("/plan", 'GET', [])->getData();
     }
 
     /**
@@ -271,7 +250,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/transaction", [])->getData();
+        return $this->setHttpResponse("/transaction", 'GET', [])->getData();
     }
 
     /**
@@ -309,7 +288,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setPostResponse("/plan", $data);
+        $this->setHttpResponse("/plan", 'POST', $data);
 
     }
 
@@ -322,7 +301,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/plan/' . $plan_code, [])->getResponse();
+        return $this->setHttpResponse('/plan/' . $plan_code, 'GET', [])->getResponse();
 
     }
 
@@ -345,7 +324,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setPutResponse('/plan/' . $plan_code, $data)->getResponse();
+        return $this->setHttpResponse('/plan/' . $plan_code, 'PUT', $data)->getResponse();
 
     }
 
@@ -366,7 +345,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->setPostResponse('/customer', $data);
+        $this->setHttpResponse('/customer', 'POST', $data);
 
     }
 
@@ -379,7 +358,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/customer/'. $customer_id, [])->getResponse();
+        return $this->setHttpResponse('/customer/'. $customer_id, 'GET', [])->getResponse();
 
     }
 
@@ -401,7 +380,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setPutResponse('/customer/'. $customer_id, $data)->getResponse();
+        return $this->setHttpResponse('/customer/'. $customer_id, 'PUT', $data)->getResponse();
 
     }
 
@@ -419,7 +398,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/transaction/export', $data)->getResponse();
+        return $this->setHttpResponse('/transaction/export', 'GET', $data)->getResponse();
 
     }
 
@@ -437,7 +416,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->setPostResponse('/subscription', $data);
+        $this->setHttpResponse('/subscription', 'POST', $data);
     }
 
     /**
@@ -453,7 +432,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setPostResponse('/subscription/enable', $data)->getResponse();
+        return $this->setHttpResponse('/subscription/enable', 'POST', $data)->getResponse();
 
     }
 
@@ -470,7 +449,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setPostResponse('/subscription/disable', $data)->getResponse();
+        return $this->setHttpResponse('/subscription/disable', 'POST', $data)->getResponse();
 
     }
 
@@ -483,7 +462,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/subscription/'.$subscription_id, [])->getResponse();
+        return $this->setHttpResponse('/subscription/'.$subscription_id, 'GET', [])->getResponse();
 
     }
 
@@ -501,7 +480,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->setPostResponse('/page', $data);
+        $this->setHttpResponse('/page', 'POST', $data);
 
     }
 
@@ -513,7 +492,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/page', [])->getResponse();
+        return $this->setHttpResponse('/page', 'GET', [])->getResponse();
 
     }
 
@@ -526,7 +505,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/page/'.$page_id, [])->getResponse();
+        return $this->setHttpResponse('/page/'.$page_id, 'GET', [])->getResponse();
 
     }
 
@@ -545,7 +524,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        return $this->setGetResponse('/page/'.$page_id, $data)->getResponse();
+        return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
 
     }
 
