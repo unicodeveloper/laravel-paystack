@@ -307,6 +307,21 @@ class Paystack {
 
     }
 
+    /**
+     * Fetch any plan based on its plan id or code
+     * @param $plan_code
+     * @return mixed
+     */
+    public function fetchPlan($plan_code){
+
+        $this->setRequestOptions();
+
+        $this->response = $this->client->post($this->baseUrl .'/plan/' . $plan_code, []);
+
+        return $this->response->getResponse();
+
+    }
+
 }
 
 
