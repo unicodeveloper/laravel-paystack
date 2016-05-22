@@ -127,9 +127,9 @@ class Paystack {
         return $this;
     }
 
-    private function setGetResponse($relativeUrl)
+    private function setGetResponse($relativeUrl, $body = array())
     {
-        $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
+        $this->response = $this->client->get($this->baseUrl . $relativeUrl, $body);
 
         return $this;
     }
@@ -235,7 +235,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/customer")->getData();
+        return $this->setGetResponse("/customer", [])->getData();
     }
 
     /**
@@ -246,7 +246,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/plan")->getData();
+        return $this->setGetResponse("/plan", [])->getData();
     }
 
     /**
@@ -257,7 +257,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/transaction")->getData();
+        return $this->setGetResponse("/transaction", [])->getData();
     }
 
     /**
@@ -299,11 +299,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->client->post($this->baseUrl .'/plan', [
-            'body' => json_encode($data)
-        ]);
-
-        return $this->response->getResponse();
+        return $this->setGetResponse("/plan", $data)->getResponse();
 
     }
 
@@ -316,9 +312,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->client->post($this->baseUrl .'/plan/' . $plan_code, []);
-
-        return $this->response->getResponse();
+        return $this->setGetResponse('/plan/' . $plan_code, [])->getResponse();
 
     }
 
@@ -342,13 +336,11 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->client->post($this->baseUrl .'/plan/' . $plan_code, [
-            'body' => json_encode($data)
-        ]);
-
-        return $this->response->getResponse();
+        return $this->setGetResponse('/plan/' . $plan_code, $data)->getResponse();
 
     }
+
+    
 
 }
 
