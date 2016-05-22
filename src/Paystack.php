@@ -310,13 +310,41 @@ class Paystack {
     /**
      * Fetch any plan based on its plan id or code
      * @param $plan_code
-     * @return mixed
+     * @return array
      */
     public function fetchPlan($plan_code){
 
         $this->setRequestOptions();
 
         $this->response = $this->client->post($this->baseUrl .'/plan/' . $plan_code, []);
+
+        return $this->response->getResponse();
+
+    }
+
+    /**
+     * Update any plan's details based on its id or code
+     * @param $plan_code
+     * @return array
+     */
+    public function updatePlan($plan_code){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->desc,
+            "amount" => intval(request()->amount),
+            "interval" => request()->interval,
+            "send_invoices" => request()->send_invoices,
+            "send_sms" => request()->send_sms,
+            "currency" => request()->currency,
+        ];
+
+        $this->setRequestOptions();
+
+        $this->response = $this->client->post($this->baseUrl .'/plan/' . $plan_code, [
+            'body' => json_encode($data)
+        ]);
 
         return $this->response->getResponse();
 
