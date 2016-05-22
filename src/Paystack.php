@@ -361,19 +361,7 @@ class Paystack {
         return $this->setGetResponse('/customer', $data)->getResponse();
 
     }
-
-    /**
-     * Fetches all customers
-     * @return array
-     */
-    public function fetchAllCustomers(){
-
-        $this->setRequestOptions();
-
-        return $this->setGetResponse('/customer', [])->getResponse();
-
-    }
-
+    
     /**
      * Fetch a customer based on id or code
      * @param $customer_id
