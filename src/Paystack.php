@@ -188,8 +188,8 @@ class Paystack {
 
     /**
      * Get Payment details if the transaction was verified successfully
-     * @throws Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException
      * @return json
+     * @throws PaymentVerificationFailedException
      */
     public function getPaymentData()
     {
@@ -278,4 +278,36 @@ class Paystack {
         return $this->getResponse()['data'];
     }
 
+    //Edits by Funsho http://devfunsho.com | @iamfusnho - 22/05/2016
+
+    /**
+     * Create a plan
+     * @return array
+     */
+    public function createPlan(){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->desc,
+            "amount" => intval(request()->amount),
+            "interval" => request()->interval,
+            "send_invoices" => request()->send_invoices,
+            "send_sms" => request()->send_sms,
+            "currency" => request()->currency,
+        ];
+
+        $this->setRequestOptions();
+
+        $this->response = $this->client->post($this->baseUrl .'/plan', [
+            'body' => json_encode($data)
+        ]);
+
+        return $this->response->getResponse();
+
+    }
+
 }
+
+
+
