@@ -352,7 +352,7 @@ class Paystack {
             "first_name" => request()->fname,
             "last_name" => request()->lname,
             "phone" => request()->phone,
-            "metadata" => request()->addtional_info,
+            "metadata" => request()->addtional_info /* key => value pairs array */
 
         ];
 
@@ -384,6 +384,29 @@ class Paystack {
         $this->setRequestOptions();
 
         return $this->setGetResponse('/customer/'. $customer_id, [])->getResponse();
+
+    }
+
+    /**
+     * Update a customer's details based on their id or code
+     * @param $customer_id
+     * @return array
+     */
+    public function updateCustomer($customer_id){
+
+        $data = [
+
+            "email" => request()->email,
+            "first_name" => request()->fname,
+            "last_name" => request()->lname,
+            "phone" => request()->phone,
+            "metadata" => request()->addtional_info /* key => value pairs array */
+
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer/'. $customer_id, $data)->getResponse();
 
     }
 
