@@ -467,6 +467,19 @@ class Paystack {
 
     }
 
+    /**
+     * Fetch details about a certain subscription
+     * @param $subscription_id
+     * @return array
+     */
+    public function fetchSubscription($subscription_id){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription/'.$subscription_id)->getResponse();
+
+    }
+
 }
 
 
