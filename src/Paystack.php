@@ -127,9 +127,9 @@ class Paystack {
         return $this;
     }
 
-    private function setGetResponse($relativeUrl)
+    private function setGetResponse($relativeUrl, $body = array())
     {
-        $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
+        $this->response = $this->client->get($this->baseUrl . $relativeUrl, $body);
 
         return $this;
     }
@@ -188,8 +188,8 @@ class Paystack {
 
     /**
      * Get Payment details if the transaction was verified successfully
-     * @throws Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException
      * @return json
+     * @throws PaymentVerificationFailedException
      */
     public function getPaymentData()
     {
@@ -235,7 +235,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/customer")->getData();
+        return $this->setGetResponse("/customer", [])->getData();
     }
 
     /**
@@ -246,7 +246,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/plan")->getData();
+        return $this->setGetResponse("/plan", [])->getData();
     }
 
     /**
@@ -257,7 +257,7 @@ class Paystack {
     {
         $this->setRequestOptions();
 
-        return $this->setGetResponse("/transaction")->getData();
+        return $this->setGetResponse("/transaction", [])->getData();
     }
 
     /**
@@ -278,4 +278,273 @@ class Paystack {
         return $this->getResponse()['data'];
     }
 
+    //Edits by Funsho http://devfunsho.com | @iamfusnho - 22/05/2016
+
+    /**
+     * Create a plan
+     * @return array
+     */
+    public function createPlan(){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->desc,
+            "amount" => intval(request()->amount),
+            "interval" => request()->interval,
+            "send_invoices" => request()->send_invoices,
+            "send_sms" => request()->send_sms,
+            "currency" => request()->currency,
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse("/plan", $data)->getResponse();
+
+    }
+
+    /**
+     * Fetch any plan based on its plan id or code
+     * @param $plan_code
+     * @return array
+     */
+    public function fetchPlan($plan_code){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/plan/' . $plan_code, [])->getResponse();
+
+    }
+
+    /**
+     * Update any plan's details based on its id or code
+     * @param $plan_code
+     * @return array
+     */
+    public function updatePlan($plan_code){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->desc,
+            "amount" => intval(request()->amount),
+            "interval" => request()->interval,
+            "send_invoices" => request()->send_invoices,
+            "send_sms" => request()->send_sms,
+            "currency" => request()->currency,
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/plan/' . $plan_code, $data)->getResponse();
+
+    }
+
+    /**
+     * Create a customer
+     * @return array
+     */
+    public function createCustomer(){
+
+        $data = [
+
+            "email" => request()->email,
+            "first_name" => request()->fname,
+            "last_name" => request()->lname,
+            "phone" => request()->phone,
+            "metadata" => request()->addtional_info /* key => value pairs array */
+
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer', $data)->getResponse();
+
+    }
+
+    /**
+     * Fetch a customer based on id or code
+     * @param $customer_id
+     * @return array
+     */
+    public function fetchCustomer($customer_id){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer/'. $customer_id, [])->getResponse();
+
+    }
+
+    /**
+     * Update a customer's details based on their id or code
+     * @param $customer_id
+     * @return array
+     */
+    public function updateCustomer($customer_id){
+
+        $data = [
+
+            "email" => request()->email,
+            "first_name" => request()->fname,
+            "last_name" => request()->lname,
+            "phone" => request()->phone,
+            "metadata" => request()->addtional_info /* key => value pairs array */
+
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer/'. $customer_id, $data)->getResponse();
+
+    }
+
+    /**
+     * Export tranactions in .CSV
+     * @return array
+     */
+    public function exportTransactions(){
+
+        $data = [
+            "from" => request()->from,
+            "to" => request()->to,
+            'settled' => request()->settled
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/transaction/export', $data)->getResponse();
+
+    }
+
+    /**
+     * Create a subscription to a plan from a customer.
+     * @return array
+     */
+    public function createSubscription(){
+
+        $data = [
+            "customer" => request()->customer, //Customer email or code
+            "plan" => request()->plan,
+            "authorization" => request()->authorization_code
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription', $data)->getResponse();
+    }
+
+    /**
+     * Enable a subscription using the subscription code and token
+     * @return array
+     */
+    public function enableSubscription(){
+
+        $data = [
+            "code" => request()->code,
+            "token" => request()->token,
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription/enable', $data)->getResponse();
+
+    }
+
+    /**
+     * Disable a subscription using the subscription code and token
+     * @return array
+     */
+    public function disableSubscription(){
+
+        $data = [
+            "code" => request()->code,
+            "token" => request()->token,
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription/disable', $data)->getResponse();
+
+    }
+
+    /**
+     * Fetch details about a certain subscription
+     * @param $subscription_id
+     * @return array
+     */
+    public function fetchSubscription($subscription_id){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription/'.$subscription_id, [])->getResponse();
+
+    }
+
+    /**
+     * Create pages you can share with users using the returned slug
+     * @return array
+     */
+    public function createPage(){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->description,
+            "amount" => request()->amount
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page', $data)->getResponse();
+
+    }
+
+    /**
+     * Fetches all the pages the merchant has
+     * @return array
+     */
+    public function getAllPages(){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page', [])->getResponse();
+
+    }
+
+    /**
+     * Fetch details about a certain page using its id or slug
+     * @param $page_id
+     * @return array
+     */
+    public function fetchPage($page_id){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page/'.$page_id, [])->getResponse();
+
+    }
+
+    /**
+     * Update the details about a particular page
+     * @param $page_id
+     * @return array
+     */
+    public function updatePage($page_id){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->description,
+            "amount" => request()->amount
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page/'.$page_id, $data)->getResponse();
+
+    }
+
 }
+
+
+
