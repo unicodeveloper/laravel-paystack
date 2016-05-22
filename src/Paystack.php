@@ -524,6 +524,26 @@ class Paystack {
 
     }
 
+    /**
+     * Update the details about a particular page
+     * @param $page_id
+     * @return array
+     */
+    public function updatePage($page_id){
+
+        $data = [
+
+            "name" => request()->name,
+            "description" => request()->description,
+            "amount" => request()->amount
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/page/'.$page_id, $data)->getResponse();
+
+    }
+
 }
 
 
