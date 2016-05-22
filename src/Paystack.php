@@ -374,7 +374,18 @@ class Paystack {
 
     }
 
-    
+    /**
+     * Fetch a customer based on id or code
+     * @param $customer_id
+     * @return array
+     */
+    public function fetchCustomer($customer_id){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer/'. $customer_id, [])->getResponse();
+
+    }
 
 }
 
