@@ -416,6 +416,23 @@ class Paystack {
 
     }
 
+    /**
+     * Create a subscription to a plan from a customer.
+     * @return array
+     */
+    public function createSubscription(){
+
+        $data = [
+            "customer" => request()->customer, //Customer email or code
+            "plan" => request()->plan,
+            "authorization" => request()->authorization_code
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/subscription', $data)->getResponse();
+    }
+
 }
 
 
