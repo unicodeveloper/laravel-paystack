@@ -362,6 +362,20 @@ class Paystack {
 
     }
 
+    /**
+     * Fetches all customers
+     * @return array
+     */
+    public function fetchAllCustomers(){
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer', [])->getResponse();
+
+    }
+
+    
+
 }
 
 
