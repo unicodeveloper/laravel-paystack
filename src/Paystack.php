@@ -340,7 +340,27 @@ class Paystack {
 
     }
 
-    
+    /**
+     * Create a customer
+     * @return array
+     */
+    public function createCustomer(){
+
+        $data = [
+
+            "email" => request()->email,
+            "first_name" => request()->fname,
+            "last_name" => request()->lname,
+            "phone" => request()->phone,
+            "metadata" => request()->addtional_info,
+
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setGetResponse('/customer', $data)->getResponse();
+
+    }
 
 }
 
