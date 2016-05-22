@@ -366,7 +366,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setPostResponse('/customer', $data);
+        $this->setPostResponse('/customer', $data);
 
     }
 
@@ -437,7 +437,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setPostResponse('/subscription', $data);
+        $this->setPostResponse('/subscription', $data);
     }
 
     /**
@@ -501,7 +501,7 @@ class Paystack {
 
         $this->setRequestOptions();
 
-        $this->response = $this->setPostResponse('/page', $data);
+        $this->setPostResponse('/page', $data);
 
     }
 
