@@ -116,7 +116,7 @@ class Paystack {
     private function setHttpResponse($relativeUrl, $method, $body = [])
     {
         if(is_null($method)){
-            throw new isNullException("Empty method not allowed");
+            throw new IsNullException("Empty method not allowed");
         }
 
         $this->response = $this->client->{strtolower($method)}($this->baseUrl . $relativeUrl, ["body" => json_encode($body)]);
