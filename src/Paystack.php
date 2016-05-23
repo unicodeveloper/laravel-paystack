@@ -113,20 +113,14 @@ class Paystack {
     }
 
 
-    private function setHttpResponse($relativeUrl, $method, $body = []){
-
+    private function setHttpResponse($relativeUrl, $method, $body = [])
+    {
         if(is_null($method)){
-
             throw new isNullException("Empty method not allowed");
-
-        }else{
-
-            $this->response = $this->client->{strtolower($method)}($this->baseUrl . $relativeUrl, $body);
-
-            return $this;
-
         }
 
+        $this->response = $this->client->{strtolower($method)}($this->baseUrl . $relativeUrl, ["body" => json_encode($body)]);
+        return $this;
     }
 
     /**
@@ -298,11 +292,8 @@ class Paystack {
      * @return array
      */
     public function fetchPlan($plan_code){
-
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/plan/' . $plan_code, 'GET', [])->getResponse();
-
     }
 
     /**
@@ -311,7 +302,6 @@ class Paystack {
      * @return array
      */
     public function updatePlan($plan_code){
-
         $data = [
             "name" => request()->name,
             "description" => request()->desc,
@@ -323,9 +313,7 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/plan/' . $plan_code, 'PUT', $data)->getResponse();
-
     }
 
     /**
@@ -333,7 +321,6 @@ class Paystack {
      * @return array
      */
     public function createCustomer(){
-
         $data = [
             "email" => request()->email,
             "first_name" => request()->fname,
@@ -344,9 +331,7 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         $this->setHttpResponse('/customer', 'POST', $data);
-
     }
 
     /**
@@ -354,12 +339,10 @@ class Paystack {
      * @param $customer_id
      * @return array
      */
-    public function fetchCustomer($customer_id){
-
+    public function fetchCustomer($customer_id)
+    {
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/customer/'. $customer_id, 'GET', [])->getResponse();
-
     }
 
     /**
@@ -368,7 +351,6 @@ class Paystack {
      * @return array
      */
     public function updateCustomer($customer_id){
-
         $data = [
             "email" => request()->email,
             "first_name" => request()->fname,
@@ -379,9 +361,7 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/customer/'. $customer_id, 'PUT', $data)->getResponse();
-
     }
 
     /**
@@ -389,7 +369,6 @@ class Paystack {
      * @return array
      */
     public function exportTransactions(){
-
         $data = [
             "from" => request()->from,
             "to" => request()->to,
@@ -397,9 +376,7 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/transaction/export', 'GET', $data)->getResponse();
-
     }
 
     /**
@@ -407,7 +384,6 @@ class Paystack {
      * @return array
      */
     public function createSubscription(){
-
         $data = [
             "customer" => request()->customer, //Customer email or code
             "plan" => request()->plan,
@@ -415,7 +391,6 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         $this->setHttpResponse('/subscription', 'POST', $data);
     }
 
@@ -424,16 +399,13 @@ class Paystack {
      * @return array
      */
     public function enableSubscription(){
-
         $data = [
             "code" => request()->code,
             "token" => request()->token,
         ];
 
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/subscription/enable', 'POST', $data)->getResponse();
-
     }
 
     /**
@@ -441,16 +413,13 @@ class Paystack {
      * @return array
      */
     public function disableSubscription(){
-
         $data = [
             "code" => request()->code,
             "token" => request()->token,
         ];
 
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/subscription/disable', 'POST', $data)->getResponse();
-
     }
 
     /**
@@ -458,12 +427,10 @@ class Paystack {
      * @param $subscription_id
      * @return array
      */
-    public function fetchSubscription($subscription_id){
-
+    public function fetchSubscription($subscription_id)
+    {
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/subscription/'.$subscription_id, 'GET', [])->getResponse();
-
     }
 
     /**
@@ -471,7 +438,6 @@ class Paystack {
      * @return array
      */
     public function createPage(){
-
         $data = [
             "name" => request()->name,
             "description" => request()->description,
@@ -479,21 +445,17 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         $this->setHttpResponse('/page', 'POST', $data);
-
     }
 
     /**
      * Fetches all the pages the merchant has
      * @return array
      */
-    public function getAllPages(){
-
+    public function getAllPages()
+    {
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/page', 'GET', [])->getResponse();
-
     }
 
     /**
@@ -501,12 +463,10 @@ class Paystack {
      * @param $page_id
      * @return array
      */
-    public function fetchPage($page_id){
-
+    public function fetchPage($page_id)
+    {
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/page/'.$page_id, 'GET', [])->getResponse();
-
     }
 
     /**
@@ -515,7 +475,6 @@ class Paystack {
      * @return array
      */
     public function updatePage($page_id){
-
         $data = [
             "name" => request()->name,
             "description" => request()->description,
@@ -523,9 +482,7 @@ class Paystack {
         ];
 
         $this->setRequestOptions();
-
         return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
-
     }
 
 }
