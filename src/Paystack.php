@@ -104,8 +104,15 @@ class Paystack {
         $data = [
             "amount" => intval(request()->amount),
             "reference" => request()->reference,
-            "email" => request()->email
+            "email" => request()->email,
+            "plan" => request()->plan,
+            "first_name" => request()->first_name,
+            "last_name" => request()->last_name,
+            "callback_url" => request()->callback_url
         ];
+        
+        // Remove the fields which were not sent (value would be null)
+        array_filter($data);
 
         $this->setHttpResponse('/transaction/initialize', 'POST', $data);
 
