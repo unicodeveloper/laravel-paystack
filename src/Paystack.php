@@ -170,7 +170,7 @@ class Paystack {
             case self::VS:
                 $validate = true;
                 break;
-            case self:ITF:
+            case self::ITF:
                 $validate = false;
                 break;
             default:
