@@ -53,8 +53,4 @@ class PaystackTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('array', gettype(array($array)));
     }
-
-
-
-
 }

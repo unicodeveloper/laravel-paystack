@@ -13,6 +13,7 @@ namespace Unicodeveloper\Paystack\Exceptions;
 
 use Exception;
 
-class PaymentVerificationFailedException extends Exception {
+class PaymentVerificationFailedException extends Exception
+{
 
 }
