@@ -13,6 +13,8 @@ namespace Unicodeveloper\Paystack;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
+use Unicodeveloper\Paystack\Exceptions\IsNullException;
+use Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException;
 
 class Paystack {
 
