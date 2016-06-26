@@ -13,16 +13,16 @@
 
 namespace Unicodeveloper\Paystack;
 
-class TransRef {
-
+class TransRef
+{
     /**
      * Get the pool to use based on the type of prefix hash
      * @param  string $type
      * @return string
      */
-    private static function getPool( $type = 'alnum')
+    private static function getPool($type = 'alnum')
     {
-        switch ( $type ) {
+        switch ($type) {
             case 'alnum':
                 $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 break;
@@ -55,7 +55,8 @@ class TransRef {
      * @param  integer $max
      * @return integer
      */
-    private static function secure_crypt($min, $max) {
+    private static function secureCrypt($min, $max)
+    {
         $range = $max - $min;
 
         if ($range < 0) {
@@ -84,10 +85,9 @@ class TransRef {
         $token = "";
         $max   = strlen(static::getPool());
         for ($i = 0; $i < $length; $i++) {
-            $token .= static::getPool()[static::secure_crypt(0, $max)];
+            $token .= static::getPool()[static::secureCrypt(0, $max)];
         }
 
         return $token;
     }
-
 }

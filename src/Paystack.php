@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Config;
 use Unicodeveloper\Paystack\Exceptions\IsNullException;
 use Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException;
 
-class Paystack {
-
+class Paystack
+{
     /**
      * Transaction Verification Successful
      */
@@ -30,13 +30,13 @@ class Paystack {
 
     /**
      * Issue Secret Key from your Paystack Dashboard
-     * @var mixed
+     * @var string
      */
     protected $secretKey;
 
     /**
      * Instance of Client
-     * @var object
+     * @var Client
      */
     protected $client;
 
@@ -75,7 +75,6 @@ class Paystack {
 
     /**
      * Get secret key from Paystack config file
-     * @return  void
      */
     public function setKey()
     {
@@ -84,22 +83,26 @@ class Paystack {
 
     /**
      * Set options for making the Client request
-     * @return  void
      */
     private function setRequestOptions()
     {
         $authBearer = 'Bearer '. $this->secretKey;
 
-        $this->client = new Client(['base_uri' => $this->baseUrl,
-            'headers' => [
-                'Authorization' => $authBearer,
-                'Content-Type'  => 'application/json',
-                'Accept'        => 'application/json'
-        ]]);
+        $this->client = new Client(
+            [
+                'base_uri' => $this->baseUrl,
+                'headers' => [
+                    'Authorization' => $authBearer,
+                    'Content-Type'  => 'application/json',
+                    'Accept'        => 'application/json'
+                ]
+            ]
+        );
     }
 
     /**
      * Initiate a payment request to Paystack
+     * @return Paystack
      */
     public function makePaymentRequest()
     {
@@ -112,7 +115,7 @@ class Paystack {
             "last_name" => request()->last_name,
             "callback_url" => request()->callback_url
         ];
-        
+
         // Remove the fields which were not sent (value would be null)
         array_filter($data);
 
@@ -122,18 +125,30 @@ class Paystack {
     }
 
 
+    /**
+     * @param string $relativeUrl
+     * @param string $method
+     * @param array $body
+     * @return Paystack
+     * @throws IsNullException
+     */
     private function setHttpResponse($relativeUrl, $method, $body = [])
     {
-        if(is_null($method)){
+        if (is_null($method)) {
             throw new IsNullException("Empty method not allowed");
         }
 
-        $this->response = $this->client->{strtolower($method)}($this->baseUrl . $relativeUrl, ["body" => json_encode($body)]);
+        $this->response = $this->client->{strtolower($method)}(
+            $this->baseUrl . $relativeUrl,
+            ["body" => json_encode($body)]
+        );
+
         return $this;
     }
 
     /**
      * Get the authorization url from the callback response
+     * @return Paystack
      */
     public function getAuthorizationUrl()
     {
@@ -146,7 +161,6 @@ class Paystack {
 
     /**
      * Hit Paystack Gateway to Verify that the transaction is valid
-     * @return void
      */
     private function verifyTransactionAtGateway()
     {
@@ -167,8 +181,7 @@ class Paystack {
 
         $result = $this->getResponse()['message'];
 
-        switch ($result)
-        {
+        switch ($result) {
             case self::VS:
                 $validate = true;
                 break;
@@ -277,8 +290,8 @@ class Paystack {
     /**
      * Create a plan
      */
-    public function createPlan(){
-
+    public function createPlan()
+    {
         $data = [
             "name" => request()->name,
             "description" => request()->desc,
@@ -300,7 +313,8 @@ class Paystack {
      * @param $plan_code
      * @return array
      */
-    public function fetchPlan($plan_code){
+    public function fetchPlan($plan_code)
+    {
         $this->setRequestOptions();
         return $this->setHttpResponse('/plan/' . $plan_code, 'GET', [])->getResponse();
     }
@@ -310,7 +324,8 @@ class Paystack {
      * @param $plan_code
      * @return array
      */
-    public function updatePlan($plan_code){
+    public function updatePlan($plan_code)
+    {
         $data = [
             "name" => request()->name,
             "description" => request()->desc,
@@ -327,9 +342,9 @@ class Paystack {
 
     /**
      * Create a customer
-     * @return array
      */
-    public function createCustomer(){
+    public function createCustomer()
+    {
         $data = [
             "email" => request()->email,
             "first_name" => request()->fname,
@@ -359,7 +374,8 @@ class Paystack {
      * @param $customer_id
      * @return array
      */
-    public function updateCustomer($customer_id){
+    public function updateCustomer($customer_id)
+    {
         $data = [
             "email" => request()->email,
             "first_name" => request()->fname,
@@ -374,10 +390,11 @@ class Paystack {
     }
 
     /**
-     * Export tranactions in .CSV
+     * Export transactions in .CSV
      * @return array
      */
-    public function exportTransactions(){
+    public function exportTransactions()
+    {
         $data = [
             "from" => request()->from,
             "to" => request()->to,
@@ -390,9 +407,9 @@ class Paystack {
 
     /**
      * Create a subscription to a plan from a customer.
-     * @return array
      */
-    public function createSubscription(){
+    public function createSubscription()
+    {
         $data = [
             "customer" => request()->customer, //Customer email or code
             "plan" => request()->plan,
@@ -407,7 +424,8 @@ class Paystack {
      * Enable a subscription using the subscription code and token
      * @return array
      */
-    public function enableSubscription(){
+    public function enableSubscription()
+    {
         $data = [
             "code" => request()->code,
             "token" => request()->token,
@@ -421,7 +439,8 @@ class Paystack {
      * Disable a subscription using the subscription code and token
      * @return array
      */
-    public function disableSubscription(){
+    public function disableSubscription()
+    {
         $data = [
             "code" => request()->code,
             "token" => request()->token,
@@ -433,7 +452,7 @@ class Paystack {
 
     /**
      * Fetch details about a certain subscription
-     * @param $subscription_id
+     * @param mixed $subscription_id
      * @return array
      */
     public function fetchSubscription($subscription_id)
@@ -444,9 +463,9 @@ class Paystack {
 
     /**
      * Create pages you can share with users using the returned slug
-     * @return array
      */
-    public function createPage(){
+    public function createPage()
+    {
         $data = [
             "name" => request()->name,
             "description" => request()->description,
@@ -469,7 +488,7 @@ class Paystack {
 
     /**
      * Fetch details about a certain page using its id or slug
-     * @param $page_id
+     * @param mixed $page_id
      * @return array
      */
     public function fetchPage($page_id)
@@ -483,7 +502,8 @@ class Paystack {
      * @param $page_id
      * @return array
      */
-    public function updatePage($page_id){
+    public function updatePage($page_id)
+    {
         $data = [
             "name" => request()->name,
             "description" => request()->description,
@@ -493,8 +513,4 @@ class Paystack {
         $this->setRequestOptions();
         return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
     }
-
 }
-
-
-

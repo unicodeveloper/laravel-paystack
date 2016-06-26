@@ -13,6 +13,7 @@ namespace Unicodeveloper\Paystack\Exceptions;
 
 use Exception;
 
-class IsNullException extends Exception {
+class IsNullException extends Exception
+{
 
 }
