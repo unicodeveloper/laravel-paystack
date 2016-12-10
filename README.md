@@ -79,7 +79,7 @@ return [
 
 ##General payment flow
 
-Though there are multiple ways to pay an order, most payment gateways except you to follow the following flow in your checkout process:
+Though there are multiple ways to pay an order, most payment gateways expect you to follow the following flow in your checkout process:
 
 ###1. The customer is redirected to the payment provider
 After the customer has gone through the checkout process and is ready to pay, the customer must be redirected to site of the payment provider.
