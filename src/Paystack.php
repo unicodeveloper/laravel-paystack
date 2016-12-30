@@ -369,7 +369,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        $this->setHttpResponse('/customer', 'POST', $data);
+        return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
     }
 
     /**
