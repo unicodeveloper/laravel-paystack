@@ -446,6 +446,19 @@ class Paystack
     }
 
     /**
+     * Get customer subscriptions
+     *
+     * @param integer $customer_id
+     * @return array
+     */
+    public function getCustomerSubscriptions($customer_id)
+    {
+        $this->setRequestOptions();
+
+        return $this->setHttpResponse('/subscription?customer=' . $customer_id, 'GET', [])->getData();
+    }
+
+    /**
      * Enable a subscription using the subscription code and token
      * @return array
      */
