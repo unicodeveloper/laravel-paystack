@@ -459,6 +459,19 @@ class Paystack
     }
 
     /**
+     * Get plan subscriptions
+     *
+     * @param  integer $plan_id
+     * @return array
+     */
+    public function getPlanSubscriptions($plan_id)
+    {
+        $this->setRequestOptions();
+
+        return $this->setHttpResponse('/subscription?plan=' . $plan_id, 'GET', [])->getData();
+    }
+
+    /**
      * Enable a subscription using the subscription code and token
      * @return array
      */
