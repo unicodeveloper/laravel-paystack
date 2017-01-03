@@ -127,7 +127,7 @@ class Paystack
             *                                        
             *                                  ]
             */
-            'metadata' => request()->metadata 
+            'metadata' => request()->metadata
         ];
 
         // Remove the fields which were not sent (value would be null)
@@ -319,7 +319,6 @@ class Paystack
         $this->setRequestOptions();
 
         $this->setHttpResponse("/plan", 'POST', $data);
-
     }
 
     /**
@@ -432,6 +431,18 @@ class Paystack
 
         $this->setRequestOptions();
         $this->setHttpResponse('/subscription', 'POST', $data);
+    }
+
+    /**
+     * Get all the subscriptions made on Paystack.
+     *
+     * @return array
+     */
+    public function getAllSubscriptions()
+    {
+        $this->setRequestOptions();
+
+        return $this->setHttpResponse("/subscription", 'GET', [])->getData();
     }
 
     /**
