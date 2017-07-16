@@ -126,6 +126,12 @@ Route::post('/pay', [
 ]);
 
 Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+
+OR
+
+Route::get('payment/callback', [
+    'uses' => 'PaymentController@handleGatewayCallback'
+]); //Laravel 5.0
 ```
 
 ```php
