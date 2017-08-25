@@ -108,7 +108,7 @@ class Paystack
      */
     public function makePaymentRequest( $data = null)
     {
-        if ( $data == null ) {
+        if ( is_null($data ) ) {
             $data = [
                 "amount" => intval(request()->amount),
                 "reference" => request()->reference,
@@ -172,7 +172,7 @@ class Paystack
     {
         $this->makePaymentRequest();
 
-        $this->url = $this->getResponse()['data']['authorization_url'];
+        $this->authorizationUrl = $this->getResponse()['data']['authorization_url'];
 
         return $this;
     }
@@ -187,7 +187,7 @@ class Paystack
     {
         $this->makePaymentRequest($data);
 
-        $this->url = $this->getResponse()['data']['authorization_url'];
+        $this->authorizationUrl = $this->getResponse()['data']['authorization_url'];
 
         return $this->getResponse();
     }
@@ -248,7 +248,7 @@ class Paystack
      */
     public function redirectNow()
     {
-        return redirect($this->url);
+        return redirect($this->authorizationUrl);
     }
 
     /**
