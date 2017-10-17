@@ -391,7 +391,6 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        $this->setHttpResponse('/customer', 'POST', $data);
         return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
     }
 
@@ -609,8 +608,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        array_filter($data);
-        return $this->setHttpResponse('/subaccount', 'POST', $data)->getResponse();
+        return $this->setHttpResponse('/subaccount', 'POST', array_filter($data))->getResponse();
 
     }
 
@@ -633,10 +631,7 @@ class Paystack
      */
     public function listSubAccounts($per_page,$page){
 
-        
-
         $this->setRequestOptions();
-        
         return $this->setHttpResponse("/subaccount/?perPage=".(int) $per_page."&page=".(int) $page,"GET")->getResponse();
 
     }
@@ -663,8 +658,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        array_filter($data);
-        return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", $data)->getResponse();
+        return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", array_filter($data))->getResponse();
 
     }
 }
