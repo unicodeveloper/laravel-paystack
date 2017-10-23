@@ -214,6 +214,32 @@ Paystack::getAllTransactions();
  * @returns string
  */
 Paystack::genTranxRef();
+
+/**
+* This method creates a subaccount to be used for split payments 
+* @return array
+*/
+Paystack::createSubAccount();
+
+
+/**
+* This method fetches the details of a subaccount  
+* @return array
+*/
+Paystack::fetchSubAccount();
+
+
+/**
+* This method lists the subaccounts associated with your paystack account 
+* @return array
+*/
+Paystack::listSubAccounts();
+
+/**
+* This method Updates a subaccount to be used for split payments 
+* @return array
+*/
+Paystack::updateSubAccount();
 ```
 
 A sample form will look like so:

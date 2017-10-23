@@ -100,12 +100,15 @@ class Paystack
         );
     }
 
-    /**
+   
+     /**
+     
      * Initiate a payment request to Paystack
      * Included the option to pass the payload to this method for situations 
      * when the payload is built on the fly (not passed to the controller from a view)
      * @return Paystack
      */
+
     public function makePaymentRequest( $data = null)
     {
         if ( $data == null ) {
@@ -338,6 +341,7 @@ class Paystack
         $this->setRequestOptions();
 
         $this->setHttpResponse("/plan", 'POST', $data);
+
     }
 
     /**
@@ -582,5 +586,79 @@ class Paystack
 
         $this->setRequestOptions();
         return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
+    }
+
+     /**
+     * Creates a subaccount to be used for split payments . Required    params are business_name , settlement_bank , account_number ,   percentage_charge
+     * 
+     * @return array
+     */
+    
+    public function createSubAccount(){
+        $data = [
+            "business_name" => request()->business_name, 
+            "settlement_bank" => request()->settlement_bank,
+            "account_number" => request()->account_number,
+            "percentage_charge" => request()->percentage_charge,
+            "primary_contact_email" => request()->primary_contact_email,
+            "primary_contact_name" => request()->primary_contact_name,
+            "primary_contact_phone" => request()->primary_contact_phone,
+            "metadata" => request()->metadata,
+            'settlement_schedule' => request()->settlement_schedule
+        ];
+
+        $this->setRequestOptions();
+        return $this->setHttpResponse('/subaccount', 'POST', array_filter($data))->getResponse();
+
+    }
+
+     /**
+     * Fetches details of a subaccount
+     * @param subaccount code
+     * @return array
+     */
+    public function fetchSubAccount($subaccount_code){
+
+        $this->setRequestOptions();
+        return $this->setHttpResponse("/subaccount/{$subaccount_code}","GET",[])->getResponse();
+
+    }
+
+     /**
+     * Lists all the subaccounts associated with the account
+     * @param $per_page - Specifies how many records to retrieve per page , $page - SPecifies exactly what page to retrieve
+     * @return array
+     */
+    public function listSubAccounts($per_page,$page){
+
+        $this->setRequestOptions();
+        return $this->setHttpResponse("/subaccount/?perPage=".(int) $per_page."&page=".(int) $page,"GET")->getResponse();
+
+    }
+
+
+    /**
+     * Updates a subaccount to be used for split payments . Required params are business_name , settlement_bank , account_number , percentage_charge
+     * @param subaccount code 
+     * @return array
+     */
+    
+    public function updateSubAccount($subaccount_code){
+        $data = [
+            "business_name" => request()->business_name, 
+            "settlement_bank" => request()->settlement_bank,
+            "account_number" => request()->account_number,
+            "percentage_charge" => request()->percentage_charge,
+            "description" => request()->description,
+            "primary_contact_email" => request()->primary_contact_email,
+            "primary_contact_name" => request()->primary_contact_name,
+            "primary_contact_phone" => request()->primary_contact_phone,
+            "metadata" => request()->metadata,
+            'settlement_schedule' => request()->settlement_schedule
+        ];
+
+        $this->setRequestOptions();
+        return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", array_filter($data))->getResponse();
+
     }
 }
