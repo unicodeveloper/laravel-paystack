@@ -12,7 +12,13 @@
 
 [PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
-To get the latest version of Laravel Paystack, simply add the following line to the require block of your `composer.json` file.
+To get the latest version of Laravel Paystack, simply require it
+
+```bash
+composer require unicodeveloper/laravel-paystack
+```
+
+Or add the following line to the require block of your `composer.json` file.
 
 ```
 "unicodeveloper/laravel-paystack": "1.0.*"
@@ -20,7 +26,11 @@ To get the latest version of Laravel Paystack, simply add the following line to 
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
+
+
 Once Laravel Paystack is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
+
+> If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-paystack#configuration)
 
 * `Unicodeveloper\Paystack\PaystackServiceProvider::class`
 

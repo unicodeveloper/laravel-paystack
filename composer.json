@@ -37,5 +37,15 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit"
+    },
+   "extra": {
+    "laravel": {
+        "providers": [
+            "Unicodeveloper\\Paystack\\PaystackServiceProvider"
+        ],
+        "aliases": {
+            "Paystack": "Unicodeveloper\\Paystack\\Facades\\Paystack"
+        }
     }
+  }
 }
