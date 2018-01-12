@@ -112,8 +112,8 @@ class Paystack
     public function makePaymentRequest( $data = null)
     {
         if ( $data == null ) {
-           $quantity = intval(request()->quantity);
-             $data = [
+                $quantity = intval(request()->quantity);
+              $data = [
                 "amount" => intval(request()->amount)*$quantity,
                 "reference" => request()->reference,
                 "email" => request()->email,
