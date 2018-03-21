@@ -2,6 +2,7 @@
 <phpunit bootstrap="vendor/autoload.php"
          backupGlobals="false"
          backupStaticAttributes="false"
+         coverageClover="clover.xml"
          colors="true"
          verbose="true"
          convertErrorsToExceptions="true"

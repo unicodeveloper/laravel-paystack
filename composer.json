@@ -23,7 +23,8 @@
         "phpunit/phpunit" : "4.*",
         "scrutinizer/ocular": "~1.1",
         "satooshi/php-coveralls": "^0.7.0",
-        "mockery/mockery": ">=0.7.2"
+        "mockery/mockery": ">=0.7.2",
+        "orchestra/testbench": "~3.0"
     },
    "autoload": {
         "psr-4": {
@@ -32,11 +33,11 @@
    },
    "autoload-dev": {
         "psr-4": {
-            "Unicodeveloper\\Paystack\\Test\\": "tests"
+            "Tests\\": "tests"
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "tests": "vendor/bin/phpunit"
     },
    "extra": {
     "laravel": {
