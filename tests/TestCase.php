@@ -7,9 +7,8 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase {
 
     public $m;
+
     protected $envVars;
-    protected $data;
-    protected $formData;
 
     function setUp () {
 
@@ -62,6 +61,10 @@ abstract class TestCase extends BaseTestCase {
      */
     protected function getEnvironmentSetUp($app)
     {
-        //
+        $this->envVars = require_once __DIR__. "/Stubs/config.php";
+
+        array_walk($this->envVars, function($value, $key) use ($app) {
+            $app["config"]->set("paystack.{$key}", $value);
+        });
     }
 }

@@ -26,6 +26,7 @@ class ServiceProviderTest extends TestCase {
 	 * Test that service provider returns proper alias.
 	 *
 	 * @test
+	 * @covers Unicodeveloper\Paystack\PaystackServiceProvider::provides
 	 * @return void
 	 */
 	function it_provides_alias () {
