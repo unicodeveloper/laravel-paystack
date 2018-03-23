@@ -11,7 +11,7 @@
 
 namespace Unicodeveloper\Paystack;
 
-// use Illuminate\Support\Facades\Config
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class PaystackServiceProvider extends ServiceProvider
@@ -25,11 +25,25 @@ class PaystackServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
-     * Sets base url for paystack.
+     * Placeholder for base URL.
      * 
      * @var string
      */
     protected $baseUrl;
+
+    /**
+     * Placeholder for secret key.
+     * 
+     * @var string
+     */
+    protected $secretKey;
+
+    /**
+     * Placeholder for GuzzleHttp\Client.
+     * 
+     * @var \GuzzleHttp\Cient
+     */
+    protected $client;
 
     /**
     * Publishes all the config file this package needs to function
@@ -42,17 +56,6 @@ class PaystackServiceProvider extends ServiceProvider
             $config => config_path('paystack.php')
         ]);
 
-        $this->setBaseUrl();
-
-        $this->setSecretToken();
-
-        $this->setClient();
-
-        $this->app->singleton('laravel-paystack', function () {
-
-            return new Paystack(new Client);
-
-        });
     }
 
     /**
@@ -60,6 +63,18 @@ class PaystackServiceProvider extends ServiceProvider
     */
     public function register()
     {
+        $config = realpath(config_path("paystack.php"));
+
+        if (file_exists($config))
+            $this->setDependencies();
+
+        $this->setClient();
+
+        $this->app->singleton('laravel-paystack', function ($app) {
+
+            return new Paystack($this->client);
+
+        });
     }
 
     /**
@@ -84,11 +99,31 @@ class PaystackServiceProvider extends ServiceProvider
      */
     protected function setSecretToken()
     {
-        $this->baseUrl = $this->app["config"]->get("paystack.paymentUrl");
+        $this->secretKey = $this->app["config"]->get("paystack.secretKey");
     }
 
+    /**
+     * Set guzzle client.
+     */
     protected function setClient()
     {
-        //
+        $this->client = new Client([
+            "base_uri" => $this->baseUrl,
+            'headers' => [
+                'Authorization' => $this->secretKey,
+                'Content-Type'  => 'application/json',
+                'Accept'        => 'application/json'
+            ],
+        ]);
+    }
+
+    /**
+     * Called upon to set required meta dependencies.
+     */
+    protected function setDependencies()
+    {
+        $this->setBaseUrl();
+
+        $this->setSecretToken();
     }
 }

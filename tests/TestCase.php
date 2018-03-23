@@ -61,7 +61,7 @@ abstract class TestCase extends BaseTestCase {
      */
     protected function getEnvironmentSetUp($app)
     {
-        $this->envVars = require_once __DIR__. "/Stubs/config.php";
+        $this->envVars = require __DIR__. "/Stubs/config.php";
 
         array_walk($this->envVars, function($value, $key) use ($app) {
             $app["config"]->set("paystack.{$key}", $value);
