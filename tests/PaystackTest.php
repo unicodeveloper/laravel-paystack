@@ -18,7 +18,7 @@ use Unicodeveloper\Paystack\Paystack;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Facade as Facade;
 
-class PaystackTest extends TestCase
+class PaystackTest extends PHPUnit_Framework_TestCase
 {
     protected $paystack;
 

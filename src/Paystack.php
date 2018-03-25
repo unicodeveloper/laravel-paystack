@@ -58,7 +58,7 @@ class Paystack
      */
     protected $authorizationUrl;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client = null)
     {
         $this->setKey();
         $this->setBaseUrl();
@@ -86,18 +86,18 @@ class Paystack
      */
     private function setRequestOptions()
     {
-        $authBearer = 'Bearer '. $this->secretKey;
+        // $authBearer = "Bearer {$this->secretKey}";
 
-        $this->client = new Client(
-            [
-                'base_uri' => $this->baseUrl,
-                'headers' => [
-                    'Authorization' => $authBearer,
-                    'Content-Type'  => 'application/json',
-                    'Accept'        => 'application/json'
-                ]
-            ]
-        );
+        // $this->client = new Client(
+        //     [
+        //         'base_uri' => $this->baseUrl,
+        //         'headers' => [
+        //             'Authorization' => $authBearer,
+        //             'Content-Type'  => 'application/json',
+        //             'Accept'        => 'application/json'
+        //         ]
+        //     ]
+        // );
     }
    
      /**

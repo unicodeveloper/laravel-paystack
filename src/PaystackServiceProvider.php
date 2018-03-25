@@ -55,7 +55,6 @@ class PaystackServiceProvider extends ServiceProvider
         $this->publishes([
             $config => config_path('paystack.php')
         ]);
-
     }
 
     /**
@@ -108,7 +107,7 @@ class PaystackServiceProvider extends ServiceProvider
     protected function setClient()
     {
         $this->client = new Client([
-            "base_uri" => $this->baseUrl,
+            "base_uri" => "Bearer {$this->baseUrl}",
             'headers' => [
                 'Authorization' => $this->secretKey,
                 'Content-Type'  => 'application/json',
