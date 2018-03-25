@@ -183,7 +183,7 @@ class Paystack
      * and might need to take different actions based on the success (or not) of the transaction
      * @return array
      */
-    public function getAuthorizationResponse($data)
+    public function getAuthorizationResponse($data = null)
     {
         $this->makePaymentRequest($data);
 
