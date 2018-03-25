@@ -80,25 +80,6 @@ class Paystack
     {
         $this->secretKey = Config::get('paystack.secretKey');
     }
-
-    /**
-     * Set options for making the Client request
-     */
-    private function setRequestOptions()
-    {
-        // $authBearer = "Bearer {$this->secretKey}";
-
-        // $this->client = new Client(
-        //     [
-        //         'base_uri' => $this->baseUrl,
-        //         'headers' => [
-        //             'Authorization' => $authBearer,
-        //             'Content-Type'  => 'application/json',
-        //             'Accept'        => 'application/json'
-        //         ]
-        //     ]
-        // );
-    }
    
      /**
      * Initiate a payment request to Paystack

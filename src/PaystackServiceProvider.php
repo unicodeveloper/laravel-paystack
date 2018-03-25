@@ -62,12 +62,7 @@ class PaystackServiceProvider extends ServiceProvider
     */
     public function register()
     {
-        $config = realpath(config_path("paystack.php"));
-
-        if (file_exists($config))
-            $this->setDependencies();
-
-        $this->setClient();
+        $this->bootstrapConfig();
 
         $this->app->singleton('laravel-paystack', function ($app) {
 
@@ -83,6 +78,22 @@ class PaystackServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['laravel-paystack'];
+    }
+
+    /**
+     * Bootstraps configuration if configuration file exists.
+     * 
+     * @return void
+     */
+    protected function bootstrapConfig() 
+    {
+        $config = realpath(config_path("paystack.php"));
+
+        if (file_exists($config))
+        {
+            $this->setDependencies();
+            $this->setClient();
+        }
     }
 
     /**
