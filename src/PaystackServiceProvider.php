@@ -107,9 +107,9 @@ class PaystackServiceProvider extends ServiceProvider
     protected function setClient()
     {
         $this->client = new Client([
-            "base_uri" => "Bearer {$this->baseUrl}",
+            "base_uri" => $this->baseUrl,
             'headers' => [
-                'Authorization' => $this->secretKey,
+                'Authorization' => "Bearer {$this->secretKey}",
                 'Content-Type'  => 'application/json',
                 'Accept'        => 'application/json'
             ],
