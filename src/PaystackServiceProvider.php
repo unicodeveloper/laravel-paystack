@@ -97,6 +97,16 @@ class PaystackServiceProvider extends ServiceProvider
     }
 
     /**
+     * Called upon to set required meta dependencies.
+     */
+    protected function setDependencies()
+    {
+        $this->setBaseUrl();
+
+        $this->setSecretToken();
+    }
+
+    /**
      * Set the base url from conig.
      */
     protected function setBaseUrl()
@@ -125,15 +135,5 @@ class PaystackServiceProvider extends ServiceProvider
                 'Accept'        => 'application/json'
             ],
         ]);
-    }
-
-    /**
-     * Called upon to set required meta dependencies.
-     */
-    protected function setDependencies()
-    {
-        $this->setBaseUrl();
-
-        $this->setSecretToken();
     }
 }
