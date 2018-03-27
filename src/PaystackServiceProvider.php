@@ -11,6 +11,7 @@
 
 namespace Unicodeveloper\Paystack;
 
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class PaystackServiceProvider extends ServiceProvider
@@ -22,6 +23,27 @@ class PaystackServiceProvider extends ServiceProvider
     * @var bool
     */
     protected $defer = false;
+
+    /**
+     * Placeholder for base URL.
+     * 
+     * @var string
+     */
+    protected $baseUrl;
+
+    /**
+     * Placeholder for secret key.
+     * 
+     * @var string
+     */
+    protected $secretKey;
+
+    /**
+     * Placeholder for GuzzleHttp\Client.
+     * 
+     * @var \GuzzleHttp\Cient
+     */
+    protected $client;
 
     /**
     * Publishes all the config file this package needs to function
@@ -40,9 +62,11 @@ class PaystackServiceProvider extends ServiceProvider
     */
     public function register()
     {
-        $this->app->bind('laravel-paystack', function () {
+        $this->bootstrapConfig();
 
-            return new Paystack;
+        $this->app->singleton('laravel-paystack', function ($app) {
+
+            return new Paystack($this->client);
 
         });
     }
@@ -54,5 +78,57 @@ class PaystackServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['laravel-paystack'];
+    }
+
+    /**
+     * Bootstraps configuration if configuration file exists.
+     * 
+     * @return void
+     */
+    protected function bootstrapConfig() 
+    {    
+        $this->setDependencies();
+        $this->setClient();
+    }
+
+    /**
+     * Called upon to set required meta dependencies.
+     */
+    protected function setDependencies()
+    {
+        $this->setBaseUrl();
+
+        $this->setSecretToken();
+    }
+
+    /**
+     * Set the base url from conig.
+     */
+    protected function setBaseUrl()
+    {
+        $this->baseUrl = $this->app["config"]->get("paystack.paymentUrl");
+    }
+
+    /**
+     * Set the base url from conig.
+     */
+    protected function setSecretToken()
+    {
+        $this->secretKey = $this->app["config"]->get("paystack.secretKey");
+    }
+
+    /**
+     * Set guzzle client.
+     */
+    protected function setClient()
+    {
+        $this->client = new Client([
+            "base_uri" => $this->baseUrl,
+            'headers' => [
+                'Authorization' => "Bearer {$this->secretKey}",
+                'Content-Type'  => 'application/json',
+                'Accept'        => 'application/json'
+            ],
+        ]);
     }
 }

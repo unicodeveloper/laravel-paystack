@@ -29,12 +29,6 @@ class Paystack
     const ITF = "Invalid transaction reference";
 
     /**
-     * Issue Secret Key from your Paystack Dashboard
-     * @var string
-     */
-    protected $secretKey;
-
-    /**
      * Instance of Client
      * @var Client
      */
@@ -58,11 +52,10 @@ class Paystack
      */
     protected $authorizationUrl;
 
-    public function __construct()
+    public function __construct(Client $client = null)
     {
-        $this->setKey();
         $this->setBaseUrl();
-        $this->setRequestOptions();
+        $this->client = $client;
     }
 
     /**
@@ -72,43 +65,13 @@ class Paystack
     {
         $this->baseUrl = Config::get('paystack.paymentUrl');
     }
-
-    /**
-     * Get secret key from Paystack config file
-     */
-    public function setKey()
-    {
-        $this->secretKey = Config::get('paystack.secretKey');
-    }
-
-    /**
-     * Set options for making the Client request
-     */
-    private function setRequestOptions()
-    {
-        $authBearer = 'Bearer '. $this->secretKey;
-
-        $this->client = new Client(
-            [
-                'base_uri' => $this->baseUrl,
-                'headers' => [
-                    'Authorization' => $authBearer,
-                    'Content-Type'  => 'application/json',
-                    'Accept'        => 'application/json'
-                ]
-            ]
-        );
-    }
-
    
      /**
-     
      * Initiate a payment request to Paystack
      * Included the option to pass the payload to this method for situations 
      * when the payload is built on the fly (not passed to the controller from a view)
      * @return Paystack
      */
-
     public function makePaymentRequest( $data = null)
     {
         if ( $data == null ) {
@@ -183,10 +146,10 @@ class Paystack
      /**
      * Get the authorization callback response
      * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect 
-     * and might need to take different actions based on the success or not of the transaction
+     * and might need to take different actions based on the success (or not) of the transaction
      * @return array
      */
-    public function getAuthorizationResponse($data)
+    public function getAuthorizationResponse($data = null)
     {
         $this->makePaymentRequest($data);
 
