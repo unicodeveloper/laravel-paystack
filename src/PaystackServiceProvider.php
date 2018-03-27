@@ -86,14 +86,9 @@ class PaystackServiceProvider extends ServiceProvider
      * @return void
      */
     protected function bootstrapConfig() 
-    {
-        $config = realpath(config_path("paystack.php"));
-
-        if (file_exists($config))
-        {
-            $this->setDependencies();
-            $this->setClient();
-        }
+    {    
+        $this->setDependencies();
+        $this->setClient();
     }
 
     /**

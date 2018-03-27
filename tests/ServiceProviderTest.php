@@ -6,6 +6,9 @@ use Tests\Concerns\Reflectors;
 use Unicodeveloper\Paystack\Paystack;
 use Unicodeveloper\Paystack\PaystackServiceProvider;
 
+/**
+ * @coversDefaultClass \Unicodeveloper\Paystack\PaystackServiceProvider
+ */
 class ServiceProviderTest extends TestCase {
 
 	/**
@@ -16,7 +19,7 @@ class ServiceProviderTest extends TestCase {
 	 */
 	function it_returns_instance_of_paystack () {
 
-		$paystack = $this->app->make("laravel-paystack");
+		$paystack = $this->app["laravel-paystack"];
 
 		$this->assertInstanceOf("Unicodeveloper\Paystack\Paystack", $paystack);
 
@@ -57,5 +60,74 @@ class ServiceProviderTest extends TestCase {
 		$baseUrl = $reflection->fetchProperty("baseUrl");
 
 		$this->assertEquals($this->app["config"]->get("paystack.paymentUrl"), $baseUrl->value);
+	}
+
+	/**
+	 * Tests that secretKey is set when service provider is invoked.
+	 * 
+	 * @test
+	 * @depends it_provides_alias
+	 * @return void
+	 */
+	function it_sets_secret_token (PaystackServiceProvider $paystackServiceProvider) {
+
+		$reflection = new Reflectors($paystackServiceProvider);
+
+		$reflection->invokeMethod("setSecretToken");
+
+		$secretKey = $reflection->fetchProperty("secretKey");
+
+		$this->assertEquals($this->app["config"]->get("paystack.secretKey"), $secretKey->value);
+	}
+
+	/**
+	 * Tests that client is set when service provider is invoked.
+	 * 
+	 * @test
+	 * @depends it_provides_alias
+	 * @return void
+	 */
+	function it_sets_client (PaystackServiceProvider $paystackServiceProvider) {
+
+		$reflection = new Reflectors($paystackServiceProvider);
+
+		$reflection->invokeMethod("setClient");
+
+		$client = $reflection->fetchProperty("client");
+
+		$this->assertInstanceOf("GuzzleHttp\Client", $client->value);
+	}
+
+	/**
+	 * Tests that setDependencies in called without errors.
+	 * 
+	 * @test
+	 * @depends it_provides_alias
+	 * @return void
+	 */
+	function it_calls_set_dependencies_without_errors (PaystackServiceProvider $paystackServiceProvider) {
+
+		$reflection = new Reflectors($paystackServiceProvider);
+
+		$reflection->invokeMethod("setDependencies");
+
+		$this->assertTrue(true);
+	}
+
+	/**
+	 * Tests bootstrapConfig.
+	 * 
+	 * @test
+	 * @covers ::bootstrapConfig
+	 * @depends it_provides_alias
+	 * @return void
+	 */
+	function it_calls_bootstrap_config_without_errors (PaystackServiceProvider $paystackServiceProvider) {
+
+		$reflection = new Reflectors($paystackServiceProvider);
+
+		$reflection->invokeMethod("bootstrapConfig");
+
+		$this->assertTrue(true);
 	}
 }

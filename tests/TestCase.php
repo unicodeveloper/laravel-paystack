@@ -26,6 +26,8 @@ abstract class TestCase extends BaseTestCase {
 
         $this->m->close();
 
+        $this->app = null;
+
         parent::tearDown();
     }
 
@@ -64,7 +66,7 @@ abstract class TestCase extends BaseTestCase {
         $this->envVars = require __DIR__. "/Stubs/config.php";
 
         array_walk($this->envVars, function($value, $key) use ($app) {
-            $app["config"]->set("paystack.{$key}", $value);
+            $app->make("config")->set("paystack.{$key}", $value);
         });
     }
 }

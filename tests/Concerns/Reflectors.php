@@ -2,7 +2,7 @@
 
 namespace Tests\Concerns;
 
-class Reflectors extends \Reflectionobject 
+class Reflectors extends \ReflectionClass
 {
 	public $object;
 
@@ -29,6 +29,12 @@ class Reflectors extends \Reflectionobject
 		return $method->invokeArgs($this->object, $args);
 	}
 
+	/**
+	 * Get details of a protected property from a class
+	 * 
+	 * @param  string $propertyName 
+	 * @return stdClass=
+	 */
 	public function fetchProperty(string $propertyName)
 	{
 		$property = parent::getProperty($propertyName);
