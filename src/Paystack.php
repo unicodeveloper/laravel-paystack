@@ -54,7 +54,6 @@ class Paystack
 
     public function __construct(Client $client = null)
     {
-        $this->setKey();
         $this->setBaseUrl();
         $this->client = $client;
     }
