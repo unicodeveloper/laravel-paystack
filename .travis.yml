@@ -23,5 +23,8 @@ after_script:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
   - travis_retry php vendor/bin/coveralls -v
 
+after_success:
+  - bin/coveralls -v 
+
 notifications:
   slack: red-creek:5lI8ybvl6YTcCNPosh4TE13h

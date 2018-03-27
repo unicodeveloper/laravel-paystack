@@ -29,12 +29,6 @@ class Paystack
     const ITF = "Invalid transaction reference";
 
     /**
-     * Issue Secret Key from your Paystack Dashboard
-     * @var string
-     */
-    protected $secretKey;
-
-    /**
      * Instance of Client
      * @var Client
      */
@@ -71,14 +65,6 @@ class Paystack
     public function setBaseUrl()
     {
         $this->baseUrl = Config::get('paystack.paymentUrl');
-    }
-
-    /**
-     * Get secret key from Paystack config file
-     */
-    public function setKey()
-    {
-        $this->secretKey = Config::get('paystack.secretKey');
     }
    
      /**

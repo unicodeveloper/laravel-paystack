@@ -20,7 +20,7 @@ class Reflectors extends \ReflectionClass
 	 * @param  array  $args       
 	 * @return mixed
 	 */
-	public function invokeMethod ($methodName, array $args = [])
+	public function invokeMethod ($methodName, $args = [])
 	{
 		$method = parent::getMethod($methodName);
 
@@ -35,7 +35,7 @@ class Reflectors extends \ReflectionClass
 	 * @param  string $propertyName 
 	 * @return stdClass=
 	 */
-	public function fetchProperty(string $propertyName)
+	public function fetchProperty($propertyName)
 	{
 		$property = parent::getProperty($propertyName);
 
