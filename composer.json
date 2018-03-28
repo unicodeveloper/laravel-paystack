@@ -23,9 +23,13 @@
         "phpunit/phpunit" : "4.*",
         "scrutinizer/ocular": "~1.1",
         "satooshi/php-coveralls": "^0.7.0",
-        "mockery/mockery": ">=0.7.2"
+        "mockery/mockery": ">=0.7.2",
+        "orchestra/testbench": "~3.0"
     },
    "autoload": {
+        "files": [
+          "src/Support/helpers.php"
+        ],
         "psr-4": {
           "Unicodeveloper\\Paystack\\": "src/"
         }
