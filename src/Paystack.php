@@ -241,6 +241,7 @@ class Paystack
      */
     public function getAllCustomers()
     {
+        $this->setRequestOptions();
 
         return $this->setHttpResponse("/customer", 'GET', [])->getData();
     }
@@ -251,6 +252,7 @@ class Paystack
      */
     public function getAllPlans()
     {
+        $this->setRequestOptions();
 
         return $this->setHttpResponse("/plan", 'GET', [])->getData();
     }
@@ -261,6 +263,7 @@ class Paystack
      */
     public function getAllTransactions()
     {
+        $this->setRequestOptions();
 
         return $this->setHttpResponse("/transaction", 'GET', [])->getData();
     }
@@ -282,6 +285,22 @@ class Paystack
     {
         return $this->getResponse()['data'];
     }
+    /**
+     * @deprecated
+     * Get secret key from Paystack config file
+     */
+    public function setKey()
+    {
+        $this->secretKey = Config::get('paystack.secretKey');
+    }
+    /**
+     * @deprecated
+     * Set options for making the Client request
+     */
+    private function setRequestOptions()
+    {
+        //
+    }
 
     /**
      * Create a plan
@@ -298,6 +317,7 @@ class Paystack
             "currency" => request()->currency,
         ];
 
+        $this->setRequestOptions();
 
         $this->setHttpResponse("/plan", 'POST', $data);
 
@@ -310,6 +330,7 @@ class Paystack
      */
     public function fetchPlan($plan_code)
     {
+        $this->setRequestOptions();
         return $this->setHttpResponse('/plan/' . $plan_code, 'GET', [])->getResponse();
     }
 
@@ -330,6 +351,7 @@ class Paystack
             "currency" => request()->currency,
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/plan/' . $plan_code, 'PUT', $data)->getResponse();
     }
 
@@ -347,6 +369,7 @@ class Paystack
 
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
     }
 
@@ -357,6 +380,7 @@ class Paystack
      */
     public function fetchCustomer($customer_id)
     {
+        $this->setRequestOptions();
         return $this->setHttpResponse('/customer/'. $customer_id, 'GET', [])->getResponse();
     }
 
@@ -376,6 +400,7 @@ class Paystack
 
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/customer/'. $customer_id, 'PUT', $data)->getResponse();
     }
 
@@ -391,6 +416,7 @@ class Paystack
             'settled' => request()->settled
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/transaction/export', 'GET', $data)->getResponse();
     }
 
@@ -405,6 +431,7 @@ class Paystack
             "authorization" => request()->authorization_code
         ];
 
+        $this->setRequestOptions();
         $this->setHttpResponse('/subscription', 'POST', $data);
     }
 
@@ -415,6 +442,8 @@ class Paystack
      */
     public function getAllSubscriptions()
     {
+        $this->setRequestOptions();
+
         return $this->setHttpResponse("/subscription", 'GET', [])->getData();
     }
 
@@ -426,6 +455,8 @@ class Paystack
      */
     public function getCustomerSubscriptions($customer_id)
     {
+        $this->setRequestOptions();
+
         return $this->setHttpResponse('/subscription?customer=' . $customer_id, 'GET', [])->getData();
     }
 
@@ -437,6 +468,8 @@ class Paystack
      */
     public function getPlanSubscriptions($plan_id)
     {
+        $this->setRequestOptions();
+
         return $this->setHttpResponse('/subscription?plan=' . $plan_id, 'GET', [])->getData();
     }
 
@@ -451,6 +484,7 @@ class Paystack
             "token" => request()->token,
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/subscription/enable', 'POST', $data)->getResponse();
     }
 
@@ -465,6 +499,7 @@ class Paystack
             "token" => request()->token,
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/subscription/disable', 'POST', $data)->getResponse();
     }
 
@@ -475,6 +510,7 @@ class Paystack
      */
     public function fetchSubscription($subscription_id)
     {
+        $this->setRequestOptions();
         return $this->setHttpResponse('/subscription/'.$subscription_id, 'GET', [])->getResponse();
     }
 
@@ -489,6 +525,7 @@ class Paystack
             "amount" => request()->amount
         ];
 
+        $this->setRequestOptions();
         $this->setHttpResponse('/page', 'POST', $data);
     }
 
@@ -498,6 +535,7 @@ class Paystack
      */
     public function getAllPages()
     {
+        $this->setRequestOptions();
         return $this->setHttpResponse('/page', 'GET', [])->getResponse();
     }
 
@@ -508,6 +546,7 @@ class Paystack
      */
     public function fetchPage($page_id)
     {
+        $this->setRequestOptions();
         return $this->setHttpResponse('/page/'.$page_id, 'GET', [])->getResponse();
     }
 
@@ -524,6 +563,7 @@ class Paystack
             "amount" => request()->amount
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
     }
 
@@ -546,6 +586,7 @@ class Paystack
             'settlement_schedule' => request()->settlement_schedule
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse('/subaccount', 'POST', array_filter($data))->getResponse();
 
     }
@@ -557,6 +598,7 @@ class Paystack
      */
     public function fetchSubAccount($subaccount_code){
 
+        $this->setRequestOptions();
         return $this->setHttpResponse("/subaccount/{$subaccount_code}","GET",[])->getResponse();
 
     }
@@ -568,6 +610,7 @@ class Paystack
      */
     public function listSubAccounts($per_page,$page){
 
+        $this->setRequestOptions();
         return $this->setHttpResponse("/subaccount/?perPage=".(int) $per_page."&page=".(int) $page,"GET")->getResponse();
 
     }
@@ -593,6 +636,8 @@ class Paystack
             'settlement_schedule' => request()->settlement_schedule
         ];
 
+        $this->setRequestOptions();
         return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", array_filter($data))->getResponse();
+
     }
 }
