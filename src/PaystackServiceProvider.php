@@ -41,7 +41,7 @@ class PaystackServiceProvider extends ServiceProvider
     /**
      * Placeholder for GuzzleHttp\Client.
      * 
-     * @var \GuzzleHttp\Cient
+     * @var \GuzzleHttp\Client
      */
     protected $client;
 
