@@ -64,7 +64,7 @@ class PaystackServiceProvider extends ServiceProvider
     {
         $this->bootstrapConfig();
 
-        $this->app->singleton('laravel-paystack', function ($app) {
+        $this->app->singleton('laravel-paystack', function () {
 
             return new Paystack($this->client);
 
