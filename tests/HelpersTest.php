@@ -2,8 +2,6 @@
 
 namespace Unicodeveloper\Paystack\Test;
 
-use Orchestra\Testbench\TestCase;
-
 class HelpersTest extends TestCase {
 
 	/**
