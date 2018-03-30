@@ -32,8 +32,13 @@ Once Laravel Paystack is installed, you need to register the service provider. O
 
 > If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-paystack#configuration)
 
-* `Unicodeveloper\Paystack\PaystackServiceProvider::class`
-
+```php
+'providers' => [
+    ...
+    Unicodeveloper\Paystack\PaystackServiceProvider::class,
+    ...
+]
+```
 Also, register the Facade like so:
 
 ```php
@@ -196,7 +201,7 @@ Let me explain the fluent methods this package provides a bit here.
 /**
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
- *  Payment Page. I abstracted all of it, so you don't have to worry about that.
+ *  Payment Page. We've abstracted all of it, so you don't have to worry about that.
  *  Just eat your cookies while coding!
  */
 Paystack::getAuthorizationUrl()->redirectNow();
@@ -260,11 +265,13 @@ Paystack::listSubAccounts();
 Paystack::updateSubAccount();
 ```
 
+Alternatively, as a shorthand, you could use the API's helper `paystack()` method to call the methods above.
+
 A sample form will look like so:
 
 ```html
 <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
-        <div class="row" style="margin-bottom:40px;">
+    <div class="row" style="margin-bottom:40px;">
           <div class="col-md-8 col-md-offset-2">
             <p>
                 <div>
@@ -290,7 +297,7 @@ A sample form will look like so:
               </button>
             </p>
           </div>
-        </div>
+    </div>
 </form>
 ```
 
