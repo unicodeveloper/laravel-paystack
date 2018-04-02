@@ -1,6 +1,6 @@
 <?php 
 
-namespace Unicodeveloper\Paystack\Test;
+namespace Tests;
 
 class HelpersTest extends TestCase {
 

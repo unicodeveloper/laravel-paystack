@@ -47,6 +47,12 @@ class Paystack
     protected $baseUrl;
 
     /**
+     * Secret key.
+     * @var string
+     */
+    protected $secretKey;
+
+    /**
      * Authorization Url - Paystack payment page
      * @var string
      */
@@ -59,6 +65,7 @@ class Paystack
     }
 
     /**
+     * @deprecated
      * Get Base Url from Paystack config file
      */
     public function setBaseUrl()
@@ -116,7 +123,7 @@ class Paystack
      * @return Paystack
      * @throws IsNullException
      */
-    private function setHttpResponse($relativeUrl, $method, $body = [])
+    private function setHttpResponse($relativeUrl, $method = "GET", $body = [])
     {
         if (is_null($method)) {
             throw new IsNullException("Empty method not allowed");
