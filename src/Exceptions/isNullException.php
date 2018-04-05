@@ -15,8 +15,8 @@ use Exception;
 
 class IsNullException extends Exception
 {
-	function __construct ()
+	function __construct ($message = "")
 	{
-		parent::__construct("Bad method call.", 400);
+		parent::__construct(($message ? $message : "Bad method call."), 400);
 	}
 }

@@ -15,34 +15,45 @@ trait Mocks
 {
 	protected $client;
 
-	function paystack ()
+	function paystack ($response_type = null)
 	{
-		$this->mockedClient();
+		$this->mockedClient($response_type);
 
-		die((string)$this->client->request("get", '/go')->getBody());
 		return new Paystack($this->client);
 	}
 
-	function reflected($class = null)
+	function reflected($response_type = null, $class = null)
 	{
-		return is_null($class) ? (new Reflectors($this->paystack())) : (new Reflectors($class));
+		return is_null($class) ? (new Reflectors($this->paystack($response_type))) : (new Reflectors($class));
 	}
 
-	function mockedClient()
+	function mockedClient($response_type = null)
 	{
-		$handler = $this->handler();
+		$handler = $this->handler($response_type);
 
 		$this->client = new Client([
 			"handler" => $handler,
 		]);
 	}
 
-	function handler() 
+	function handler($response_type = null) 
 	{
-		$body = require __DIR__ . "/../Stubs/resource.php";
-
 		return new MockHandler([
-			new Response(200, ["X-Foo" => "bar"], json_encode($body)),
+			$this->response($response_type ? $response_type : "payment_response"),
 		]);
+	}
+
+	function response($response_type) 
+	{
+		$body = $this->getResourse()[$response_type];
+
+		return new Response(200, ["X-Foo" => "bar"], json_encode($body));
+	}
+
+	function getResourse()
+	{
+		$response = require __DIR__ . "/../Stubs/resource.php";
+
+		return $response;
 	}
 }
