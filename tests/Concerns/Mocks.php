@@ -45,15 +45,15 @@ trait Mocks
 
 	function response($response_type) 
 	{
-		$body = $this->getResourse()[$response_type];
+		$body = $this->getResource()[$response_type];
 
 		return new Response(200, ["X-Foo" => "bar"], json_encode($body));
 	}
 
-	function getResourse()
+	function getResource()
 	{
-		$response = require __DIR__ . "/../Stubs/resource.php";
+		$resource = require __DIR__ . "/../Stubs/resource.php";
 
-		return $response;
+		return $resource;
 	}
 }

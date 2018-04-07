@@ -33,7 +33,7 @@ class Reflectors extends \ReflectionClass
 	 * Get details of a protected property from a class
 	 * 
 	 * @param  string $propertyName 
-	 * @return stdClass=
+	 * @return stdClass
 	 */
 	public function fetchProperty($propertyName)
 	{

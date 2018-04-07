@@ -1,0 +1,13 @@
+{
+  "status": true,
+  "message": "Customer created",
+  "data": {
+    "email": "bojack@horsinaround.com",
+    "integration": 100032,
+    "domain": "test",
+    "customer_code": "CUS_xnxdt6s1zg1f4nx",
+    "id": 1173,
+    "createdAt": "2016-03-29T20:03:09.584Z",
+    "updatedAt": "2016-03-29T20:03:09.584Z"
+  }
+}

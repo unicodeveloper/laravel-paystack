@@ -329,7 +329,6 @@ class Paystack
         $this->setRequestOptions();
 
         $this->setHttpResponse("/plan", 'POST', $data);
-
     }
 
     /**
@@ -340,7 +339,7 @@ class Paystack
     public function fetchPlan($plan_code)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/plan/' . $plan_code, 'GET', [])->getResponse();
+        return $this->setHttpResponse("/plan/{$plan_code}", 'GET', [])->getResponse();
     }
 
     /**
@@ -361,7 +360,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/plan/' . $plan_code, 'PUT', $data)->getResponse();
+        return $this->setHttpResponse("/plan/{$plan_code}", 'PUT', $data)->getResponse();
     }
 
     /**
@@ -375,7 +374,6 @@ class Paystack
             "last_name" => request()->lname,
             "phone" => request()->phone,
             "metadata" => request()->additional_info /* key => value pairs array */
-
         ];
 
         $this->setRequestOptions();
