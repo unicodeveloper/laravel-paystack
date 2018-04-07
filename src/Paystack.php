@@ -13,7 +13,7 @@ namespace Unicodeveloper\Paystack;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
-use Unicodeveloper\Paystack\Exceptions\IsNullException;
+use Unicodeveloper\Paystack\Exceptions\isNullException;
 use Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException;
 
 class Paystack
@@ -47,6 +47,12 @@ class Paystack
     protected $baseUrl;
 
     /**
+     * Secret key.
+     * @var string
+     */
+    protected $secretKey;
+
+    /**
      * Authorization Url - Paystack payment page
      * @var string
      */
@@ -59,6 +65,7 @@ class Paystack
     }
 
     /**
+     * @deprecated
      * Get Base Url from Paystack config file
      */
     public function setBaseUrl()
@@ -116,10 +123,10 @@ class Paystack
      * @return Paystack
      * @throws IsNullException
      */
-    private function setHttpResponse($relativeUrl, $method, $body = [])
+    private function setHttpResponse($relativeUrl, $method = "GET", $body = [])
     {
         if (is_null($method)) {
-            throw new IsNullException("Empty method not allowed");
+            throw new isNullException("Empty method not allowed");
         }
 
         $this->response = $this->client->{strtolower($method)}(
@@ -138,7 +145,7 @@ class Paystack
     {
         $this->makePaymentRequest();
 
-        $this->url = $this->getResponse()['data']['authorization_url'];
+        $this->authorizationUrl = $this->getResponse()['data']['authorization_url'];
 
         return $this;
     }
@@ -153,9 +160,11 @@ class Paystack
     {
         $this->makePaymentRequest($data);
 
-        $this->url = $this->getResponse()['data']['authorization_url'];
+        $response = $this->getResponse();
 
-        return $this->getResponse();
+        $this->authorizationUrl = $response['data']['authorization_url'];
+
+        return $response;
     }
 
     /**
@@ -214,7 +223,7 @@ class Paystack
      */
     public function redirectNow()
     {
-        return redirect($this->url);
+        return redirect($this->authorizationUrl);
     }
 
     /**

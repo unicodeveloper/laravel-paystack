@@ -32,8 +32,13 @@ Once Laravel Paystack is installed, you need to register the service provider. O
 
 > If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-paystack#configuration)
 
-* `Unicodeveloper\Paystack\PaystackServiceProvider::class`
-
+```php
+'providers' => [
+    ...
+    Unicodeveloper\Paystack\PaystackServiceProvider::class,
+    ...
+]
+```
 Also, register the Facade like so:
 
 ```php
@@ -196,10 +201,14 @@ Let me explain the fluent methods this package provides a bit here.
 /**
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
- *  Payment Page. I abstracted all of it, so you don't have to worry about that.
+ *  Payment Page. We've abstracted all of it, so you don't have to worry about that.
  *  Just eat your cookies while coding!
  */
 Paystack::getAuthorizationUrl()->redirectNow();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAuthorizationUrl()->redirectNow();
 
 /**
  * This fluent method does all the dirty work of verifying that the just concluded transaction was actually valid,
@@ -208,36 +217,61 @@ Paystack::getAuthorizationUrl()->redirectNow();
  * to allow for easy recurrent subscription.
  */
 Paystack::getPaymentData();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getPaymentData();
 
 /**
  * This method gets all the customers that have performed transactions on your platform with Paystack
  * @returns array
  */
 Paystack::getAllCustomers();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllCustomers();
 
 /**
  * This method gets all the plans that you have registered on Paystack
  * @returns array
  */
 Paystack::getAllPlans();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllPlans();
+
 
 /**
  * This method gets all the transactions that have occurred
  * @returns array
  */
 Paystack::getAllTransactions();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllTransactions();
 
 /**
  * This method generates a unique super secure cryptograhical hash token to use as transaction reference
  * @returns string
  */
 Paystack::genTranxRef();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->genTranxRef();
 
 /**
 * This method creates a subaccount to be used for split payments 
 * @return array
 */
 Paystack::createSubAccount();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->createSubAccount();
 
 
 /**
@@ -245,6 +279,10 @@ Paystack::createSubAccount();
 * @return array
 */
 Paystack::fetchSubAccount();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->fetchSubAccount();
 
 
 /**
@@ -252,19 +290,27 @@ Paystack::fetchSubAccount();
 * @return array
 */
 Paystack::listSubAccounts();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->listSubAccounts();
 
 /**
 * This method Updates a subaccount to be used for split payments 
 * @return array
 */
 Paystack::updateSubAccount();
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->updateSubAccount();
 ```
 
 A sample form will look like so:
 
 ```html
 <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
-        <div class="row" style="margin-bottom:40px;">
+    <div class="row" style="margin-bottom:40px;">
           <div class="col-md-8 col-md-offset-2">
             <p>
                 <div>
@@ -290,7 +336,7 @@ A sample form will look like so:
               </button>
             </p>
           </div>
-        </div>
+    </div>
 </form>
 ```
 

@@ -37,13 +37,33 @@ class Reflectors extends \ReflectionClass
 	 */
 	public function fetchProperty($propertyName)
 	{
-		$property = parent::getProperty($propertyName);
-
-		$property->setAccessible(true);
+		$property = $this->getProperty($propertyName);
 
 		return (object) [
 			"name" => $property->getName(),
 			"value" => $property->getValue($this->object)
 		];
+	}
+
+	public function setProperty($propertyName, $value)
+	{
+		$property = $this->getProperty($propertyName);
+
+		$property->setValue($this->object, $value);
+	}
+
+	/**
+	 * Get property while setting it accessible.
+	 * 
+	 * @param  string $propertyName 
+	 * @return mixed
+	 */
+	public function getProperty($propertyName)
+	{
+		$property = parent::getProperty($propertyName);
+
+		$property->setAccessible(true);
+
+		return $property;
 	}
 }

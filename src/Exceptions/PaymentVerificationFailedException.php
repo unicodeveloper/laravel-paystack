@@ -15,5 +15,8 @@ use Exception;
 
 class PaymentVerificationFailedException extends Exception
 {
-
+	function __construct ($message = "")
+	{
+		parent::__construct(($message ? $message : "Payment Verification Failed."), 400);
+	}
 }
