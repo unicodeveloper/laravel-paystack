@@ -580,37 +580,4 @@ class PaystackTest extends TestCase
 
         $this->assertInstanceOf("GuzzleHttp\Psr7\Response", $response->value);
     }
-
-    // /** 
-    //  * @test
-    //  * @dataProvider providers
-    //  */
-    // public function it_gets_infos ($expected, $actual) 
-    // {
-    //     $this->assertEquals($expected, $actual);
-    // }
-
-    // /**
-    //  * Get elements from paystack.
-    //  * 
-    //  * @return array data to test.
-    //  */
-    // public function providers ()
-    // {
-    //      $elements = ["customers", "plans", "transactions"];
-
-    //     return array_map(function($value){
-
-    //         parent::setUp();
-
-    //         $reflection = $this->reflected("all_{$value}");
-
-    //         $actual = $reflection->invokeMethod(constant("self::GET_ALL_".strtoupper($value)));
-
-    //         $expected = $this->getResource()["all_{$value}"]["data"];
-
-    //         return [json_encode($expected), json_encode($actual)];
-
-    //     }, $elements);
-    // }
 }
