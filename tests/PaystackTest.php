@@ -563,7 +563,7 @@ class PaystackTest extends TestCase
      * @param  array $keys Relative keys
      * @return mixed
      */
-    public function getExpected (...$keys)
+    public function getExpected (&...$keys)
     {
         $response = $this->getResource();
 
