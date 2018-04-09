@@ -7,7 +7,7 @@ use Unicodeveloper\Paystack\TransRef;
 
 class TransRefTest extends TestCase 
 {
-	const ENCODING = [
+	protected $encoding = [
 		["alnum", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",],
 		["alpha", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",],
 		["hexdec", "0123456789abcdef",],
@@ -16,9 +16,6 @@ class TransRefTest extends TestCase
 		["distinct", "2345679ACDEFHJKLMNPRSTUVWXYZ",],
 		["other", "other",],
 	];
-	const POOL_ALNUM = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	const POOL_ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	const POOL_HEXDEC = "0123456789abcdef";
 
 	/** 
 	 * @test
@@ -40,7 +37,7 @@ class TransRefTest extends TestCase
 	 */
 	public function provider ()
 	{
-		return self::ENCODING;
+		return $this->encoding;
 	}
 
 	/**
