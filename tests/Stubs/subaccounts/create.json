@@ -1,0 +1,25 @@
+{
+  "status": true,
+  "message": "Subaccount created",
+  "data": {
+    "integration": 100973,
+    "domain": "test",
+    "subaccount_code": "ACCT_4hl4xenwpjy5wb",
+    "business_name": "Sunshine Studios",
+    "description": null,
+    "primary_contact_name": null,
+    "primary_contact_email": null,
+    "primary_contact_phone": null,
+    "metadata": null,
+    "percentage_charge": 18.2,
+    "is_verified": false,
+    "settlement_bank": "Access Bank",
+    "account_number": "0193274682",
+    "settlement_schedule": "AUTO",
+    "active": true,
+    "migrate": false,
+    "id": 55,
+    "createdAt": "2016-10-05T13:22:04.000Z",
+    "updatedAt": "2016-10-21T02:19:47.000Z"
+  }
+}

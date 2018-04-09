@@ -1,0 +1,20 @@
+{
+  "status": true,
+  "message": "Subscription successfully created",
+  "data": {
+    "customer": 1173,
+    "plan": 28,
+    "integration": 100032,
+    "domain": "test",
+    "start": 1459296064,
+    "status": "active",
+    "quantity": 1,
+    "amount": 50000,
+    "authorization": 79,
+    "subscription_code": "SUB_vsyqdmlzble3uii",
+    "email_token": "d7gofp6yppn3qz7",
+    "id": 9,
+    "createdAt": "2016-03-30T00:01:04.687Z",
+    "updatedAt": "2016-03-30T00:01:04.687Z"
+  }
+}

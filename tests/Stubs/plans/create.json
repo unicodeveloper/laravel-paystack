@@ -1,0 +1,19 @@
+{
+  "status": true,
+  "message": "Plan created",
+  "data": {
+    "name": "Monthly retainer",
+    "amount": 500000,
+    "interval": "monthly",
+    "integration": 100032,
+    "domain": "test",
+    "plan_code": "PLN_gx2wn530m0i3w3m",
+    "send_invoices": true,
+    "send_sms": true,
+    "hosted_page": false,
+    "currency": "NGN",
+    "id": 28,
+    "createdAt": "2016-03-29T22:42:50.811Z",
+    "updatedAt": "2016-03-29T22:42:50.811Z"
+  }
+}

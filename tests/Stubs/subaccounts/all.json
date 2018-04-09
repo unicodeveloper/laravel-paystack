@@ -1,0 +1,72 @@
+{
+  "status": true,
+  "message": "Subaccounts retrieved",
+  "data": [
+    {
+      "integration": 129938,
+      "domain": "test",
+      "subaccount_code": "ACCT_cljt3j4cp0kb2gq",
+      "business_name": "Business 2",
+      "description": null,
+      "primary_contact_name": null,
+      "primary_contact_email": null,
+      "primary_contact_phone": null,
+      "metadata": null,
+      "percentage_charge": 20,
+      "is_verified": false,
+      "settlement_bank": "Zenith Bank",
+      "account_number": "0193274382",
+      "active": true,
+      "migrate": false,
+      "id": 53,
+      "createdAt": "2016-10-05T12:55:47.000Z",
+      "updatedAt": "2016-10-05T12:55:47.000Z"
+    },
+    {
+      "integration": 129938,
+      "domain": "test",
+      "subaccount_code": "ACCT_vwy3d1gck2c9gxi",
+      "business_name": "Sunshine Studios",
+      "description": null,
+      "primary_contact_name": null,
+      "primary_contact_email": null,
+      "primary_contact_phone": null,
+      "metadata": null,
+      "percentage_charge": 20,
+      "is_verified": false,
+      "settlement_bank": "Access Bank",
+      "account_number": "0128633833",
+      "active": true,
+      "migrate": false,
+      "id": 35,
+      "createdAt": "2016-10-04T09:06:00.000Z",
+      "updatedAt": "2016-10-04T09:06:00.000Z"
+    },
+    {
+      "integration": 129938,
+      "domain": "test",
+      "subaccount_code": "ACCT_5mikcokeaknxk1f",
+      "business_name": "Business 2",
+      "description": null,
+      "primary_contact_name": null,
+      "primary_contact_email": null,
+      "primary_contact_phone": null,
+      "percentage_charge": 20,
+      "is_verified": false,
+      "settlement_bank": "Access Bank",
+      "account_number": "0000000000",
+      "active": true,
+      "migrate": false,
+      "id": 34,
+      "createdAt": "2016-10-04T08:46:18.000Z",
+      "updatedAt": "2016-10-04T08:46:18.000Z"
+    }
+  ],
+  "meta": {
+    "total": 20,
+    "skipped": 0,
+    "perPage": "3",
+    "page": 1,
+    "pageCount": 7
+  }
+}

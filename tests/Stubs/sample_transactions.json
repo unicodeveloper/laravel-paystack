@@ -1,0 +1,101 @@
+{
+  "status": true,
+  "message": "Transactions retrieved",
+  "data": [
+    {
+      "id": 5833,
+      "domain": "test",
+      "status": "failed",
+      "reference": "icy9ma6jd1",
+      "amount": 100,
+      "message": null,
+      "gateway_response": "Declined",
+      "paid_at": null,
+      "created_at": "2016-09-29T00:00:05.000Z",
+      "channel": "card",
+      "currency": "NGN",
+      "ip_address": null,
+      "metadata": null,
+      "timeline": null,
+      "customer": {
+        "first_name": "Ezra",
+        "last_name": "Olubi",
+        "email": "ezra@cfezra.com",
+        "phone": "16504173147",
+        "metadata": null,
+        "customer_code": "CUS_1uld4hluw0g2gn0"
+      },
+      "authorization": {},
+      "plan": {}
+    }
+  ],
+  "meta": {
+    "total": 1,
+    "skipped": 0,
+    "perPage": 50,
+    "page": 1,
+    "pageCount": 1
+  }
+}
+{
+  "status": true,
+  "message": "Transactions retrieved",
+  "data": [
+    {
+      "id": 298126,
+      "domain": "live",
+      "status": "failed",
+      "reference": "z1gsnks86e6kfo8",
+      "amount": 10000,
+      "message": null,
+      "gateway_response": "Declined",
+      "paid_at": null,
+      "created_at": "2016-09-29T00:03:22.000Z",
+      "channel": "card",
+      "currency": "NGN",
+      "ip_address": null,
+      "metadata": {
+                "custom_fields": [
+                    {
+                        "display_name": "Mobile Number",
+                        "variable_name": "mobile_number",
+                        "value": "+2348012345678"
+                    }
+                ]
+        },
+      "log": null,
+      "fees": null,
+      "paidAt": "2016-09-29T00:03:25.000Z",
+      "createdAt": "2016-09-29T00:03:22.000Z",
+      "authorization": {
+        "authorization_code": "AUTH_86gs11dr",
+        "bin": "539983",
+        "last4": "0061",
+        "exp_month": "08",
+        "exp_year": "2018",
+        "card_type": "mastercard DEBIT",
+        "bank": "Guaranty Trust Bank",
+        "country_code": "NG",
+        "brand": "mastercard"
+      },
+      "customer": {
+        "id": 8279,
+        "first_name": "Ezra",
+        "last_name": "Olubi",
+        "email": "ezra@cfezra.com",
+        "phone": "16504173147",
+        "customer_code": "CUS_1uld4hluw0g2gn0",
+        "metadata":null,
+        "risk_action": "default"
+      }
+    }
+  ],
+  "meta": {
+    "total": 248,
+    "total_volume": 1372244,
+    "skipped": 0,
+    "perPage": "1",
+    "page": 1,
+    "pageCount": 248
+  }
+}

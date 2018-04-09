@@ -27,6 +27,9 @@
         "orchestra/testbench": "~3.0"
     },
    "autoload": {
+        "files": [
+          "src/Support/helpers.php"
+        ],
         "psr-4": {
           "Unicodeveloper\\Paystack\\": "src/"
         }

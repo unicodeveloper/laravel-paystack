@@ -1,0 +1,16 @@
+{
+  "status": true,
+  "message": "Page created",
+  "data": {
+    "name": "Offering collections",
+    "description": "Give unto the Lord, and it shall be multiplied ten-fold to you.",
+    "integration": 100032,
+    "domain": "test",
+    "slug": "5nApBwZkvY",
+    "currency": "NGN",
+    "active": true,
+    "id": 18,
+    "createdAt": "2016-03-30T00:49:57.514Z",
+    "updatedAt": "2016-03-30T00:49:57.514Z"
+  }
+}

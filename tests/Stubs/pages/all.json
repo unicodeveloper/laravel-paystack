@@ -1,0 +1,56 @@
+{
+  "status": true,
+  "message": "Pages retrieved",
+  "data": [
+    {
+      "integration": 100073,
+      "plan": 1716,
+      "domain": "test",
+      "name": "Subscribe to plan: Weekly small chops",
+      "description": null,
+      "amount": null,
+      "currency": "NGN",
+      "slug": "sR7Ohx2iVd",
+      "custom_fields": null,
+      "redirect_url": null,
+      "active": true,
+      "migrate": null,
+      "id": 2223,
+      "createdAt": "2016-10-01T10:59:11.000Z",
+      "updatedAt": "2016-10-01T10:59:11.000Z"
+    },
+    {
+      "integration": 100073,
+      "plan": null,
+      "domain": "test",
+      "name": "Special",
+      "description": "Special page",
+      "amount": 10000,
+      "currency": "NGN",
+      "slug": "special-me",
+      "custom_fields": [
+        {
+          "display_name": "Speciality",
+          "variable_name": "speciality"
+        },
+        {
+          "display_name": "Age",
+          "variable_name": "age"
+        }
+      ],
+      "redirect_url": "http://special.url",
+      "active": true,
+      "migrate": null,
+      "id": 1807,
+      "createdAt": "2016-09-09T19:18:37.000Z",
+      "updatedAt": "2016-09-14T17:51:49.000Z"
+    }
+  ],
+  "meta": {
+    "total": 2,
+    "skipped": 0,
+    "perPage": "3",
+    "page": 1,
+    "pageCount": 1
+  }
+}

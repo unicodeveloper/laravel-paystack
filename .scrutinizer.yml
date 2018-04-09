@@ -1,0 +1,8 @@
+build:
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=clover'
+                coverage:
+                    file: 'clover'
+                    format: 'clover'
