@@ -23,46 +23,46 @@ class PaystackTest extends TestCase
 
     // Methods to test.
     const SET_KEY = "setKey";
-    const SET_HTTP_RESPONSE = "setHttpResponse";
-    const MAKE_PAYMENT_REQUEST = "makePaymentRequest";
-    const GET_AUTHORIZATION_URL = "getAuthorizationUrl";
-    const GET_AUTHORIZATION_RESPONSE = "getAuthorizationResponse";
-    const GEN_TRANX_REF = "genTranxRef";
-    const GET_RESPONSE = "getResponse";
-    const VERIFY_TRANSACTION_AT_GATEWAY = "verifyTransactionAtGateway";
-    const IS_TRANSACTION_VERIFICATION_VALID = "isTransactionVerificationValid";
-    const GET_PAYMENT_DATA = "getPaymentData";
-    const REDIRECT_NOW = "redirectNow";
-    const GET_ACCESS_CODE = "getAccessCode";
-    const GET_ALL_CUSTOMERS = "getAllCustomers";
-    const GET_ALL_PLANS = "getAllPlans";
-    const GET_ALL_TRANSACTIONS = "getAllTransactions";
-    const CREATE_PlAN = "createPlan";
+    const FETCH_PAGE = "fetchPage";
     const FETCH_PLAN = "fetchPlan";
+    const CREATE_PlAN = "createPlan";
+    const UPDATE_PAGE = "updatePage";
+    const CREATE_PAGE = "createPage";
     const UPDATE_PLAN = "updatePlan";
-    const CREATE_CUSTOMER = "createCustomer";
+    const REDIRECT_NOW = "redirectNow";
+    const GET_RESPONSE = "getResponse";
+    const GEN_TRANX_REF = "genTranxRef";
+    const GET_ALL_PAGES = "getAllPages";
+    const GET_ALL_PLANS = "getAllPlans";
     const FETCH_CUSTOMER = "fetchCustomer";
+    const GET_ACCESS_CODE = "getAccessCode";
+    const CREATE_CUSTOMER = "createCustomer";
     const UPDATE_CUSTOMER = "updateCustomer";
+    const GET_PAYMENT_DATA = "getPaymentData";
+    const LIST_SUBACCOUNTS = "listSubAccounts";
+    const FETCH_SUBACCOUNT = "fetchSubAccount";
+    const GET_ALL_CUSTOMERS = "getAllCustomers";
+    const SET_HTTP_RESPONSE = "setHttpResponse";
+    const CREATE_SUBACCOUNT = "createSubAccount";
+    const UPDATE_SUBACCOUNT = "updateSubAccount";
+    const FETCH_SUBSCRIPTION = "fetchSubscription";
+    const ENABLE_SUBSCRIPTION = "enableSubscription";
     const EXPORT_TRANSACTIONS = "exportTransactions";
     const CREATE_SUBSCRIPTION = "createSubscription";
-    const GET_ALL_SUBSCRIPTIONS = "getAllSubscriptions";
-    const GET_CUSTOMER_SUBSCRIPTIONS = "getCustomerSubscriptions";
-    const GET_PLAN_SUBSCRIPTIONS = "getPlanSubscriptions";
-    const ENABLE_SUBSCRIPTION = "enableSubscription";
+    const GET_ALL_TRANSACTIONS = "getAllTransactions";
+    const MAKE_PAYMENT_REQUEST = "makePaymentRequest";
     const DISABLE_SUBSCRIPTION = "disableSubscription";
-    const FETCH_SUBSCRIPTION = "fetchSubscription";
-    const CREATE_PAGE = "createPage";
-    const GET_ALL_PAGES = "getAllPages";
-    const FETCH_PAGE = "fetchPage";
-    const UPDATE_PAGE = "updatePage";
-    const CREATE_SUBACCOUNT = "createSubAccount";
-    const FETCH_SUBACCOUNT = "fetchSubAccount";
-    const LIST_SUBACCOUNTS = "listSubAccounts";
-    const UPDATE_SUBACCOUNT = "updateSubAccount";
+    const GET_AUTHORIZATION_URL = "getAuthorizationUrl";
+    const GET_ALL_SUBSCRIPTIONS = "getAllSubscriptions";
+    const GET_PLAN_SUBSCRIPTIONS = "getPlanSubscriptions";
+    const GET_CUSTOMER_SUBSCRIPTIONS = "getCustomerSubscriptions";
+    const GET_AUTHORIZATION_RESPONSE = "getAuthorizationResponse";
+    const VERIFY_TRANSACTION_AT_GATEWAY = "verifyTransactionAtGateway";
+    const IS_TRANSACTION_VERIFICATION_VALID = "isTransactionVerificationValid";
 
     // Properties
-    const AUTHORIZATION_URL = "authorizationUrl";
     const SECRET_KEY = "secretKey";
+    const AUTHORIZATION_URL = "authorizationUrl";
 
     /** @test */
     public function it_initiated_properly () 
@@ -117,9 +117,11 @@ class PaystackTest extends TestCase
 
         $reflection->invokeMethod(self::GET_AUTHORIZATION_URL, []);
 
-        $actual = $reflection->fetchProperty(self::AUTHORIZATION_URL);
+        $this->actual = $reflection->fetchProperty(self::AUTHORIZATION_URL)->value;
 
-        $expected = $this->getExpected("payment_response", "data", "authorization_url");
+        $keys = ["payment_response", "data", "authorization_url"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -191,13 +193,13 @@ class PaystackTest extends TestCase
     {
         $resource = $this->getResource();
 
-        $expected = $resource["validation_response_success"];
+        $this->expected = $resource["validation_response_success"];
 
         $reflection = $this->reflected("validation_response_success");
 
         $data = $reflection->invokeMethod(self::GET_PAYMENT_DATA);
 
-        $actual = $data;
+        $this->actual = $data;
 
         $this->checkEquals();
     }
@@ -237,11 +239,13 @@ class PaystackTest extends TestCase
     {
         $reflection->setProperty("response", $this->response("payment_response"));
 
-        $actual = $reflection->invokeMethod(self::GET_ACCESS_CODE);
+        $this->actual = $reflection->invokeMethod(self::GET_ACCESS_CODE);
 
-        $expected = $this->getExpected("payment_response", "data", "access_code");
+        $keys = ["payment_response", "data", "access_code"];
 
-        $this->assertEquals($expected, $actual);
+        $this->expected = $this->getExpected(...$keys);
+
+        $this->checkEquals();
     }
 
     /** 
@@ -262,7 +266,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::GET_ALL_CUSTOMERS);
 
-        $this->expected = $this->getExpected("all_customers", "data");
+        $keys = ["all_customers", "data"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -272,9 +278,11 @@ class PaystackTest extends TestCase
     {
         $reflection = $this->reflected("all_plans");
 
-        $actual = $reflection->invokeMethod(self::GET_ALL_PLANS);
+        $this->actual = $reflection->invokeMethod(self::GET_ALL_PLANS);
 
-        $expected = $this->getResource("all_plans", "data");
+        $keys = ["all_plans", "data"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -286,7 +294,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::GET_ALL_TRANSACTIONS);
 
-        $this->expected = $this->getExpected("all_transactions", "data");
+        $keys = ["all_transactions", "data"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -331,7 +341,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::CREATE_CUSTOMER);
 
-        $this->expected = $this->getExpected("created_customers");
+        $keys = ["created_customers"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -343,7 +355,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::FETCH_CUSTOMER, [1]);
 
-        $this->expected = $this->getExpected("fetch_customers");
+        $keys = ["fetch_customers"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -355,7 +369,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::UPDATE_CUSTOMER, [1]);
 
-        $this->expected = $this->getExpected("update_customers");
+        $keys = ["update_customers"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -367,7 +383,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod (self::EXPORT_TRANSACTIONS);
 
-        $this->expected = $this->getExpected("export_transactions");
+        $keys = ["export_transactions"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -390,7 +408,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::GET_ALL_SUBSCRIPTIONS);
 
-        $this->expected = $this->getExpected("all_subscriptions", "data");
+        $keys = ["all_subscriptions", "data"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -424,7 +444,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::ENABLE_SUBSCRIPTION);
 
-        $this->expected = $this->getExpected("enabled_subscription");
+        $keys = ["enabled_subscription"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -436,7 +458,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::DISABLE_SUBSCRIPTION);
 
-        $this->expected = $this->getExpected("disabled_subscription");
+        $keys = ["disabled_subscription"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -448,7 +472,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::FETCH_SUBSCRIPTION, ["subscription_id"]);
 
-        $this->expected = $this->getExpected("fetch_subscription");
+        $keys = ["fetch_subscription"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -470,7 +496,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::GET_ALL_PAGES);
 
-        $this->expected = $this->getExpected("all_pages");
+        $keys = ["all_pages"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -482,7 +510,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::FETCH_PAGE, ["page_id"]);
 
-        $this->expected = $this->getExpected("fetched_page");
+        $keys = ["fetched_page"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -494,7 +524,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::UPDATE_PAGE, ["page_id"]);
 
-        $this->expected = $this->getExpected("updated_page");
+        $keys = ["updated_page"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -506,7 +538,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::CREATE_SUBACCOUNT);
 
-        $this->expected = $this->getExpected("created_subaccount");
+        $keys = ["created_subaccount"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -518,7 +552,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::FETCH_SUBACCOUNT, ["subaccount_code"]);
 
-        $this->expected = $this->getExpected("fetched_subaccount");
+        $keys = ["fetched_subaccount"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -530,7 +566,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::LIST_SUBACCOUNTS, [20, 1]);
 
-        $this->expected = $this->getExpected("all_subaccount");
+        $keys = ["all_subaccount"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -542,7 +580,9 @@ class PaystackTest extends TestCase
 
         $this->actual = $reflection->invokeMethod(self::UPDATE_SUBACCOUNT, ["account_id"]);
 
-        $this->expected = $this->getExpected("updated_subaccount");
+        $keys = ["updated_subaccount"];
+
+        $this->expected = $this->getExpected(...$keys);
 
         $this->checkEquals();
     }
@@ -563,7 +603,7 @@ class PaystackTest extends TestCase
      * @param  array $keys Relative keys
      * @return mixed
      */
-    public function getExpected (&...$keys)
+    public function getExpected (...$keys)
     {
         $response = $this->getResource();
 
