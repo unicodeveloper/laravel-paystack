@@ -121,7 +121,7 @@ class PaystackTest extends TestCase
 
         $keys = ["payment_response", "data", "authorization_url"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -243,7 +243,7 @@ class PaystackTest extends TestCase
 
         $keys = ["payment_response", "data", "access_code"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -268,7 +268,7 @@ class PaystackTest extends TestCase
 
         $keys = ["all_customers", "data"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -282,7 +282,7 @@ class PaystackTest extends TestCase
 
         $keys = ["all_plans", "data"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -296,7 +296,7 @@ class PaystackTest extends TestCase
 
         $keys = ["all_transactions", "data"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -343,7 +343,7 @@ class PaystackTest extends TestCase
 
         $keys = ["created_customers"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -357,7 +357,7 @@ class PaystackTest extends TestCase
 
         $keys = ["fetch_customers"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -371,7 +371,7 @@ class PaystackTest extends TestCase
 
         $keys = ["update_customers"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -385,7 +385,7 @@ class PaystackTest extends TestCase
 
         $keys = ["export_transactions"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -410,7 +410,7 @@ class PaystackTest extends TestCase
 
         $keys = ["all_subscriptions", "data"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -446,7 +446,7 @@ class PaystackTest extends TestCase
 
         $keys = ["enabled_subscription"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -460,7 +460,7 @@ class PaystackTest extends TestCase
 
         $keys = ["disabled_subscription"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -474,7 +474,7 @@ class PaystackTest extends TestCase
 
         $keys = ["fetch_subscription"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -498,7 +498,7 @@ class PaystackTest extends TestCase
 
         $keys = ["all_pages"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -512,7 +512,7 @@ class PaystackTest extends TestCase
 
         $keys = ["fetched_page"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -526,7 +526,7 @@ class PaystackTest extends TestCase
 
         $keys = ["updated_page"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -540,7 +540,7 @@ class PaystackTest extends TestCase
 
         $keys = ["created_subaccount"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -554,7 +554,7 @@ class PaystackTest extends TestCase
 
         $keys = ["fetched_subaccount"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -568,7 +568,7 @@ class PaystackTest extends TestCase
 
         $keys = ["all_subaccount"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -582,7 +582,7 @@ class PaystackTest extends TestCase
 
         $keys = ["updated_subaccount"];
 
-        $this->expected = $this->getExpected(...$keys);
+        $this->expected = $this->getExpected($keys);
 
         $this->checkEquals();
     }
@@ -603,7 +603,7 @@ class PaystackTest extends TestCase
      * @param  array $keys Relative keys
      * @return mixed
      */
-    public function getExpected (&...$keys)
+    public function getExpected ($keys)
     {
         $response = $this->getResource();
 
