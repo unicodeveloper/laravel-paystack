@@ -477,7 +477,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse('/subscription?plan=' . $plan_id, 'GET', [])->getData();
+        return $this->setHttpResponse("/subscription?plan={$plan_id}", 'GET', [])->getData();
     }
 
     /**
@@ -518,7 +518,7 @@ class Paystack
     public function fetchSubscription($subscription_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/subscription/'.$subscription_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse("/subscription/$subscription_id", 'GET', [])->getResponse();
     }
 
     /**
@@ -619,7 +619,6 @@ class Paystack
 
         $this->setRequestOptions();
         return $this->setHttpResponse("/subaccount/?perPage=".(int) $per_page."&page=".(int) $page,"GET")->getResponse();
-
     }
 
 
