@@ -197,10 +197,11 @@ class Paystack
 
     /**
      * Hit Paystack Gateway to Verify that the transaction is valid
+     * @param  $trxref
      */
-    private function verifyTransactionAtGateway()
+    private function verifyTransactionAtGateway($trxref)
     {
-        $transactionRef = request()->query('trxref');
+        $transactionRef = $trxref ?: request()->query('trxref');
 
         $relativeUrl = "/transaction/verify/{$transactionRef}";
 
@@ -209,11 +210,12 @@ class Paystack
 
     /**
      * True or false condition whether the transaction is verified
+     * @param $trxref
      * @return boolean
      */
-    public function isTransactionVerificationValid()
+    public function isTransactionVerificationValid($trxref = null)
     {
-        $this->verifyTransactionAtGateway();
+        $this->verifyTransactionAtGateway($trxref);
 
         $result = $this->getResponse()['message'];
 
