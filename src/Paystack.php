@@ -202,7 +202,7 @@ class Paystack
     {
         $transactionRef = request()->query('trxref');
 
-        $relativeUrl = "/transaction/verify/{$transactionRef}";
+        $relativeUrl = Endpoint::VERIFY_TRANSACTION . "{$transactionRef}";
 
         $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
     }
