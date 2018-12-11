@@ -280,7 +280,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse("/customer", 'GET', [])->getData();
+        return $this->setHttpResponse(Endpoint::CUSTOMERS, 'GET', [])->getData();
     }
 
     /**
@@ -291,7 +291,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse("/plan", 'GET', [])->getData();
+        return $this->setHttpResponse(Endpoint::PLANS, 'GET', [])->getData();
     }
 
     /**
@@ -302,7 +302,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse("/transaction", 'GET', [])->getData();
+        return $this->setHttpResponse(Endpoint::TRANSACTIONS, 'GET', [])->getData();
     }
 
     /**
@@ -340,7 +340,7 @@ class Paystack
 
         $this->setRequestOptions();
 
-        $this->setHttpResponse("/plan", 'POST', $data);
+        $this->setHttpResponse(Endpoint::CREATE_PLAN, 'POST', $data);
 
     }
 
@@ -352,7 +352,7 @@ class Paystack
     public function fetchPlan($plan_code)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/plan/' . $plan_code, 'GET', [])->getResponse();
+        return $this->setHttpResponse(Endpoint::FETCH_PLAN . $plan_code, 'GET', [])->getResponse();
     }
 
     /**
@@ -373,7 +373,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/plan/' . $plan_code, 'PUT', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::UPDATE_PLAN . $plan_code, 'PUT', $data)->getResponse();
     }
 
     /**
@@ -391,7 +391,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::CREATE_CUSTOMER, 'POST', $data)->getResponse();
     }
 
     /**
@@ -402,7 +402,7 @@ class Paystack
     public function fetchCustomer($customer_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/customer/'. $customer_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse(Endpoint::FETCH_CUSTOMER . $customer_id, 'GET', [])->getResponse();
     }
 
     /**
@@ -422,7 +422,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/customer/'. $customer_id, 'PUT', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::UPDATE_CUSTOMER . $customer_id, 'PUT', $data)->getResponse();
     }
 
     /**
@@ -438,7 +438,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/transaction/export', 'GET', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::EXPORT_TRANSACTION, 'GET', $data)->getResponse();
     }
 
     /**
@@ -453,7 +453,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        $this->setHttpResponse('/subscription', 'POST', $data);
+        $this->setHttpResponse(Endpoint::CREATE_SUBSCRIPTION, 'POST', $data);
     }
 
     /**
@@ -465,7 +465,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse("/subscription", 'GET', [])->getData();
+        return $this->setHttpResponse(Endpoint::GET_ALL_SUBSCRIPTIONS, 'GET', [])->getData();
     }
 
     /**
@@ -478,7 +478,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse('/subscription?customer=' . $customer_id, 'GET', [])->getData();
+        return $this->setHttpResponse(Endpoint::GET_CUSTOMER_SUBSCRIPTION . $customer_id, 'GET', [])->getData();
     }
 
     /**
@@ -491,7 +491,7 @@ class Paystack
     {
         $this->setRequestOptions();
 
-        return $this->setHttpResponse('/subscription?plan=' . $plan_id, 'GET', [])->getData();
+        return $this->setHttpResponse(Endpoint::GET_PLAN_SUBSCRIPTION . $plan_id, 'GET', [])->getData();
     }
 
     /**
@@ -506,7 +506,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/subscription/enable', 'POST', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::ENABLE_SUBSCRIPTION, 'POST', $data)->getResponse();
     }
 
     /**
@@ -521,7 +521,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/subscription/disable', 'POST', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::DISABLE_SUBSCRIPTION, 'POST', $data)->getResponse();
     }
 
     /**
@@ -532,7 +532,7 @@ class Paystack
     public function fetchSubscription($subscription_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/subscription/'.$subscription_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse(Endpoint::FETCH_SUBSCRIPTION . $subscription_id, 'GET', [])->getResponse();
     }
 
     /**
@@ -547,7 +547,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        $this->setHttpResponse('/page', 'POST', $data);
+        $this->setHttpResponse(Endpoint::CREATE_PAGE, 'POST', $data);
     }
 
     /**
@@ -557,7 +557,7 @@ class Paystack
     public function getAllPages()
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/page', 'GET', [])->getResponse();
+        return $this->setHttpResponse(Endpoint::GET_ALL_PAGES, 'GET', [])->getResponse();
     }
 
     /**
@@ -568,7 +568,7 @@ class Paystack
     public function fetchPage($page_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/page/'.$page_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse(Endpoint::FETCH_PAGE . $page_id, 'GET', [])->getResponse();
     }
 
     /**
@@ -585,7 +585,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
+        return $this->setHttpResponse(Endpoint::UPDATE_PAGE . $page_id, 'PUT', $data)->getResponse();
     }
 
      /**
@@ -608,7 +608,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/subaccount', 'POST', array_filter($data))->getResponse();
+        return $this->setHttpResponse(Endpoint::CREATE_SUB_ACCOUNT, 'POST', array_filter($data))->getResponse();
 
     }
 
@@ -620,7 +620,7 @@ class Paystack
     public function fetchSubAccount($subaccount_code){
 
         $this->setRequestOptions();
-        return $this->setHttpResponse("/subaccount/{$subaccount_code}","GET",[])->getResponse();
+        return $this->setHttpResponse(Endpoint::FETCH_SUB_ACCOUNT . "{$subaccount_code}","GET",[])->getResponse();
 
     }
 
@@ -632,7 +632,7 @@ class Paystack
     public function listSubAccounts($per_page,$page){
 
         $this->setRequestOptions();
-        return $this->setHttpResponse("/subaccount/?perPage=".(int) $per_page."&page=".(int) $page,"GET")->getResponse();
+        return $this->setHttpResponse(Endpoint::LIST_SUB_ACCOUNT . (int) $per_page."&page=".(int) $page,"GET")->getResponse();
 
     }
 
@@ -658,7 +658,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", array_filter($data))->getResponse();
+        return $this->setHttpResponse(Endpoint::UPDATE_SUB_ACCOUNT . "{$subaccount_code}", "PUT", array_filter($data))->getResponse();
 
     }
 }

@@ -17,7 +17,7 @@ class Endpoint
 	const CREATE_CUSTOMER = "/customer";
 	const FETCH_CUSTOMER = "/customer/";
 	const UPDATE_CUSTOMER = "/customer/";
-	const SUBSCRIPTIONS = "/subscription";
+	const GET_ALL_SUBSCRIPTIONS = "/subscription";
 	const CREATE_SUBSCRIPTION = "/subscription";
 	const GET_CUSTOMER_SUBSCRIPTION = "/subscription?customer=";
 	const GET_PLAN_SUBSCRIPTION = "/subscription?plan=";
@@ -26,7 +26,7 @@ class Endpoint
 	const FETCH_SUBSCRIPTION = "/subscription/";
 	const CREATE_PAGE = "/page";
 	const GET_ALL_PAGES = "/page";
-	const FETCH_PAGE = "/page";
+	const FETCH_PAGE = "/page/";
 	const UPDATE_PAGE = "/page/";
 	const CREATE_SUB_ACCOUNT = "/subaccount";
 	const FETCH_SUB_ACCOUNT = "/subaccount/";
