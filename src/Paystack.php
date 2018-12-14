@@ -255,7 +255,7 @@ class Paystack
     }
 
     /**
-     * Get Access code from transaction callback respose
+     * Get Access code from transaction callback response
      * @return string
      */
     public function getAccessCode()
