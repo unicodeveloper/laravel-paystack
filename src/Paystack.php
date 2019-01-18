@@ -247,6 +247,33 @@ class Paystack
     }
 
     /**
+     * Get Payment details based on transaction referenece
+     * @return json
+     * @param String $trxref
+     * 
+     */
+    public function getRefPaymentData($trxref)
+    {
+        request()->query->set('trxref', $trxref);
+        return $this->getPaymentData();
+    }
+
+    /**
+     * Get Payment status and gateway response
+     * @return json
+     * @param String $trxref
+     * 
+     */
+    public function getPaymentStatus($trxref)
+    {
+        request()->query->set('trxref', $trxref);
+        $data = $this->getPaymentData()['data'];
+        $status = ['status' => $data['status'], 'gateway_response' => $data['gateway_response']];
+
+        return $status;
+    }
+
+    /**
      * Fluent method to redirect to Paystack Payment Page
      */
     public function redirectNow()
