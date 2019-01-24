@@ -230,8 +230,9 @@ class Paystack
 
         $result = $this->getResponse()['message'];
 
-        switch ($result) {
-            case self::VS:
+        //converting the string to lower case so as not to have issue
+        switch (strtolower($result)) {
+            case strtolower(self::VS):
                 $validate = true;
                 break;
             default:
@@ -246,6 +247,7 @@ class Paystack
      * Hit Paystack Gateway to Verify that the transaction is valid.
      *
      * @param string|null $trxref
+     * @throws PaymentVerificationFailedException
      */
     private function verifyTransactionAtGateway($trxref = null)
     {
@@ -253,6 +255,8 @@ class Paystack
         //then we will make use of it else we check the request query
         //for a parameter of 'trxref'
         $transactionRef = $trxref ?: request()->query('trxref');
+
+        if(!$transactionRef) throw new PaymentVerificationFailedException("Payment reference not provided");
 
         $relativeUrl = "/transaction/verify/{$transactionRef}";
 
