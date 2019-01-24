@@ -66,14 +66,6 @@ class Paystack
     }
 
     /**
-     * Get Base Url from Paystack config file
-     */
-    public function setBaseUrl()
-    {
-        $this->baseUrl = Config::get('paystack.paymentUrl');
-    }
-
-    /**
      * Get secret key from Paystack config file
      */
     public function setKey()
@@ -82,36 +74,57 @@ class Paystack
     }
 
     /**
+     * Get Base Url from Paystack config file
+     */
+    public function setBaseUrl()
+    {
+        $this->baseUrl = Config::get('paystack.paymentUrl');
+    }
+
+    /**
      * Set options for making the Client request
      */
     private function setRequestOptions()
     {
-        $authBearer = 'Bearer '. $this->secretKey;
+        $authBearer = 'Bearer ' . $this->secretKey;
 
         $this->client = new Client(
             [
                 'base_uri' => $this->baseUrl,
                 'headers' => [
                     'Authorization' => $authBearer,
-                    'Content-Type'  => 'application/json',
-                    'Accept'        => 'application/json'
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'
                 ]
             ]
         );
     }
 
-   
-     /**
-     
-     * Initiate a payment request to Paystack
-     * Included the option to pass the payload to this method for situations 
-     * when the payload is built on the fly (not passed to the controller from a view)
+    /**
+     * Get the authorization url from the callback response
      * @return Paystack
+     * @throws IsNullException
      */
-
-    public function makePaymentRequest( $data = null)
+    public function getAuthorizationUrl()
     {
-        if ( $data == null ) {
+        $this->makePaymentRequest();
+
+        $this->url = $this->getResponse()['data']['authorization_url'];
+
+        return $this;
+    }
+
+    /**
+     * Initiate a payment request to Paystack
+     * Included the option to pass the payload to this method for situations
+     * when the payload is built on the fly (not passed to the controller from a view)
+     * @param null|array $data
+     * @return Paystack
+     * @throws IsNullException
+     */
+    public function makePaymentRequest($data = null)
+    {
+        if ($data == null) {
             $data = [
                 "amount" => intval(request()->amount),
                 "reference" => request()->reference,
@@ -121,18 +134,17 @@ class Paystack
                 "last_name" => request()->last_name,
                 "callback_url" => request()->callback_url,
                 /*
-                * to allow use of metadata on Paystack dashboard and a means to return additional data back to redirect url
-                * form need an input field: <input type="hidden" name="metadata" value="{{ json_encode($array) }}" >
-                *array must be set up as: $array = [ 'custom_fields' => [
-                *                                                            ['display_name' => "Cart Id", "variable_name" => "cart_id", "value" => "2"],
-                *                                                            ['display_name' => "Sex", "variable_name" => "sex", "value" => "female"],
-                *                                                            .
-                *                                                            .
-                *                                                            .
-                *                                                        ]
-                *                                        
-                *                                  ]
-                */
+                 * to allow use of metadata on Paystack dashboard and a means to return additional data back to redirect url
+                 * form need an input field:
+                 * <input type="hidden" name="metadata" value="{{ json_encode($array) }}"/>
+                 * array must be set up as:
+                 * $array = [ 'custom_fields' => [
+                 *               ['display_name' => "Cart Id", "variable_name" => "cart_id", "value" => "2"],
+                 *               ['display_name' => "Sex", "variable_name" => "sex", "value" => "female"]
+                 * ...
+                 *      ]
+                 *  ]
+                 */
                 'metadata' => request()->metadata
             ];
 
@@ -144,7 +156,6 @@ class Paystack
 
         return $this;
     }
-
 
     /**
      * @param string $relativeUrl
@@ -168,23 +179,21 @@ class Paystack
     }
 
     /**
-     * Get the authorization url from the callback response
-     * @return Paystack
-     */
-    public function getAuthorizationUrl()
-    {
-        $this->makePaymentRequest();
-
-        $this->url = $this->getResponse()['data']['authorization_url'];
-
-        return $this;
-    }
-    
-     /**
-     * Get the authorization callback response
-     * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect 
-     * and might need to take different actions based on the success or not of the transaction
+     * Get the whole response from a get operation
      * @return array
+     */
+    private function getResponse()
+    {
+        return json_decode($this->response->getBody(), true);
+    }
+
+    /**
+     * Get the authorization callback response
+     * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect
+     * and might need to take different actions based on the success or not of the transaction
+     * @param $data
+     * @return array
+     * @throws IsNullException
      */
     public function getAuthorizationResponse($data)
     {
@@ -196,45 +205,8 @@ class Paystack
     }
 
     /**
-     * Hit Paystack Gateway to Verify that the transaction is valid
-     */
-    private function verifyTransactionAtGateway()
-    {
-        $transactionRef = request()->query('trxref');
-
-        $relativeUrl = "/transaction/verify/{$transactionRef}";
-
-        $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
-    }
-
-    /**
-     * True or false condition whether the transaction is verified
-     * @return boolean
-     */
-    public function isTransactionVerificationValid()
-    {
-        $this->verifyTransactionAtGateway();
-
-        $result = $this->getResponse()['message'];
-
-        switch ($result) {
-            case self::VS:
-                $validate = true;
-                break;
-            case self::ITF:
-                $validate = false;
-                break;
-            default:
-                $validate = false;
-                break;
-        }
-
-        return $validate;
-    }
-
-    /**
      * Get Payment details if the transaction was verified successfully
-     * @return json
+     * @return array
      * @throws PaymentVerificationFailedException
      */
     public function getPaymentData()
@@ -247,6 +219,47 @@ class Paystack
     }
 
     /**
+     * True or false condition whether the transaction is verified.
+     *
+     * @param string|null $transactionReferenceKey
+     * @return boolean
+     */
+    public function isTransactionVerificationValid($transactionReferenceKey = null)
+    {
+        $this->verifyTransactionAtGateway($transactionReferenceKey);
+
+        $result = $this->getResponse()['message'];
+
+        switch ($result) {
+            case self::VS:
+                $validate = true;
+                break;
+            default:
+                $validate = false;
+                break;
+        }
+
+        return $validate;
+    }
+
+    /**
+     * Hit Paystack Gateway to Verify that the transaction is valid.
+     *
+     * @param string|null $trxref
+     */
+    private function verifyTransactionAtGateway($trxref = null)
+    {
+        //if the user specified the reference id of the transaction,
+        //then we will make use of it else we check the request query
+        //for a parameter of 'trxref'
+        $transactionRef = $trxref ?: request()->query('trxref');
+
+        $relativeUrl = "/transaction/verify/{$transactionRef}";
+
+        $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
+    }
+
+    /**
      * Fluent method to redirect to Paystack Payment Page
      */
     public function redirectNow()
@@ -255,7 +268,7 @@ class Paystack
     }
 
     /**
-     * Get Access code from transaction callback respose
+     * Get Access code from transaction callback response
      * @return string
      */
     public function getAccessCode()
@@ -275,6 +288,7 @@ class Paystack
     /**
      * Get all the customers that have made transactions on your platform
      * @return array
+     * @throws IsNullException
      */
     public function getAllCustomers()
     {
@@ -284,8 +298,18 @@ class Paystack
     }
 
     /**
+     * Get the data response from a get operation
+     * @return array
+     */
+    private function getData()
+    {
+        return $this->getResponse()['data'];
+    }
+
+    /**
      * Get all the plans that you have on Paystack
      * @return array
+     * @throws IsNullException
      */
     public function getAllPlans()
     {
@@ -297,30 +321,13 @@ class Paystack
     /**
      * Get all the transactions that have happened overtime
      * @return array
+     * @throws IsNullException
      */
     public function getAllTransactions()
     {
         $this->setRequestOptions();
 
         return $this->setHttpResponse("/transaction", 'GET', [])->getData();
-    }
-
-    /**
-     * Get the whole response from a get operation
-     * @return array
-     */
-    private function getResponse()
-    {
-        return json_decode($this->response->getBody(), true);
-    }
-
-    /**
-     * Get the data response from a get operation
-     * @return array
-     */
-    private function getData()
-    {
-        return $this->getResponse()['data'];
     }
 
     /**
@@ -348,6 +355,7 @@ class Paystack
      * Fetch any plan based on its plan id or code
      * @param $plan_code
      * @return array
+     * @throws IsNullException
      */
     public function fetchPlan($plan_code)
     {
@@ -359,6 +367,7 @@ class Paystack
      * Update any plan's details based on its id or code
      * @param $plan_code
      * @return array
+     * @throws IsNullException
      */
     public function updatePlan($plan_code)
     {
@@ -398,17 +407,19 @@ class Paystack
      * Fetch a customer based on id or code
      * @param $customer_id
      * @return array
+     * @throws IsNullException
      */
     public function fetchCustomer($customer_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/customer/'. $customer_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse('/customer/' . $customer_id, 'GET', [])->getResponse();
     }
 
     /**
      * Update a customer's details based on their id or code
      * @param $customer_id
      * @return array
+     * @throws IsNullException
      */
     public function updateCustomer($customer_id)
     {
@@ -422,12 +433,13 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/customer/'. $customer_id, 'PUT', $data)->getResponse();
+        return $this->setHttpResponse('/customer/' . $customer_id, 'PUT', $data)->getResponse();
     }
 
     /**
      * Export transactions in .CSV
      * @return array
+     * @throws IsNullException
      */
     public function exportTransactions()
     {
@@ -460,6 +472,7 @@ class Paystack
      * Get all the subscriptions made on Paystack.
      *
      * @return array
+     * @throws IsNullException
      */
     public function getAllSubscriptions()
     {
@@ -473,6 +486,7 @@ class Paystack
      *
      * @param integer $customer_id
      * @return array
+     * @throws IsNullException
      */
     public function getCustomerSubscriptions($customer_id)
     {
@@ -486,6 +500,7 @@ class Paystack
      *
      * @param  integer $plan_id
      * @return array
+     * @throws IsNullException
      */
     public function getPlanSubscriptions($plan_id)
     {
@@ -497,6 +512,7 @@ class Paystack
     /**
      * Enable a subscription using the subscription code and token
      * @return array
+     * @throws IsNullException
      */
     public function enableSubscription()
     {
@@ -512,6 +528,7 @@ class Paystack
     /**
      * Disable a subscription using the subscription code and token
      * @return array
+     * @throws IsNullException
      */
     public function disableSubscription()
     {
@@ -528,11 +545,12 @@ class Paystack
      * Fetch details about a certain subscription
      * @param mixed $subscription_id
      * @return array
+     * @throws IsNullException
      */
     public function fetchSubscription($subscription_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/subscription/'.$subscription_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse('/subscription/' . $subscription_id, 'GET', [])->getResponse();
     }
 
     /**
@@ -553,6 +571,7 @@ class Paystack
     /**
      * Fetches all the pages the merchant has
      * @return array
+     * @throws IsNullException
      */
     public function getAllPages()
     {
@@ -564,17 +583,19 @@ class Paystack
      * Fetch details about a certain page using its id or slug
      * @param mixed $page_id
      * @return array
+     * @throws IsNullException
      */
     public function fetchPage($page_id)
     {
         $this->setRequestOptions();
-        return $this->setHttpResponse('/page/'.$page_id, 'GET', [])->getResponse();
+        return $this->setHttpResponse('/page/' . $page_id, 'GET', [])->getResponse();
     }
 
     /**
      * Update the details about a particular page
      * @param $page_id
      * @return array
+     * @throws IsNullException
      */
     public function updatePage($page_id)
     {
@@ -585,18 +606,20 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        return $this->setHttpResponse('/page/'.$page_id, 'PUT', $data)->getResponse();
+        return $this->setHttpResponse('/page/' . $page_id, 'PUT', $data)->getResponse();
     }
 
-     /**
+    /**
      * Creates a subaccount to be used for split payments . Required    params are business_name , settlement_bank , account_number ,   percentage_charge
-     * 
+     *
      * @return array
+     * @throws IsNullException
      */
-    
-    public function createSubAccount(){
+
+    public function createSubAccount()
+    {
         $data = [
-            "business_name" => request()->business_name, 
+            "business_name" => request()->business_name,
             "settlement_bank" => request()->settlement_bank,
             "account_number" => request()->account_number,
             "percentage_charge" => request()->percentage_charge,
@@ -612,40 +635,45 @@ class Paystack
 
     }
 
-     /**
+    /**
      * Fetches details of a subaccount
-     * @param subaccount code
+     *
+     * @param string subaccount_code
      * @return array
+     * @throws IsNullException
      */
-    public function fetchSubAccount($subaccount_code){
+    public function fetchSubAccount($subaccount_code)
+    {
 
         $this->setRequestOptions();
-        return $this->setHttpResponse("/subaccount/{$subaccount_code}","GET",[])->getResponse();
+        return $this->setHttpResponse("/subaccount/{$subaccount_code}", "GET", [])->getResponse();
 
     }
 
-     /**
+    /**
      * Lists all the subaccounts associated with the account
      * @param $per_page - Specifies how many records to retrieve per page , $page - SPecifies exactly what page to retrieve
+     * @param $page
      * @return array
+     * @throws IsNullException
      */
-    public function listSubAccounts($per_page,$page){
-
+    public function listSubAccounts($per_page, $page)
+    {
         $this->setRequestOptions();
-        return $this->setHttpResponse("/subaccount/?perPage=".(int) $per_page."&page=".(int) $page,"GET")->getResponse();
-
+        return $this->setHttpResponse("/subaccount/?perPage=" . (int)$per_page . "&page=" . (int)$page, "GET")->getResponse();
     }
 
 
     /**
      * Updates a subaccount to be used for split payments . Required params are business_name , settlement_bank , account_number , percentage_charge
-     * @param subaccount code 
+     * @param string subaccount_code
      * @return array
+     * @throws IsNullException
      */
-    
-    public function updateSubAccount($subaccount_code){
+    public function updateSubAccount($subaccount_code)
+    {
         $data = [
-            "business_name" => request()->business_name, 
+            "business_name" => request()->business_name,
             "settlement_bank" => request()->settlement_bank,
             "account_number" => request()->account_number,
             "percentage_charge" => request()->percentage_charge,
