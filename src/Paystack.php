@@ -207,12 +207,13 @@ class Paystack
 
     /**
      * Get Payment details if the transaction was verified successfully
+     * @param string|null $transactionReferenceKey
      * @return array
      * @throws PaymentVerificationFailedException
      */
-    public function getPaymentData()
+    public function getPaymentData($transactionReferenceKey = null)
     {
-        if ($this->isTransactionVerificationValid()) {
+        if ($this->isTransactionVerificationValid($transactionReferenceKey)) {
             return $this->getResponse();
         } else {
             throw new PaymentVerificationFailedException("Invalid Transaction Reference");
