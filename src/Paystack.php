@@ -12,6 +12,7 @@
 namespace Unicodeveloper\Paystack;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Config;
 use Unicodeveloper\Paystack\Exceptions\IsNullException;
 use Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException;
@@ -226,21 +227,25 @@ class Paystack
      */
     public function isTransactionVerificationValid($transactionReferenceKey = null)
     {
-        $this->verifyTransactionAtGateway($transactionReferenceKey);
+        try {
+            $this->verifyTransactionAtGateway($transactionReferenceKey);
 
-        $result = $this->getResponse()['message'];
+            $result = $this->getResponse()['message'];
 
-        //converting the string to lower case so as not to have issue
-        switch (strtolower($result)) {
-            case strtolower(self::VS):
-                $validate = true;
-                break;
-            default:
-                $validate = false;
-                break;
+            //converting the string to lower case so as not to have issue
+            switch (strtolower($result)) {
+                case strtolower(self::VS):
+                    $validate = true;
+                    break;
+                default:
+                    $validate = false;
+                    break;
+            }
+
+            return $validate;
+        }catch (RequestException $exception){
+            return false;
         }
-
-        return $validate;
     }
 
     /**
@@ -261,6 +266,7 @@ class Paystack
         $relativeUrl = "/transaction/verify/{$transactionRef}";
 
         $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
+
     }
 
     /**
