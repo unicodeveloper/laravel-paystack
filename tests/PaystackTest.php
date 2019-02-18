@@ -12,11 +12,7 @@
 namespace Unicodeveloper\Paystack\Test;
 
 use Mockery as m;
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
-use Unicodeveloper\Paystack\Paystack;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Facade as Facade;
 
 class PaystackTest extends TestCase
 {
