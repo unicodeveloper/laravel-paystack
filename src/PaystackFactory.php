@@ -10,6 +10,7 @@ use Illuminate\Contracts\Cache\Factory;
 use Madewithlove\IlluminatePsrCacheBridge\Laravel\CacheItemPool;
 use Unicodeveloper\Paystack\Http\ClientBuilder;
 use Xeviant\Paystack\Client;
+use Xeviant\Paystack\Config;
 use Xeviant\Paystack\Exception\InvalidArgumentException;
 
 class PaystackFactory
@@ -28,13 +29,25 @@ class PaystackFactory
 
     public function make(array $config)
     {
-        if (empty($config)) {
-            throw new InvalidArgumentException('You cannot use the Paystack Factory without a SECRET and PUBLIC key');
+        if ($this->secretKeyDoesNotExist($config)) {
+            throw new InvalidArgumentException('You cannot use the Paystack Factory without a SECRET key, go into "paystack.php" to set one.');
         }
 
-        $client = new Client($this->getBuilder($config), 'v1');
+        $compatibleConfig = $this->createCompatibleConfiguration($config);
+
+        $client = new Client($this->getBuilder($config), 'v1', $compatibleConfig);
 
         return $client;
+    }
+
+    protected function secretKeyDoesNotExist(array $config)
+    {
+        return !array_key_exists('secretKey', $config) || (isset($config['secretKey']) && empty($config['secretKey']));
+    }
+
+    public function createCompatibleConfiguration(array $config)
+    {
+        return new Config(null, $config['publicKey'] ?: null, $config['secretKey'] ?: null, 'v1');
     }
 
     protected function getBuilder($config)

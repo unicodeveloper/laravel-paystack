@@ -20,7 +20,7 @@ final class PaystackFactoryTest extends AbstractTestBenchTestCase
     {
         $factory = $this->getFactory();
 
-        $client = $factory[0]->make(['secret' => 'sk_123', 'public' => 'pk_123']);
+        $client = $factory[0]->make(['secretKey' => 'sk_123', 'publicKey' => 'pk_123']);
 
         self::assertInstanceOf(Client::class, $client);
     }
@@ -31,7 +31,7 @@ final class PaystackFactoryTest extends AbstractTestBenchTestCase
 
         $factory[1]->shouldReceive('store')->once()->with(null)->andReturn(Mockery::mock(Repository::class));
 
-        $client = $factory[0]->make(['secret' => 'sk_123', 'public' => 'pk_123', 'cache' => true]);
+        $client = $factory[0]->make(['secretKey' => 'sk_123', 'publicKey' => 'pk_123', 'cache' => true]);
 
         $this->assertInstanceOf(Client::class, $client);
     }
@@ -40,7 +40,7 @@ final class PaystackFactoryTest extends AbstractTestBenchTestCase
     {
         $factory = $this->getFactory();
 
-        $client = $factory[0]->make(['secret' => 'sk_123', 'public' => 'pk_123', 'apiUrl' => 'https://api.example.co']);
+        $client = $factory[0]->make(['secretKey' => 'sk_123', 'publicKey' => 'pk_123', 'paymentUrl' => 'https://api.example.co']);
 
         $this->assertInstanceOf(Client::class, $client);
     }
@@ -49,7 +49,7 @@ final class PaystackFactoryTest extends AbstractTestBenchTestCase
     {
         $factory = $this->getFactory();
 
-        $client = $factory[0]->make(['secret' => 'sk_123', 'public' => 'pk_123', 'apiVersion' => 'v2']);
+        $client = $factory[0]->make(['secretKey' => 'sk_123', 'publicKey' => 'pk_123', 'apiVersion' => 'v2']);
 
         $this->assertInstanceOf(Client::class, $client);
     }

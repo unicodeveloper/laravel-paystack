@@ -15,7 +15,7 @@ class PaystackManagerTest extends AbstractTestCase
 {
     public function testCreateConnection()
     {
-        $config = ['secret_key' => 'sk_123abc', 'public_key' => 'pk_123abc'];
+        $config = ['secretKey' => 'sk_123abc', 'publicKey' => 'pk_123abc'];
 
         $manager = $this->getManager($config);
 
