@@ -13,7 +13,12 @@ declare(strict_types=1);
 
 namespace Unicodeveloper\Paystack;
 
+use function Clue\StreamFilter\fun;
+use Illuminate\Container\Container;
+use Illuminate\Foundation\Application as LaravelApp;
 use Illuminate\Support\ServiceProvider;
+use Xeviant\Paystack\Client;
+use Laravel\Lumen\Application as LumenApp;
 
 class PaystackServiceProvider extends ServiceProvider
 {
@@ -30,11 +35,22 @@ class PaystackServiceProvider extends ServiceProvider
     */
     public function boot()
     {
-        $config = realpath(__DIR__.'/../resources/config/paystack.php');
+        $this->setupConfig();
+    }
 
-        $this->publishes([
-            $config => config_path('paystack.php')
-        ]);
+    protected function setupConfig()
+    {
+        $config = realpath($raw = __DIR__.'/../resources/config/paystack.php') ?: $raw;
+
+        if ($this->app instanceof LaravelApp && $this->app->runningInConsole()) {
+            $this->publishes([
+                $config => config_path('paystack.php')
+            ]);
+        } elseif ($this->app instanceof LumenApp) {
+            $this->app->configure('paystack');
+        }
+
+        $this->mergeConfigFrom($config, 'paystack');
     }
 
     /**
@@ -47,6 +63,50 @@ class PaystackServiceProvider extends ServiceProvider
             return new Paystack;
 
         });
+
+        $this->registerPaystackFactory()
+            ->registerPaystackManager()
+            ->registerCoreBindings();
+    }
+
+    protected function registerPaystackFactory()
+    {
+        $this->app->singleton('paystack.factory', function (Container $container) {
+            $cache = $container['cache'];
+
+            return new PaystackFactory($cache);
+        });
+
+        $this->app->alias('paystack.factory', PaystackFactory::class);
+
+        return $this;
+    }
+
+    protected function registerPaystackManager()
+    {
+        $this->app->singleton('paystack', function (Container $container) {
+            $config = $container['config'];
+            $factory = $container['paystack.factory'];
+
+            return new PaystackManager($config, $factory);
+        });
+
+        $this->app->alias('paystack', PaystackManager::class);
+
+        return $this;
+    }
+
+    protected function registerCoreBindings()
+    {
+        $this->app->bind('paystack.connection', function (Container $container) {
+           $manager = $container['paystack'];
+
+           return $manager->connection();
+        });
+
+        $this->app->alias('paystack.connection', Client::class);
+
+        return $this;
     }
 
     /**
@@ -55,6 +115,11 @@ class PaystackServiceProvider extends ServiceProvider
     */
     public function provides()
     {
-        return ['laravel-paystack'];
+        return [
+            'paystack',
+            'paystack.factory',
+            'laravel-paystack',
+            'paystack.connection',
+        ];
     }
 }
