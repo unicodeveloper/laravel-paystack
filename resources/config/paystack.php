@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Laravel Paystack package.
  *
@@ -11,6 +13,13 @@
 
 return [
 
+    'default' => 'main',
+
+    'connections' => [
+      'main' => [
+
+      ]
+    ],
     /**
      * Public Key From Paystack Dashboard
      *
