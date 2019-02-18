@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Unicodeveloper\Paystack;
 
 /**
@@ -67,5 +66,21 @@ class PaystackManager extends AbstractManager
     public function getFactory()
     {
         return $this->factory;
+    }
+
+    public function __call(string $method, array $parameters)
+    {
+        $legacyObject = $this->getLegacyObject();
+
+        if (method_exists($legacyObject, $method)) {
+            return $legacyObject->{$method}(...$parameters);
+        }
+
+        return parent::__call($method, $parameters);
+    }
+
+    protected function getLegacyObject()
+    {
+        return new Paystack;
     }
 }

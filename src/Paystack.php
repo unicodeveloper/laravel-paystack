@@ -65,6 +65,7 @@ class Paystack
         $this->setKey();
         $this->setBaseUrl();
         $this->setRequestOptions();
+        $this->paystack = app()->make('paystack.connection');
     }
 
     /**
@@ -102,11 +103,11 @@ class Paystack
         );
     }
 
-   
-     /**
-     
+
+    /**
+
      * Initiate a payment request to Paystack
-     * Included the option to pass the payload to this method for situations 
+     * Included the option to pass the payload to this method for situations
      * when the payload is built on the fly (not passed to the controller from a view)
      * @return Paystack
      */
@@ -132,7 +133,7 @@ class Paystack
                 *                                                            .
                 *                                                            .
                 *                                                        ]
-                *                                        
+                *
                 *                                  ]
                 */
                 'metadata' => request()->metadata
@@ -181,10 +182,10 @@ class Paystack
 
         return $this;
     }
-    
-     /**
+
+    /**
      * Get the authorization callback response
-     * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect 
+     * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect
      * and might need to take different actions based on the success or not of the transaction
      * @return array
      */
@@ -590,15 +591,15 @@ class Paystack
         return $this->setHttpResponse(Endpoint::UPDATE_PAGE . $page_id, 'PUT', $data)->getResponse();
     }
 
-     /**
+    /**
      * Creates a subaccount to be used for split payments . Required    params are business_name , settlement_bank , account_number ,   percentage_charge
-     * 
+     *
      * @return array
      */
-    
+
     public function createSubAccount(){
         $data = [
-            "business_name" => request()->business_name, 
+            "business_name" => request()->business_name,
             "settlement_bank" => request()->settlement_bank,
             "account_number" => request()->account_number,
             "percentage_charge" => request()->percentage_charge,
@@ -614,7 +615,7 @@ class Paystack
 
     }
 
-     /**
+    /**
      * Fetches details of a subaccount
      * @param subaccount code
      * @return array
@@ -626,28 +627,28 @@ class Paystack
 
     }
 
-     /**
+    /**
      * Lists all the subaccounts associated with the account
      * @param $per_page - Specifies how many records to retrieve per page , $page - SPecifies exactly what page to retrieve
      * @return array
      */
-    public function listSubAccounts($per_page,$page){
+    public function listSubAccounts($per_page, $page) {
 
         $this->setRequestOptions();
-        return $this->setHttpResponse(Endpoint::LIST_SUB_ACCOUNT . (int) $per_page."&page=".(int) $page,"GET")->getResponse();
 
+        return $this->paystack->subAccount()->list(['perPage' => $per_page, 'page' => $page]);
     }
 
 
     /**
      * Updates a subaccount to be used for split payments . Required params are business_name , settlement_bank , account_number , percentage_charge
-     * @param subaccount code 
+     * @param subaccount code
      * @return array
      */
-    
+
     public function updateSubAccount($subaccount_code){
         $data = [
-            "business_name" => request()->business_name, 
+            "business_name" => request()->business_name,
             "settlement_bank" => request()->settlement_bank,
             "account_number" => request()->account_number,
             "percentage_charge" => request()->percentage_charge,
