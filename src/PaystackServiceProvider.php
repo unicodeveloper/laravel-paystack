@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Unicodeveloper\Paystack;
 
-use function Clue\StreamFilter\fun;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApp;
 use Illuminate\Support\ServiceProvider;
