@@ -10,6 +10,7 @@ use Illuminate\Contracts\Cache\Factory;
 use Madewithlove\IlluminatePsrCacheBridge\Laravel\CacheItemPool;
 use Unicodeveloper\Paystack\Http\ClientBuilder;
 use Xeviant\Paystack\Client;
+use Xeviant\Paystack\Exception\InvalidArgumentException;
 
 class PaystackFactory
 {
@@ -27,7 +28,11 @@ class PaystackFactory
 
     public function make(array $config)
     {
-        $client = new Client($this->getBuilder(), 'v1');
+        if (empty($config)) {
+            throw new InvalidArgumentException('You cannot use the Paystack Factory without a SECRET and PUBLIC key');
+        }
+
+        $client = new Client($this->getBuilder($config), 'v1');
 
         return $client;
     }

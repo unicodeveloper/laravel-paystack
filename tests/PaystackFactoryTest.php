@@ -29,9 +29,9 @@ final class PaystackFactoryTest extends AbstractTestBenchTestCase
     {
         $factory = $this->getFactory();
 
-        $factory[1]->shouldRecieve('store')->once()->with(null)->andReturn(Mockery::mock(Repository::class));
+        $factory[1]->shouldReceive('store')->once()->with(null)->andReturn(Mockery::mock(Repository::class));
 
-        $client = $factory[0]->make(['secret' => 'sk_123', 'public' => 'pk_123']);
+        $client = $factory[0]->make(['secret' => 'sk_123', 'public' => 'pk_123', 'cache' => true]);
 
         $this->assertInstanceOf(Client::class, $client);
     }
@@ -69,6 +69,6 @@ final class PaystackFactoryTest extends AbstractTestBenchTestCase
     protected function getFactory()
     {
         $cache = Mockery::mock(Factory::class);
-        return [new PaystackFactory(), $cache];
+        return [new PaystackFactory($cache), $cache];
     }
 }
