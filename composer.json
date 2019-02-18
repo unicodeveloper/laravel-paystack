@@ -13,7 +13,8 @@
         "email": "info@devfunsho.com"
       }
    ],
-   "minimum-stability": "stable",
+   "minimum-stability": "dev",
+  "prefer-stable": true,
    "require": {
      "php": "^7.1.3",
         "illuminate/support": "5.7.*",
