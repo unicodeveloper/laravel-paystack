@@ -40,15 +40,15 @@ return [
 
     'connections' => [
         'main' => [
-            'publicKey' => $publicKey,
-            'secretKey' => $secretKey,
-            'paymentUrl' => $paymentUrl
+            'publicKey'     => $publicKey,
+            'secretKey'     => $secretKey,
+            'paymentUrl'    => $paymentUrl
         ],
 
         'alternative' => [
-            'publicKey' => $publicKey,
-            'secretKey' => $secretKey,
-            'paymentUrl' => $paymentUrl
+            'publicKey'     => $publicKey,
+            'secretKey'     => $secretKey,
+            'paymentUrl'    => $paymentUrl
         ]
     ],
 ];
