@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Unicodeveloper\Paystack;
 
-use GuzzleHttp\Client;
 use Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException;
 
 class Paystack

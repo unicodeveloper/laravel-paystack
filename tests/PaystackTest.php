@@ -47,7 +47,7 @@ class PaystackTest extends TestCase
 
     public function testAllPlansAreReturned()
     {
-        $array = $this->paystack->shouldReceive('getAllPlans')->andReturn(['intermediate-plan']);
+        $array = $this->paystack->shouldReceive('getAllPlans')->andReturn([]);
 
         $this->assertEquals('array', gettype(array($array)));
     }
