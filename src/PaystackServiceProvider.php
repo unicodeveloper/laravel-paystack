@@ -58,9 +58,7 @@ class PaystackServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('laravel-paystack', function () {
-
             return new Paystack;
-
         });
 
         $this->registerPaystackFactory()
