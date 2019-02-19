@@ -22,11 +22,22 @@ class PaystackFactory
      */
     private $cache;
 
+    /**
+     * PaystackFactory constructor.
+     *
+     * @param Factory|null $cache
+     */
     public function __construct(Factory $cache = null)
     {
         $this->cache = $cache;
     }
 
+    /**
+     * Creates A Paystack Client Object
+     *
+     * @param array $config
+     * @return Client
+     */
     public function make(array $config)
     {
         if ($this->secretKeyDoesNotExist($config)) {
@@ -40,16 +51,34 @@ class PaystackFactory
         return $client;
     }
 
+    /**
+     * Check to see if Secret key doesn't exists
+     *
+     * @param array $config
+     * @return bool
+     */
     protected function secretKeyDoesNotExist(array $config)
     {
         return !array_key_exists('secretKey', $config) || (isset($config['secretKey']) && empty($config['secretKey']));
     }
 
+    /**
+     * Creates a Compatible Paystack Client Configuration from a configuration array
+     *
+     * @param array $config
+     * @return Config
+     */
     public function createCompatibleConfiguration(array $config)
     {
         return new Config(null, $config['publicKey'] ?: null, $config['secretKey'] ?: null, 'v1');
     }
 
+    /**
+     * Prepares and retrieves the Paystack client builder
+     *
+     * @param $config
+     * @return ClientBuilder
+     */
     protected function getBuilder($config)
     {
         $builder = new ClientBuilder();

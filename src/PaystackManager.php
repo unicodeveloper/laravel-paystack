@@ -35,6 +35,12 @@ class PaystackManager extends AbstractManager
      */
     private $factory;
 
+    /**
+     * PaystackManager constructor.
+     *
+     * @param Repository $repository
+     * @param PaystackFactory $factory
+     */
     public function __construct(Repository $repository, PaystackFactory $factory)
     {
         parent::__construct($repository);
@@ -63,11 +69,19 @@ class PaystackManager extends AbstractManager
         return 'paystack';
     }
 
+    /**
+     * Gets the instance of the Paystack Factory
+     *
+     * @return PaystackFactory
+     */
     public function getFactory()
     {
         return $this->factory;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function __call(string $method, array $parameters)
     {
         $legacyObject = $this->getLegacyObject();
@@ -79,6 +93,11 @@ class PaystackManager extends AbstractManager
         return parent::__call($method, $parameters);
     }
 
+    /**
+     * Gets the Legacy Paystack Object from v1 of this package
+     *
+     * @return Paystack
+     */
     protected function getLegacyObject()
     {
         return new Paystack;

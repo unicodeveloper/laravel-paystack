@@ -37,6 +37,9 @@ class PaystackServiceProvider extends ServiceProvider
         $this->setupConfig();
     }
 
+    /**
+     * Sets up Paystack configuration file
+     */
     protected function setupConfig()
     {
         $config = realpath($raw = __DIR__.'/../resources/config/paystack.php') ?: $raw;
@@ -66,6 +69,11 @@ class PaystackServiceProvider extends ServiceProvider
             ->registerCoreBindings();
     }
 
+    /**
+     * Registers the Paystack factory
+     *
+     * @return $this
+     */
     protected function registerPaystackFactory()
     {
         $this->app->singleton('paystack.factory', function (Container $container) {
@@ -79,6 +87,11 @@ class PaystackServiceProvider extends ServiceProvider
         return $this;
     }
 
+    /**
+     * Registers Paystack manager
+     *
+     * @return $this
+     */
     protected function registerPaystackManager()
     {
         $this->app->singleton('paystack', function (Container $container) {
@@ -93,6 +106,11 @@ class PaystackServiceProvider extends ServiceProvider
         return $this;
     }
 
+    /**
+     * Registers the Core Paystack Binding
+     *
+     * @return $this
+     */
     protected function registerCoreBindings()
     {
         $this->app->bind('paystack.connection', function (Container $container) {

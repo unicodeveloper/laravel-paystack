@@ -36,19 +36,23 @@ return [
      */
     'merchantEmail' => $merchantEmail = env('MERCHANT_EMAIL'),
 
-    'default' => 'main',
+    'default' => 'test',
 
+    /**
+     * Here you can specify different Paystack connection.
+     */
     'connections' => [
-        'main' => [
+        'test' => [
             'publicKey'     => $publicKey,
             'secretKey'     => $secretKey,
-            'paymentUrl'    => $paymentUrl
+            'paymentUrl'    => $paymentUrl,
+            'cache'         => false,
         ],
-
-        'alternative' => [
+        'live' => [
             'publicKey'     => $publicKey,
             'secretKey'     => $secretKey,
-            'paymentUrl'    => $paymentUrl
-        ]
+            'paymentUrl'    => $paymentUrl,
+            'cache'         => false,
+        ],
     ],
 ];
