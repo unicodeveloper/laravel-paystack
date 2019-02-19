@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Unicodeveloper\Paystack;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Config;
-use Unicodeveloper\Paystack\Exceptions\IsNullException;
 use Unicodeveloper\Paystack\Exceptions\PaymentVerificationFailedException;
 
 class Paystack
@@ -31,28 +29,10 @@ class Paystack
     const INVALID_TRANSACTION_REFERENCE = "Invalid transaction reference";
 
     /**
-     * Issue Secret Key from your Paystack Dashboard
-     * @var string
-     */
-    protected $secretKey;
-
-    /**
-     * Instance of Client
-     * @var Client
-     */
-    protected $client;
-
-    /**
      *  Response from requests made to Paystack
-     * @var mixed
+     * @var array
      */
     protected $response;
-
-    /**
-     * Paystack API base Url
-     * @var string
-     */
-    protected $baseUrl;
 
     /**
      * Authorization Url - Paystack payment page
@@ -65,6 +45,16 @@ class Paystack
      */
     private $paystack;
 
+    /**
+     * Authorization URL
+     *
+     * @var string
+     */
+    private $url;
+
+    /**
+     * Paystack constructor.
+     */
     public function __construct()
     {
         $this->paystack = app()->make('paystack.connection');
@@ -180,7 +170,7 @@ class Paystack
 
     /**
      * Get Payment details if the transaction was verified successfully
-     * @return json
+     * @return array
      * @throws PaymentVerificationFailedException
      */
     public function getPaymentData()
@@ -535,7 +525,8 @@ class Paystack
      * @param $page
      * @return array
      */
-    public function listSubAccounts($perPage = null, $page = null) {
+    public function listSubAccounts($perPage = null, $page = null)
+    {
         return $this->paystack->subAccount()->list(['perPage' => $perPage, 'page' => $page]);
     }
 
