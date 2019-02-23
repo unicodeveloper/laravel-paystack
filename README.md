@@ -223,6 +223,12 @@ class PaymentController extends Controller
 Let me explain the fluent methods this package provides a bit here.
 ```php
 /**
+ *  To use the Multi connection Feature you need to prefix your call like this otherwise
+ *  the default connection will be used as specified in the paystack.php config file.
+ */
+Paystack::connection('live')->getAuthorizationUrl()->redirectNow();
+
+/**
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
  *  Payment Page. I abstracted all of it, so you don't have to worry about that.
