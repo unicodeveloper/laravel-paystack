@@ -253,6 +253,14 @@ class Paystack
     {
         return redirect($this->url);
     }
+    
+    /**
+     * get redirect url only 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
     /**
      * Get Access code from transaction callback respose
