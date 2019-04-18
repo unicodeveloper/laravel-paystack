@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace Unicodeveloper\Paystack;
 
 
+use Closure;
 use Illuminate\Contracts\Cache\Factory;
 use Madewithlove\IlluminatePsrCacheBridge\Laravel\CacheItemPool;
+use Unicodeveloper\Paystack\Event\EventHandler;
 use Unicodeveloper\Paystack\Http\ClientBuilder;
 use Xeviant\Paystack\Client;
 use Xeviant\Paystack\Config;
@@ -55,6 +57,8 @@ class PaystackFactory
         $compatibleConfig = $this->createCompatibleConfiguration($config);
 
         $client = new Client($this->getBuilder($config), 'v1', $compatibleConfig);
+
+        $client->getEvent()->listen('*', Closure::fromCallable([new EventHandler, 'handle']));
 
         return $client;
     }
