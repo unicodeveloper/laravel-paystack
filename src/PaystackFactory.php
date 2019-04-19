@@ -58,6 +58,7 @@ class PaystackFactory
 
         $client = new Client($this->getBuilder($config), 'v1', $compatibleConfig);
 
+        // We register a Global Event listener
         $client->getEvent()->listen('*', Closure::fromCallable([new EventHandler, 'handle']));
 
         return $client;
