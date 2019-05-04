@@ -51,7 +51,7 @@ class PaystackFactory
     public function make(array $config)
     {
         if ($this->secretKeyDoesNotExist($config)) {
-            throw new InvalidArgumentException('You cannot use the Paystack Factory without a SECRET key, go into "paystack.php" to set one.');
+            throw new InvalidArgumentException('You cannot use the Paystack Factory without a SECRET key, go into "config/paystack.php" to set one.');
         }
 
         $compatibleConfig = $this->createCompatibleConfiguration($config);
