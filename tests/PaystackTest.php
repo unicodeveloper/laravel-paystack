@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Laravel Paystack package.
  *
@@ -12,13 +14,9 @@
 namespace Unicodeveloper\Paystack\Test;
 
 use Mockery as m;
-use GuzzleHttp\Client;
-use PHPUnit_Framework_TestCase;
-use Unicodeveloper\Paystack\Paystack;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Facade as Facade;
+use PHPUnit\Framework\TestCase;
 
-class PaystackTest extends PHPUnit_Framework_TestCase
+class PaystackTest extends TestCase
 {
     protected $paystack;
 
@@ -49,7 +47,7 @@ class PaystackTest extends PHPUnit_Framework_TestCase
 
     public function testAllPlansAreReturned()
     {
-        $array = $this->paystack->shouldReceive('getAllPlans')->andReturn(['intermediate-plan']);
+        $array = $this->paystack->shouldReceive('getAllPlans')->andReturn([]);
 
         $this->assertEquals('array', gettype(array($array)));
     }

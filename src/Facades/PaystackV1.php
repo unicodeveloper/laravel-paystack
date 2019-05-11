@@ -15,7 +15,7 @@ namespace Unicodeveloper\Paystack\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Paystack extends Facade
+class PaystackV1 extends Facade
 {
     /**
      * Get the registered name of the component
@@ -23,6 +23,6 @@ class Paystack extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'paystack';
+        return 'laravel-paystack';
     }
 }

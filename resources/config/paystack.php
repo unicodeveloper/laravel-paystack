@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Laravel Paystack package.
  *
@@ -10,29 +12,47 @@
  */
 
 return [
-
     /**
      * Public Key From Paystack Dashboard
      *
      */
-    'publicKey' => getenv('PAYSTACK_PUBLIC_KEY'),
+    'publicKey' => $publicKey = env('PAYSTACK_PUBLIC_KEY', 'publicKey'),
 
     /**
      * Secret Key From Paystack Dashboard
      *
      */
-    'secretKey' => getenv('PAYSTACK_SECRET_KEY'),
+    'secretKey' => $secretKey = env('PAYSTACK_SECRET_KEY', 'secretKey'),
 
     /**
      * Paystack Payment URL
      *
      */
-    'paymentUrl' => getenv('PAYSTACK_PAYMENT_URL'),
+    'paymentUrl' => $paymentUrl = env('PAYSTACK_PAYMENT_URL'),
 
     /**
      * Optional email address of the merchant
      *
      */
-    'merchantEmail' => getenv('MERCHANT_EMAIL'),
+    'merchantEmail' => $merchantEmail = env('MERCHANT_EMAIL'),
 
+    'default' => 'test',
+
+    /**
+     * Here you can specify different Paystack connection.
+     */
+    'connections' => [
+        'test' => [
+            'publicKey'     => $publicKey,
+            'secretKey'     => $secretKey,
+            'paymentUrl'    => $paymentUrl,
+            'cache'         => false,
+        ],
+        'live' => [
+            'publicKey'     => $publicKey,
+            'secretKey'     => $secretKey,
+            'paymentUrl'    => $paymentUrl,
+            'cache'         => false,
+        ],
+    ],
 ];

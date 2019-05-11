@@ -10,7 +10,7 @@
 
 ## Installation
 
-[PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
+[PHP](https://php.net) 7.1+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
 To get the latest version of Laravel Paystack, simply require it
 
@@ -57,32 +57,61 @@ A configuration-file named `paystack.php` with some sensible defaults will be pl
 ```php
 <?php
 
-return [
+declare(strict_types=1);
 
+/*
+ * This file is part of the Laravel Paystack package.
+ *
+ * (c) Prosper Otemuyiwa <prosperotemuyiwa@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+return [
     /**
      * Public Key From Paystack Dashboard
      *
      */
-    'publicKey' => getenv('PAYSTACK_PUBLIC_KEY'),
+    'publicKey' => $publicKey = env('PAYSTACK_PUBLIC_KEY', 'publicKey'),
 
     /**
      * Secret Key From Paystack Dashboard
      *
      */
-    'secretKey' => getenv('PAYSTACK_SECRET_KEY'),
+    'secretKey' => $secretKey = env('PAYSTACK_SECRET_KEY', 'secretKey'),
 
     /**
      * Paystack Payment URL
      *
      */
-    'paymentUrl' => getenv('PAYSTACK_PAYMENT_URL'),
+    'paymentUrl' => $paymentUrl = env('PAYSTACK_PAYMENT_URL'),
 
     /**
      * Optional email address of the merchant
      *
      */
-    'merchantEmail' => getenv('MERCHANT_EMAIL'),
+    'merchantEmail' => $merchantEmail = env('MERCHANT_EMAIL'),
 
+    'default' => 'test',
+
+    /**
+     * Here you can specify different Paystack connection.
+     */
+    'connections' => [
+        'test' => [
+            'publicKey'     => $publicKey,
+            'secretKey'     => $secretKey,
+            'paymentUrl'    => $paymentUrl,
+            'cache'         => false,
+        ],
+        'live' => [
+            'publicKey'     => $publicKey,
+            'secretKey'     => $secretKey,
+            'paymentUrl'    => $paymentUrl,
+            'cache'         => false,
+        ],
+    ],
 ];
 ```
 
@@ -193,6 +222,12 @@ class PaymentController extends Controller
 
 Let me explain the fluent methods this package provides a bit here.
 ```php
+/**
+ *  To use the Multi connection Feature you need to prefix your call like this otherwise
+ *  the default connection will be used as specified in the paystack.php config file.
+ */
+Paystack::connection('live')->getAuthorizationUrl()->redirectNow();
+
 /**
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
