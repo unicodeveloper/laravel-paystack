@@ -19,9 +19,12 @@ use Illuminate\Contracts\Cache\Factory;
 use Madewithlove\IlluminatePsrCacheBridge\Laravel\CacheItemPool;
 use Unicodeveloper\Paystack\Event\EventHandler;
 use Unicodeveloper\Paystack\Http\ClientBuilder;
+use Xeviant\Paystack\App\PaystackApplication;
 use Xeviant\Paystack\Client;
 use Xeviant\Paystack\Config;
+use Xeviant\Paystack\Contract\Config as PaystackConfigContract;
 use Xeviant\Paystack\Exception\InvalidArgumentException;
+use Xeviant\Paystack\HttpClient\Builder;
 
 class PaystackFactory
 {
@@ -47,6 +50,8 @@ class PaystackFactory
      *
      * @param array $config
      * @return Client
+     * @throws \ReflectionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function make(array $config)
     {
@@ -56,7 +61,12 @@ class PaystackFactory
 
         $compatibleConfig = $this->createCompatibleConfiguration($config);
 
-        $client = new Client($this->getBuilder($config), 'v1', $compatibleConfig);
+        $app = new PaystackApplication;
+
+        $app->instance(Builder::class, $this->getBuilder($config));
+        $app->instance(PaystackConfigContract::class, $compatibleConfig);
+
+        $client = new Client($app);
 
         // We register a Global Event listener
         $client->getEvent()->listen('*', Closure::fromCallable([new EventHandler, 'handle']));
@@ -91,6 +101,7 @@ class PaystackFactory
      *
      * @param $config
      * @return ClientBuilder
+     * @throws \ReflectionException
      */
     protected function getBuilder($config)
     {

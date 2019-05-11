@@ -16,9 +16,9 @@
    "minimum-stability": "dev",
   "prefer-stable": true,
    "require": {
-     "php": "^7.1.3",
+        "php": "^7.1.3",
         "illuminate/support": "^5.7",
-        "xeviant/paystack": "0.0.*",
+        "xeviant/paystack": "dev-master",
         "graham-campbell/cache-plugin": "^1.1",
         "graham-campbell/manager": "^4.2"
    },
