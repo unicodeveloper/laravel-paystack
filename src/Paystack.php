@@ -119,6 +119,7 @@ class Paystack
                 "plan" => request()->plan,
                 "first_name" => request()->first_name,
                 "last_name" => request()->last_name,
+                "currency" => (request()->currency != ""  ? request()->currency : "NGN"),
                 "callback_url" => request()->callback_url,
                 /*
                 * to allow use of metadata on Paystack dashboard and a means to return additional data back to redirect url
