@@ -340,7 +340,7 @@ class Paystack
 
         $this->setRequestOptions();
 
-        $this->setHttpResponse("/plan", 'POST', $data);
+        return $this->setHttpResponse("/plan", 'POST', $data)->getResponse();
 
     }
 
@@ -453,7 +453,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        $this->setHttpResponse('/subscription', 'POST', $data);
+        return $this->setHttpResponse('/subscription', 'POST', $data)->getResponse();
     }
 
     /**
@@ -547,7 +547,7 @@ class Paystack
         ];
 
         $this->setRequestOptions();
-        $this->setHttpResponse('/page', 'POST', $data);
+        return $this->setHttpResponse('/page', 'POST', $data)->getResponse();
     }
 
     /**
