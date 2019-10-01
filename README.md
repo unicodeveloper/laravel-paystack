@@ -6,7 +6,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-paystack.svg?style=flat-square)](https://scrutinizer-ci.com/g/unicodeveloper/laravel-paystack)
 [![Total Downloads](https://img.shields.io/packagist/dt/unicodeveloper/laravel-paystack.svg?style=flat-square)](https://packagist.org/packages/unicodeveloper/laravel-paystack)
 
-> A Laravel 5 Package for working with Paystack seamlessly
+> A Laravel Package for working with Paystack seamlessly
 
 ## Installation
 
