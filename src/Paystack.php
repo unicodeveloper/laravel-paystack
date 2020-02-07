@@ -132,8 +132,9 @@ class Paystack
                 *                                                        ]
                 *                                        
                 *                                  ]
-                */
-                'metadata' => request()->metadata
+                */            
+                // 'metadata' => request()->metadata
+                'metadata' => json_encode(request()->custom_metadata), // To accept metadata as individual inputs
             ];
 
             // Remove the fields which were not sent (value would be null)
