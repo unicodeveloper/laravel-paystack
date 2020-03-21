@@ -118,6 +118,7 @@ PAYSTACK_SECRET_KEY=xxxxxxxxxxxxx
 PAYSTACK_PAYMENT_URL=https://api.paystack.co
 MERCHANT_EMAIL=unicodeveloper@gmail.com
 ```
+*If you are using a hosting service like heroku, ensure to add the above details to your configuration variables.*
 
 Set up routes and controller methods like so:
 
