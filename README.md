@@ -30,6 +30,14 @@ You'll then need to run `composer install` or `composer update` to download it a
 
 Once Laravel Paystack is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
 
+```php
+'providers' => [
+    ...
+    Unicodeveloper\Paystack\PaystackServiceProvider::class,
+    ...
+]
+```
+
 > If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-paystack#configuration)
 
 * `Unicodeveloper\Paystack\PaystackServiceProvider::class`
@@ -197,10 +205,15 @@ Let me explain the fluent methods this package provides a bit here.
 /**
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
- *  Payment Page. I abstracted all of it, so you don't have to worry about that.
+ *  Payment Page. We've abstracted all of it, so you don't have to worry about that.
  *  Just eat your cookies while coding!
  */
 Paystack::getAuthorizationUrl()->redirectNow();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAuthorizationUrl()->redirectNow();
 
 /**
  * This fluent method does all the dirty work of verifying that the just concluded transaction was actually valid,
@@ -211,10 +224,21 @@ Paystack::getAuthorizationUrl()->redirectNow();
 Paystack::getPaymentData();
 
 /**
+ * Alternatively, use the helper.
+ */
+paystack()->getPaymentData();
+
+/**
  * This method gets all the customers that have performed transactions on your platform with Paystack
  * @returns array
  */
 Paystack::getAllCustomers();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllCustomers();
+
 
 /**
  * This method gets all the plans that you have registered on Paystack
@@ -223,10 +247,21 @@ Paystack::getAllCustomers();
 Paystack::getAllPlans();
 
 /**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllPlans();
+
+
+/**
  * This method gets all the transactions that have occurred
  * @returns array
  */
 Paystack::getAllTransactions();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllTransactions();
 
 /**
  * This method generates a unique super secure cryptograhical hash token to use as transaction reference
@@ -235,10 +270,21 @@ Paystack::getAllTransactions();
 Paystack::genTranxRef();
 
 /**
+ * Alternatively, use the helper.
+ */
+paystack()->genTranxRef();
+
+
+/**
 * This method creates a subaccount to be used for split payments
 * @return array
 */
 Paystack::createSubAccount();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->createSubAccount();
 
 
 /**
@@ -246,6 +292,11 @@ Paystack::createSubAccount();
 * @return array
 */
 Paystack::fetchSubAccount();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->fetchSubAccount();
 
 
 /**
@@ -255,10 +306,21 @@ Paystack::fetchSubAccount();
 Paystack::listSubAccounts();
 
 /**
+ * Alternatively, use the helper.
+ */
+paystack()->listSubAccounts();
+
+
+/**
 * This method Updates a subaccount to be used for split payments
 * @return array
 */
 Paystack::updateSubAccount();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->updateSubAccount();
 ```
 
 A sample form will look like so:
