@@ -22,13 +22,13 @@ class PaystackTest extends TestCase
 {
     protected $paystack;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->paystack = m::mock('Unicodeveloper\Paystack\Paystack');
         $this->mock = m::mock('GuzzleHttp\Client');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
