@@ -9,3 +9,5 @@ All Notable changes to `laravel-paystack` will be documented in this file
 - Support for Laravel 7
 - Support for splitting payments into subaccounts
 - Support for more than one currency. Now you can use USD!
+- Support for multiple quantities
+- Support for helpers
