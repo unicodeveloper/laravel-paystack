@@ -87,7 +87,7 @@ return [
 ```
 
 
-##General payment flow
+## General payment flow
 
 Though there are multiple ways to pay an order, most payment gateways expect you to follow the following flow in your checkout process:
 
