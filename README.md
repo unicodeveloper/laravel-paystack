@@ -91,18 +91,18 @@ return [
 
 Though there are multiple ways to pay an order, most payment gateways expect you to follow the following flow in your checkout process:
 
-###1. The customer is redirected to the payment provider
+### 1. The customer is redirected to the payment provider
 After the customer has gone through the checkout process and is ready to pay, the customer must be redirected to site of the payment provider.
 
-The redirection is accomplished by submitting a form with some hidden fields. The form must post to the site of the payment provider. The hidden fields minimally specify the amount that must be paid, the order id and a hash.
+The redirection is accomplished by submitting a form with some hidden fields. The form must send a POST request to the site of the payment provider. The hidden fields minimally specify the amount that must be paid, the order id and a hash.
 
 The hash is calculated using the hidden form fields and a non-public secret. The hash used by the payment provider to verify if the request is valid.
 
 
-###2. The customer pays on the site of the payment provider
-The customer arrived on the site of the payment provider and gets to choose a payment method. All steps necessary to pay the order are taken care of by the payment provider.
+### 2. The customer pays on the site of the payment provider
+The customer arrives on the site of the payment provider and gets to choose a payment method. All steps necessary to pay the order are taken care of by the payment provider.
 
-###3. The customer gets redirected back
+### 3. The customer gets redirected back to your site
 After having paid the order the customer is redirected back. In the redirection request to the shop-site some values are returned. The values are usually the order id, a paymentresult and a hash.
 
 The hash is calculated out of some of the fields returned and a secret non-public value. This hash is used to verify if the request is valid and comes from the payment provider. It is paramount that this hash is thoroughly checked.
@@ -128,7 +128,7 @@ Note: Make sure you have `/payment/callback` registered in Paystack Dashboard [h
 
 ```php
 // Laravel 5.1.17 and above
-Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay'); 
+Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
 ```
 
 OR
@@ -150,7 +150,7 @@ OR
 // Laravel 5.0
 Route::get('payment/callback', [
     'uses' => 'PaymentController@handleGatewayCallback'
-]); 
+]);
 ```
 
 ```php
@@ -235,27 +235,27 @@ Paystack::getAllTransactions();
 Paystack::genTranxRef();
 
 /**
-* This method creates a subaccount to be used for split payments 
+* This method creates a subaccount to be used for split payments
 * @return array
 */
 Paystack::createSubAccount();
 
 
 /**
-* This method fetches the details of a subaccount  
+* This method fetches the details of a subaccount
 * @return array
 */
 Paystack::fetchSubAccount();
 
 
 /**
-* This method lists the subaccounts associated with your paystack account 
+* This method lists the subaccounts associated with your paystack account
 * @return array
 */
 Paystack::listSubAccounts();
 
 /**
-* This method Updates a subaccount to be used for split payments 
+* This method Updates a subaccount to be used for split payments
 * @return array
 */
 Paystack::updateSubAccount();
