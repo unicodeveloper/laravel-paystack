@@ -2,9 +2,9 @@
 
 namespace Unicodeveloper\Paystack\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class HelpersTest extends PHPUnit_Framework_TestCase {
+class HelpersTest extends TestCase {
 
     /**
      * Tests that helper returns
