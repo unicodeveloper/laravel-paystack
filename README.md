@@ -181,7 +181,11 @@ class PaymentController extends Controller
      */
     public function redirectToGateway()
     {
-        return Paystack::getAuthorizationUrl()->redirectNow();
+        try{
+            return Paystack::getAuthorizationUrl()->redirectNow();
+        }catch(\Exception $e) {
+            return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
+        }        
     }
 
     /**
