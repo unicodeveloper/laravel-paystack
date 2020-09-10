@@ -553,7 +553,7 @@ class Paystack
     public function chargeAuthorizedCard()
     {
         $data = [
-            "authorization_code" => request()->name,
+            "authorization_code" => request()->authorization_code,
             "email" => request()->email,
             "amount" => intval(request()->amount),
         ];
