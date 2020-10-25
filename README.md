@@ -137,6 +137,10 @@ Note: Make sure you have `/payment/callback` registered in Paystack Dashboard [h
 ```php
 // Laravel 5.1.17 and above
 Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
+
+// Laravel 8
+Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+
 ```
 
 OR
@@ -159,6 +163,10 @@ OR
 Route::get('payment/callback', [
     'uses' => 'PaymentController@handleGatewayCallback'
 ]);
+
+
+// Laravel 8
+Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 ```
 
 ```php
