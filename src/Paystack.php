@@ -115,7 +115,7 @@ class Paystack
 
             $quantity = intval(request()->quantity ?? 1);
 
-            $data = [
+            $data = array_filter([
                 "amount" => intval(request()->amount) * $quantity,
                 "reference" => request()->reference,
                 "email" => request()->email,
@@ -145,10 +145,7 @@ class Paystack
                 *                                  ]
                 */
                 'metadata' => request()->metadata
-            ];
-
-            // Remove the fields which were not sent (value would be null)
-            array_filter($data);
+            ]);
         }
 
         $this->setHttpResponse('/transaction/initialize', 'POST', $data);
