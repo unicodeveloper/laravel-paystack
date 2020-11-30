@@ -181,9 +181,9 @@ class Paystack
      * Get the authorization url from the callback response
      * @return Paystack
      */
-    public function getAuthorizationUrl()
+    public function getAuthorizationUrl($data = null)
     {
-        $this->makePaymentRequest();
+        $this->makePaymentRequest($data);
 
         $this->url = $this->getResponse()['data']['authorization_url'];
 
