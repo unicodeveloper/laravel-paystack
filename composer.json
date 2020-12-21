@@ -1,7 +1,7 @@
 {
     "name": "unicodeveloper/laravel-paystack",
-    "description": "A Laravel 5 Package for Paystack",
-    "keywords": ["php","github", "laravel","Open Source","payments", "subscription", "paystack", "paystack.co","laravel 5"],
+    "description": "A Laravel Package for Paystack",
+    "keywords": ["php","github", "laravel","Open Source","payments", "subscription", "paystack", "paystack.co","laravel 6", "laravel 7", "laravel 8"],
     "license": "MIT",
     "authors": [
       {
@@ -15,17 +15,20 @@
    ],
    "minimum-stability": "stable",
    "require": {
-    "php": "^5.4.0|^7.0",
-    "illuminate/support": "5.*",
-    "guzzlehttp/guzzle": "5.*|6.*"
+    "php": "^7.2",
+    "illuminate/support": "~6|~7|~8",
+    "guzzlehttp/guzzle": "~6|~7"
    },
    "require-dev": {
-        "phpunit/phpunit" : "4.*",
+        "phpunit/phpunit" : "^8.4|^9.0",
         "scrutinizer/ocular": "~1.1",
-        "satooshi/php-coveralls": "^0.7.0",
-        "mockery/mockery": ">=0.7.2"
+        "php-coveralls/php-coveralls": "^2.0",
+        "mockery/mockery": "^1.3"
     },
    "autoload": {
+        "files": [
+              "src/Support/helpers.php"
+            ],
         "psr-4": {
           "Unicodeveloper\\Paystack\\": "src/"
         }
@@ -37,5 +40,15 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit"
+    },
+   "extra": {
+    "laravel": {
+        "providers": [
+            "Unicodeveloper\\Paystack\\PaystackServiceProvider"
+        ],
+        "aliases": {
+            "Paystack": "Unicodeveloper\\Paystack\\Facades\\Paystack"
+        }
     }
+  }
 }
