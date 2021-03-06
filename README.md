@@ -152,6 +152,16 @@ Route::post('/pay', [
 Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
 ```
 
+```php
+// Laravel 5.1.17 and above (laravel new route name)
+Route::get('/payment/callback', [PaymentController::class,'handleGatewayCallback');
+```
+
+
+```php
+Route::get('/payment/callback', [PaymentController::class,'handleGatewayCallback')->name('pay');
+```
+
 OR
 
 ```php
