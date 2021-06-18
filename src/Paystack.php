@@ -152,7 +152,7 @@ class Paystack
                  *       { "subaccount" => "ACCT_li4p6kte2dolodo", "share" => 30 },
                  *     ],
                  *     "bearer_type" => "all",
-                 *     "main_account_share": 70,
+                 *     "main_account_share" => 70,
                  * ]
                  * More details here: https://paystack.com/docs/payments/multi-split-payments/#dynamic-splits
                  */
