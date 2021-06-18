@@ -147,6 +147,13 @@ Route::post('/pay', [
     'as' => 'pay'
 ]);
 ```
+OR
+
+```php
+// Laravel 8
+Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+```
+
 
 ```php
 Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
@@ -159,6 +166,13 @@ OR
 Route::get('payment/callback', [
     'uses' => 'PaymentController@handleGatewayCallback'
 ]);
+```
+
+OR
+
+```php
+// Laravel 8
+Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 ```
 
 ```php
@@ -330,6 +344,23 @@ paystack()->updateSubAccount();
 
 A sample form will look like so:
 
+```php
+<?php
+// more details https://paystack.com/docs/payments/multi-split-payments/#dynamic-splits
+
+$split = [
+   "type" => "percentage",
+   "currency" => "KES",
+   "subaccounts" => [
+    [ "subaccount" => "ACCT_li4p6kte2dolodo", "share" => 10 ],
+    [ "subaccount" => "ACCT_li4p6kte2dolodo", "share" => 30 ],
+   ],
+   "bearer_type" => "all",
+   "main_account_share" => 70
+];
+?>
+```
+
 ```html
 <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
     <div class="row" style="margin-bottom:40px;">
@@ -347,6 +378,9 @@ A sample form will look like so:
             <input type="hidden" name="currency" value="NGN">
             <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
             <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
+            
+            <input type="hidden" name="split_code" value="SPL_EgunGUnBeCareful"> {{-- to support transaction split. more details https://paystack.com/docs/payments/multi-split-payments/#using-transaction-splits-with-payments --}}
+            <input type="hidden" name="split" value="{{ json_encode($split) }}"> {{-- to support dynamic transaction split. More details https://paystack.com/docs/payments/multi-split-payments/#dynamic-splits --}}
             {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
