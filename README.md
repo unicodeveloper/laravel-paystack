@@ -147,6 +147,13 @@ Route::post('/pay', [
     'as' => 'pay'
 ]);
 ```
+OR
+
+```php
+// Laravel 8
+Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+```
+
 
 ```php
 Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
@@ -159,6 +166,13 @@ OR
 Route::get('payment/callback', [
     'uses' => 'PaymentController@handleGatewayCallback'
 ]);
+```
+
+OR
+
+```php
+// Laravel 8
+Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 ```
 
 ```php
