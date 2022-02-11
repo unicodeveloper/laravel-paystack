@@ -150,7 +150,7 @@ Route::post('/pay', [
 OR
 
 ```php
-// Laravel 8
+// Laravel 8 & 9
 Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
 ```
 
@@ -171,7 +171,7 @@ Route::get('payment/callback', [
 OR
 
 ```php
-// Laravel 8
+// Laravel 8 & 9
 Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 ```
 
