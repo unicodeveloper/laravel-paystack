@@ -28,7 +28,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^7.2|^8.0",
-    "illuminate/support": "~6|~7|~8",
+    "illuminate/support": "~6|~7|~8|~9",
     "guzzlehttp/guzzle": "~6|~7|~8"
   },
   "require-dev": {
