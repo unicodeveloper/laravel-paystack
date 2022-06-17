@@ -219,6 +219,28 @@ class PaymentController extends Controller
 }
 ```
 
+```php
+/**
+ *  In the case where you need to pass the data from your 
+ *  controller instead of a form
+ *  Make sure to send:
+ *  required: email, amount, reference, orderID(probably)
+ *  optionally: currency, description, metadata
+ *  e.g:
+ *  
+ */
+$data = array(
+        "amount" => 700 * 100,
+        "reference" => '4g4g5485g8545jg8gj',
+        "email" => 'user@mail.com',
+        "currency" => "NGN",
+        "orderID" => 23456,
+    );
+
+return Paystack::getAuthorizationUrl($data)->redirectNow();
+
+```
+
 Let me explain the fluent methods this package provides a bit here.
 ```php
 /**
