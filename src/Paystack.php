@@ -119,6 +119,7 @@ class Paystack
                 "amount" => intval(request()->amount) * $quantity,
                 "reference" => request()->reference,
                 "email" => request()->email,
+                "channels" => request()->channels,
                 "plan" => request()->plan,
                 "first_name" => request()->first_name,
                 "last_name" => request()->last_name,
