@@ -285,7 +285,8 @@ class Paystack
      */
     public function redirectNow()
     {
-        return redirect($this->url);
+        //return redirect($this->url);
+        return redirect()->to($this->url)->send();
     }
 
     /**
