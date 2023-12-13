@@ -412,17 +412,20 @@ class Paystack
     /**
      * Create a customer
      */
-    public function createCustomer()
+    public function createCustomer($data = null)
     {
-        $data = [
-            "email" => request()->email,
-            "first_name" => request()->fname,
-            "last_name" => request()->lname,
-            "phone" => request()->phone,
-            "metadata" => request()->additional_info /* key => value pairs array */
+        if ($data == null) {
 
-        ];
+            $data = [
+                "email" => request()->email,
+                "first_name" => request()->fname,
+                "last_name" => request()->lname,
+                "phone" => request()->phone,
+                "metadata" => request()->additional_info /* key => value pairs array */
 
+            ];
+        }
+        
         $this->setRequestOptions();
         return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
     }
