@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Unicodeveloper\\Paystack\\Test\\HelpersTest::it_returns_instance_of_paystack":0.213,"Unicodeveloper\\Paystack\\Test\\PaystackTest::testAllCustomersAreReturned":0.089,"Unicodeveloper\\Paystack\\Test\\PaystackTest::testAllTransactionsAreReturned":0.001,"Unicodeveloper\\Paystack\\Test\\PaystackTest::testAllPlansAreReturned":0.001}}
