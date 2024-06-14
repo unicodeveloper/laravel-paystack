@@ -272,9 +272,9 @@ class Paystack
      * @return json
      * @throws PaymentVerificationFailedException
      */
-    public function getPaymentData()
+    public function getPaymentData($reference)
     {
-        if ($this->isTransactionVerificationValid()) {
+        if ($this->isTransactionVerificationValid($reference)) {
             return $this->getResponse();
         } else {
             throw new PaymentVerificationFailedException("Invalid Transaction Reference");
