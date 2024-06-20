@@ -573,6 +573,23 @@ class Paystack
     }
 
     /**
+     * Charge returning customers
+     * Used for reccurring charges
+     */
+    public function chargeAuthorizedCard()
+    {
+        $data = [
+            "authorization_code" => request()->authorization_code,
+            "email" => request()->email,
+            "amount" => intval(request()->amount),
+        ];
+
+        $this->setRequestOptions();
+
+        return $this->setHttpResponse("/transaction/charge_authorization", 'POST', $data)->getResponse();
+    }
+
+    /**
      * Create pages you can share with users using the returned slug
      */
     public function createPage()
